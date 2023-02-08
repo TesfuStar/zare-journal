@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
                 </NavLink>
               ))}
             </div>
-            {/* <div className="bg-white"/> */}
+            {/* <div className="absolute top-0 right-0 bg-gradient-to-l from-black h-10 w-1/2"/> */}
             <div className="bg-main-bg p-2 rounded-sm cursor-pointer">
               <BsThreeDotsVertical className="text-white" />
             </div>

@@ -5,12 +5,12 @@ import { useGoogleLogin } from "@react-oauth/google";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { FaFacebookF } from "react-icons/fa";
 import axios from "axios";
-import { useHref } from "react-router-dom";
 
 interface Props {
   isLogin: boolean;
+  setIsLogin: (isLogin: boolean) => void;
 }
-const SignIn = ({ isLogin }: Props) => {
+const SignIn = ({ isLogin, setIsLogin }: Props) => {
   const [error, setError] = useState<string>("");
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -46,7 +46,7 @@ const SignIn = ({ isLogin }: Props) => {
         <div className="flex flex-col items-center space-y-2">
           <button
             onClick={googleLogin as any}
-            className="p-2 w-full hover:opacity-95 flex items-center space-x-2
+            className="p-3 w-full hover:opacity-95 flex items-center space-x-2
               justify-center bg-sky-600 font-normal text-white text-[15px] rounded-[4px]"
           >
             <IoLogoGoogle size={22} className="text-white" />{" "}
@@ -61,7 +61,7 @@ const SignIn = ({ isLogin }: Props) => {
             callback={responseFacebook}
             render={(renderProps: any) => (
               <button
-                className="p-2 w-full hover:opacity-95 flex items-center space-x-2
+                className="p-3 w-full hover:opacity-95 flex items-center space-x-2
     justify-center bg-blue-700 font-normal text-white text-[15px] rounded-[4px]"
               >
                 <FaFacebookF size={22} className="text-white" />{" "}
@@ -75,7 +75,8 @@ const SignIn = ({ isLogin }: Props) => {
   }
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(emailRef.current?.value)
+    if (!isLogin) {
+    }
   };
   //Return
   return (
@@ -94,6 +95,7 @@ const SignIn = ({ isLogin }: Props) => {
               id=""
               placeholder="Name"
               className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+              required
             />
           )}
           <input
@@ -103,6 +105,7 @@ const SignIn = ({ isLogin }: Props) => {
             id=""
             placeholder="Email"
             className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+            required
           />
           <input
             ref={passwordRef}
@@ -111,6 +114,7 @@ const SignIn = ({ isLogin }: Props) => {
             id=""
             placeholder="Password"
             className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+            required
           />
           <button
             type="submit"
@@ -121,6 +125,15 @@ const SignIn = ({ isLogin }: Props) => {
           </button>
         </form>
       </div>
+      <p className="text-gray-400 font-normal py-2">
+        {isLogin ? "Don't have account ?" : "Already have account ?"}
+        <span onClick={() => setIsLogin(!isLogin)}
+         className="text-main-color font-medium cursor-pointer"
+        >
+          {isLogin ? " Sign up" : " sign in"}
+        </span>
+      </p>
+
       <div className="flex items-center justify-center space-x-2 py-4">
         <div className="w-20 h-[1px] bg-gray-300" />
         <p className="font-medium text-dark-color">or</p>

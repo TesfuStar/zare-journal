@@ -47,7 +47,7 @@ const SignInModal = () => {
                   >
                     {isLogin ? "Sign In" : "Sign UP"}
                   </Dialog.Title>
-                  <SignIn isLogin={isLogin} />
+                  <SignIn isLogin={isLogin} setIsLogin={setIsLogin}/>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
