@@ -42,7 +42,7 @@ const SubscribeModal = () => {
               >
                 <Dialog.Panel
                   className="w-full max-w-md transform overflow-hidden rounded-md bg-white 
-                p-6  align-middle shadow-xl transition-all"
+                p-3  align-middle shadow-xl transition-all"
                 >
                   <Dialog.Title
                     as="h3"
