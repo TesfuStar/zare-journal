@@ -2,10 +2,15 @@ import React from "react";
 import Logo from "../assets/Logo.svg";
 import { BiSearch } from "react-icons/bi";
 import SubscribeModal from "./subscription/SubscribeModal";
-import {AiOutlineGoogle} from 'react-icons/ai'
+import { AiOutlineGoogle } from "react-icons/ai";
 import { useHome } from "../context/HomeContext";
+import SignInModal from "./Auth/SignInModal";
 const Header: React.FC = () => {
-  const { isSubscriptionModalOpen, setIsSubscriptionModalOpen } = useHome();
+  const {
+    isSubscriptionModalOpen,
+    setIsSubscriptionModalOpen,
+    setIsSignInModalOpen,
+  } = useHome();
   return (
     <>
       <div className="bg-white">
@@ -19,13 +24,19 @@ const Header: React.FC = () => {
             >
               Subscribe
             </button>
-                 <div>
-                    <p className="text-gray-500">or</p>
-                 </div>
+            <div>
+              <p
+                onClick={() => setIsSignInModalOpen(true)}
+                className="text-dark-color font-medium text-[15px] cursor-pointer"
+              >
+                Sign In
+              </p>
+            </div>
           </div>
         </div>
       </div>
       <SubscribeModal />
+      <SignInModal />
     </>
   );
 };

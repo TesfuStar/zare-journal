@@ -82,8 +82,8 @@ const SubscribeModal = () => {
                       className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
                     />
                     <button
-                      className=" rounded-sm  bg-main-bg p-3 text-sm font-medium text-white
-                     hover:bg-main-bg/70  w-full"
+                      className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
+                     hover:bg-main-bg/80  w-full"
                     >
                       Subscribe
                     </button>
