@@ -6,6 +6,8 @@ import { NavLink } from "react-router-dom";
 import Header from "./Header";
 
 const Navbar: React.FC = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL as string;
+  console.log(backendUrl)
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -13,7 +15,7 @@ const Navbar: React.FC = () => {
   const categoriesData = useQuery(
     ["getCategoriesDataApi"],
     async () =>
-      await axios.get(`http://192.168.0.144:8000/api/categories`, {
+      await axios.get(`${process.env.REACT_APP_BACKEND_URL}categories`, {
         headers,
       }),
     {
