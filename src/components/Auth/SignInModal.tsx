@@ -1,10 +1,11 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { useHome } from "../../context/HomeContext";
+import SignIn from "./SignIn";
 
 const SignInModal = () => {
   const { isSignInModalOpen, setIsSignInModalOpen } = useHome();
-  const [isLogin, setIsLogin] = useState<boolean>(false)
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   return (
     <>
       <Transition appear show={isSignInModalOpen} as={Fragment}>
@@ -44,28 +45,9 @@ const SignInModal = () => {
                     as="h3"
                     className="text-lg font-semibold leading-6 text-gray-900"
                   >
-                    {isLogin ? "Sign In"  :'Sign UP'}
+                    {isLogin ? "Sign In" : "Sign UP"}
                   </Dialog.Title>
-                  <div className="mt-2 flex flex-col items-center space-y-2">
-                    <input
-                      type="email"
-                      name=""
-                      id=""
-                      placeholder="Email"
-                      className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
-                    />
-                    <button
-                      className=" rounded-sm  bg-main-bg p-3 text-sm font-medium text-white
-                   hover:bg-main-bg/70  w-full"
-                    >
-                      Subscribe
-                    </button>
-                  </div>
-                  <div className="flex items-center justify-center space-x-2 py-4">
-                    <div className="w-20 h-[1px] bg-gray-300" />
-                    <p className="font-medium text-dark-color">or</p>
-                    <div className="w-20 h-[1px] bg-gray-300" />
-                  </div>
+                  <SignIn isLogin={isLogin} />
                 </Dialog.Panel>
               </Transition.Child>
             </div>
