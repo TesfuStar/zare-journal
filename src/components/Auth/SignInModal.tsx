@@ -4,7 +4,10 @@ import { useHome } from "../../context/HomeContext";
 
 const SignInModal = () => {
   const { isSignInModalOpen, setIsSignInModalOpen } = useHome();
-  const [isLogin, setIsLogin] = useState<boolean>(false)
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+
+
+
   return (
     <>
       <Transition appear show={isSignInModalOpen} as={Fragment}>
@@ -44,7 +47,7 @@ const SignInModal = () => {
                     as="h3"
                     className="text-lg font-semibold leading-6 text-gray-900"
                   >
-                    {isLogin ? "Sign In"  :'Sign UP'}
+                    {isLogin ? "Sign In" : "Sign Up"}
                   </Dialog.Title>
                   <div className="mt-2 flex flex-col items-center space-y-2">
                     <input
