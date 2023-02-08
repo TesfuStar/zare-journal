@@ -50,6 +50,14 @@ const SubscribeModal = () => {
                   >
                     Subscribe for Daily Newsletter
                   </Dialog.Title>
+                  {/* <h2 className="font-semibold text-2xl text-gray-700">
+                    Stay Tuned in with Our Newsletter
+                  </h2> */}
+                  <p className="pt-3 font-medium text-md text-gray-600">
+                    We hand-pick our favorites and send you the hottest deals
+                    every week
+                  </p>
+
                   <div className="mt-2 flex flex-col items-center space-y-2">
                     <input
                       type="email"
@@ -64,11 +72,6 @@ const SubscribeModal = () => {
                     >
                       Subscribe
                     </button>
-                  </div>
-                  <div className="flex items-center justify-center space-x-2 py-4">
-                    <div className="w-20 h-[1px] bg-gray-300" />
-                    <p className="font-medium text-dark-color">or</p>
-                    <div className="w-20 h-[1px] bg-gray-300" />
                   </div>
 
                   <div className="mt-4"></div>
