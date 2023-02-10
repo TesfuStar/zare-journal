@@ -58,11 +58,13 @@ const Search: React.FC = () => {
                     <img
                       src={item.blog_cover.original_url}
                       alt=""
-                  className="h-36  md:h-56 cursor-pointer hover:scale-[1.03] w-36 md:w-64 
+                      className="h-36  md:h-56 cursor-pointer hover:scale-[1.03] w-36 md:w-64 
                    object-cover transition-all duration-500 ease-out"
                     />
                     <div>
-                      <h3 className="font-bold text-gray-900 line-clamp-1 md:line-clamp-3">{item.title}</h3>
+                      <h3 className="font-bold text-gray-900 line-clamp-1 md:line-clamp-3">
+                        {item.title}
+                      </h3>
                       <p className="text-gray-600 text-sm font-normal line-clamp-2">
                         {item.body}
                       </p>
@@ -81,7 +83,7 @@ const Search: React.FC = () => {
             <div className="md:col-span-8"></div>
           </div>
         ) : (
-          <div></div>
+          <div>Loading</div>
         )}
       </div>
     </div>

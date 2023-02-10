@@ -51,11 +51,12 @@ const HomePage: React.FC = () => {
             {homePageData?.data?.data?.data?.trending?.map((item: any) => (
               <div key={item.id}
               onClick={()=>navigate(`/blog/${item.id}`)}
+              className="cursor-pointer overflow-hidden"
               >
                 <img
                   src={item.blog_cover.original_url}
                   alt=""
-                  className="object-cover w-full max-h-56 h-full"
+                  className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
                   // className="w-full"
                 />
                 <p className="text-gray-400 text-sm font-light">
@@ -139,11 +140,12 @@ const HomePage: React.FC = () => {
               (item: any) => (
                 <div key={item.id}
                 onClick={()=>navigate(`/blog/${item.id}`)}
+                className="cursor-pointer overflow-hidden"
                 >
                   <img
                     src={item.blog_cover.original_url}
                     alt=""
-                    className="object-cover w-full max-h-56 h-full"
+                    className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
                     // className="w-full"
                   />
                   <p className="text-gray-400 text-sm font-light">
@@ -184,12 +186,12 @@ const HomePage: React.FC = () => {
                 : index === 3
                 ? "row-span-2 col-span-2"
                 : index === 4 && " row-span-3 col-span-2"
-            } flex flex-col items-start space-y-1`}
+            } flex flex-col items-start space-y-1 overflow-hidden`}
           >
             <img
               src={item.blog_cover.original_url}
               alt=""
-              className={`object-cover w-full ${
+              className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
                 item.index === 3 ? "h-auto " : "max-h-56 h-full "
               }`}
               // className="w-full"
