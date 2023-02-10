@@ -25,16 +25,16 @@ const Search: React.FC = () => {
     }
   );
   return (
-    <div className="max-w-7xl mx-auto w-full flex flex-col">
+    <div className="max-w-7xl mx-auto w-full flex flex-col p-3">
       <div className="flex flex-col items-center justify-center py-10">
         <h3 className="font-bold text-xl md:text-3xl pb-10">Search articles</h3>
 
-        <div className="pl-3 max-w-5xl border-2 border-dark-color max-auto w-full flex flex-grow items-center h-12 ">
+        <div className="pl-3 max-w-5xl border border-gray-800 max-auto w-full flex flex-grow items-center h-12 ">
           <BiSearch className=" text-xl h-full flex text-gray-500" />
           <input
             type="text"
             placeholder="Search blogs, news, categories"
-            className="w-full p-2 h-full rounded-sm border-none focus:outline-none ring-0"
+            className="w-full p-2 h-full rounded-sm border-none focus:outline-none ring-0 text-sm"
           />
           <button className="text-white font-medium px-5 hover:bg-red-500/70  bg-red-500 h-full">
             search
@@ -58,11 +58,11 @@ const Search: React.FC = () => {
                     <img
                       src={item.blog_cover.original_url}
                       alt=""
-                      className=" h-64 cursor-pointer hover:scale-[1.03] max-w-64 lg:w-80 w-full
-                  object-cover transition-all duration-500 ease-out "
+                  className="h-36  md:h-56 cursor-pointer hover:scale-[1.03] w-36 md:w-64 
+                   object-cover transition-all duration-500 ease-out"
                     />
                     <div>
-                      <h3 className="font-bold text-gray-900">{item.title}</h3>
+                      <h3 className="font-bold text-gray-900 line-clamp-1 md:line-clamp-3">{item.title}</h3>
                       <p className="text-gray-600 text-sm font-normal line-clamp-2">
                         {item.body}
                       </p>

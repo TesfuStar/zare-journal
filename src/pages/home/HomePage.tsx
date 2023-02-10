@@ -49,7 +49,9 @@ const HomePage: React.FC = () => {
         {homePageData.isFetched ? (
           <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-3">
             {homePageData?.data?.data?.data?.trending?.map((item: any) => (
-              <div key={item.id}>
+              <div key={item.id}
+              onClick={()=>navigate(`/blog/${item.id}`)}
+              >
                 <img
                   src={item.blog_cover.original_url}
                   alt=""
@@ -70,7 +72,7 @@ const HomePage: React.FC = () => {
             ))}
           </div>
         ) : (
-          <div></div>
+          <div>Loading</div>
         )}
       </>
     );
@@ -114,7 +116,7 @@ const HomePage: React.FC = () => {
             )}
           </div>
         ) : (
-          <div></div>
+          <div>Loading</div>
         )}
       </>
     );
@@ -135,7 +137,9 @@ const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-3">
             {homePageData?.data?.data?.data?.business_investment?.map(
               (item: any) => (
-                <div key={item.id}>
+                <div key={item.id}
+                onClick={()=>navigate(`/blog/${item.id}`)}
+                >
                   <img
                     src={item.blog_cover.original_url}
                     alt=""
@@ -157,7 +161,7 @@ const HomePage: React.FC = () => {
             )}
           </div>
         ) : (
-          <div></div>
+          <div>Loading</div>
         )}
       </>
     );
@@ -168,6 +172,7 @@ const HomePage: React.FC = () => {
       <div className="grid grid-rows-5 grid-flow-col gap-3 ">
         {todaysPick?.map((item: any, index: number) => (
           <div
+          onClick={()=>navigate(`/blog/${item.id}`)}
           key={index}
             className={`${
               index === 0
