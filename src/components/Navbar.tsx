@@ -2,12 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Header from "./Header";
 
 const Navbar: React.FC = () => {
-  const backendUrl = process.env.REACT_APP_BACKEND_URL as string;
-  console.log(backendUrl)
+const navigate = useNavigate()
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -27,7 +26,6 @@ const Navbar: React.FC = () => {
     }
   );
 
-  console.log(categoriesData?.data?.data);
   return (
     <>
       <Header />
@@ -37,7 +35,7 @@ const Navbar: React.FC = () => {
             <div className=" flex items-center space-x-8 overflow-x-hidden flex-grow">
               {categoriesData?.data?.data?.data?.map((category: any) => (
                 <NavLink
-                  to={""}
+                  to={"/categories"}
                   // className={({ isActive }) => [
                   //   "group flex items-center  text-base font-medium rounded-md",
                   //   isActive ? " text-red-600  text-lg " : "",

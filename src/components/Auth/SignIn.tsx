@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useHome } from "../../context/HomeContext";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios"
+import axios from "axios";
 import { IoLogoGoogle } from "react-icons/io";
 import { useGoogleLogin } from "@react-oauth/google";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
@@ -16,7 +16,7 @@ const SignIn = ({ isLogin, setIsLogin }: Props) => {
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const {login} = useAuth()
+  const { login } = useAuth();
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -81,16 +81,21 @@ const SignIn = ({ isLogin, setIsLogin }: Props) => {
   }
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isLogin) {
-    }
+    loginMutationSubmitHandler();
   };
 
   //POST REQUEST
   const loginMutation = useMutation(
-    async (newData:any) =>
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}auth/admin/sign-in`, newData, {
-        headers,
-      }),
+    async (newData: any) =>
+      await axios.post(
+        isLogin
+          ? `${process.env.REACT_APP_BACKEND_URL}auth/admin/sign-in`
+          : `${process.env.REACT_APP_BACKEND_URL}register`,
+        newData,
+        {
+          headers,
+        }
+      ),
     {
       retry: false,
     }
@@ -104,7 +109,7 @@ const SignIn = ({ isLogin, setIsLogin }: Props) => {
           // password: password,
         },
         {
-          onSuccess: (responseData:any) => {
+          onSuccess: (responseData: any) => {
             console.log(responseData?.data);
             // toast({
             //   title: "Success",
@@ -112,13 +117,10 @@ const SignIn = ({ isLogin, setIsLogin }: Props) => {
             //   duration: 1800,
             //   isClosable: true,
             // });
-            login(
-              responseData?.data?.token,
-              responseData?.data?.result
-            );
+            login(responseData?.data?.token, responseData?.data?.result);
             // navigate('/dashboard')
           },
-          onError: (err:any) => {
+          onError: (err: any) => {
             console.log(err?.response?.data);
             // toast({
             //   title: err?.response?.data.message,
@@ -127,7 +129,6 @@ const SignIn = ({ isLogin, setIsLogin }: Props) => {
             //   isClosable: true,
             // });
           },
-
         }
       );
     } catch (err) {
@@ -183,8 +184,9 @@ const SignIn = ({ isLogin, setIsLogin }: Props) => {
       </div>
       <p className="text-gray-400 font-normal py-2">
         {isLogin ? "Don't have account ?" : "Already have account ?"}
-        <span onClick={() => setIsLogin(!isLogin)}
-         className="text-main-color font-medium cursor-pointer"
+        <span
+          onClick={() => setIsLogin(!isLogin)}
+          className="text-main-color font-medium cursor-pointer"
         >
           {isLogin ? " Sign up" : " sign in"}
         </span>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Navbar, Footer } from "./components";
-import { HomePage, BlogDetail, Search } from "./pages";
+import { HomePage, BlogDetail, Search, Category } from "./pages";
 const App = () => {
   return (
     <>
@@ -11,6 +11,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/categories" element={<Category />} />
       </Routes>
       <Footer />
     </>
