@@ -1,11 +1,12 @@
 import { useState, useRef } from "react";
 import { useHome } from "../../context/HomeContext";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios"
 import { IoLogoGoogle } from "react-icons/io";
 import { useGoogleLogin } from "@react-oauth/google";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { FaFacebookF } from "react-icons/fa";
-import axios from "axios";
-
+import { useAuth } from "../../context/Auth";
 interface Props {
   isLogin: boolean;
   setIsLogin: (isLogin: boolean) => void;
@@ -15,6 +16,11 @@ const SignIn = ({ isLogin, setIsLogin }: Props) => {
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const {login} = useAuth()
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  };
   //google login
   const googleLogin = useGoogleLogin({
     onSuccess: async (response: any) => {
@@ -76,6 +82,56 @@ const SignIn = ({ isLogin, setIsLogin }: Props) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!isLogin) {
+    }
+  };
+
+  //POST REQUEST
+  const loginMutation = useMutation(
+    async (newData:any) =>
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}auth/admin/sign-in`, newData, {
+        headers,
+      }),
+    {
+      retry: false,
+    }
+  );
+
+  const loginMutationSubmitHandler = async () => {
+    try {
+      loginMutation.mutate(
+        {
+          // phone: "251".concat(phone as string),
+          // password: password,
+        },
+        {
+          onSuccess: (responseData:any) => {
+            console.log(responseData?.data);
+            // toast({
+            //   title: "Success",
+            //   status: "success",
+            //   duration: 1800,
+            //   isClosable: true,
+            // });
+            login(
+              responseData?.data?.token,
+              responseData?.data?.result
+            );
+            // navigate('/dashboard')
+          },
+          onError: (err:any) => {
+            console.log(err?.response?.data);
+            // toast({
+            //   title: err?.response?.data.message,
+            //   status: "error",
+            //   duration: 1800,
+            //   isClosable: true,
+            // });
+          },
+
+        }
+      );
+    } catch (err) {
+      console.log(err);
     }
   };
   //Return

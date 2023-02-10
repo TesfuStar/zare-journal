@@ -1,10 +1,13 @@
+/* eslint-disable no-lone-blocks */
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const HomePage: React.FC = () => {
   const [todaysPick, setTodaysPick] = useState<string[]>([]);
+  const navigate = useNavigate()
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -30,7 +33,7 @@ const HomePage: React.FC = () => {
       },
     }
   );
-  console.log(homePageData?.data?.data?.data?.trending);
+  console.log(homePageData?.data?.data?.data);
 
   //trending
   function TrendingStory() {
@@ -46,9 +49,9 @@ const HomePage: React.FC = () => {
         {homePageData.isFetched ? (
           <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-3">
             {homePageData?.data?.data?.data?.trending?.map((item: any) => (
-              <div>
+              <div key={item.id}>
                 <img
-                  src={item.blog_image.original_url}
+                  src={item.blog_cover.original_url}
                   alt=""
                   className="object-cover w-full max-h-56 h-full"
                   // className="w-full"
@@ -87,11 +90,13 @@ const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-3">
             {homePageData?.data?.data?.data?.business_investment?.map(
               (item: any) => (
-                <div>
+                <div 
+                 onClick={()=>navigate(`/blog/${item.id}`)}
+                key={item.id} className="cursor-pointer overflow-hidden"> 
                   <img
-                    src={item.blog_image.original_url}
+                    src={item.blog_cover.original_url}
                     alt=""
-                    className="object-cover w-full max-h-56 h-full"
+                    className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
                     // className="w-full"
                   />
                   <p className="text-gray-400 text-sm font-light">
@@ -120,7 +125,7 @@ const HomePage: React.FC = () => {
     return (
       <>
         <div className="flex items-center justify-between pt-14 pb-4">
-          <h2 className="font-bold text-xl">Business & investment</h2>
+          <h2 className="font-bold text-xl">Videos</h2>
           <div className="bg-main-bg p-2 rounded-sm cursor-pointer">
             <AiOutlineArrowRight className="text-white" />
           </div>
@@ -130,9 +135,9 @@ const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-3">
             {homePageData?.data?.data?.data?.business_investment?.map(
               (item: any) => (
-                <div>
+                <div key={item.id}>
                   <img
-                    src={item.blog_image.original_url}
+                    src={item.blog_cover.original_url}
                     alt=""
                     className="object-cover w-full max-h-56 h-full"
                     // className="w-full"
@@ -163,23 +168,24 @@ const HomePage: React.FC = () => {
       <div className="grid grid-rows-5 grid-flow-col gap-3 ">
         {todaysPick?.map((item: any, index: number) => (
           <div
+          key={index}
             className={`${
-              index == 0
+              index === 0
                 ? "row-span-2  col-span-2 "
-                : index == 1
+                : index === 1
                 ? "row-span-3 col-span-2 "
-                : index == 2
+                : index === 2
                 ? "row-span-5 col-span-5 h-full "
-                : index == 3
+                : index === 3
                 ? "row-span-2 col-span-2"
-                : index == 4 && " row-span-3 col-span-2"
+                : index === 4 && " row-span-3 col-span-2"
             } flex flex-col items-start space-y-1`}
           >
             <img
-              src={item.blog_image.original_url}
+              src={item.blog_cover.original_url}
               alt=""
               className={`object-cover w-full ${
-                item.index == 3 ? "h-auto " : "max-h-56 h-full "
+                item.index === 3 ? "h-auto " : "max-h-56 h-full "
               }`}
               // className="w-full"
             />
@@ -188,7 +194,7 @@ const HomePage: React.FC = () => {
             </p>
             <h3
               className={`font-bold text-gray-900 ${
-                item.index == 3 ? "text-5xl " : " "
+                item.index === 3 ? "text-5xl " : " "
               } `}
             >
               {item.title}
@@ -201,6 +207,7 @@ const HomePage: React.FC = () => {
       </div>
       <TrendingStory />
       <BusinessInvestment />
+      <Videos />
     </div>
   );
 };

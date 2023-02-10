@@ -5,19 +5,23 @@ import SubscribeModal from "./subscription/SubscribeModal";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { useHome } from "../context/HomeContext";
 import SignInModal from "./Auth/SignInModal";
+import {useNavigate} from 'react-router-dom'
 const Header: React.FC = () => {
   const {
     isSubscriptionModalOpen,
     setIsSubscriptionModalOpen,
     setIsSignInModalOpen,
   } = useHome();
+  const navigate = useNavigate()
   return (
     <>
       <div className="bg-white">
         <div className="max-w-7xl mx-auto p-2 flex items-center justify-between">
           <img src={Logo} alt="" className="h-10" />
           <div className="flex items-center space-x-4">
-            <BiSearch size={20} className="cursor-pointer" />
+            <BiSearch 
+             onClick={()=>navigate('/search')}
+            size={20} className="cursor-pointer" />
             <button
               onClick={() => setIsSubscriptionModalOpen(true)}
               className="bg-main-bg hover:bg-main-bg/70 p-2 px-3 rounded-sm text-white font-normal text-[15px]"
