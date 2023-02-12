@@ -2,7 +2,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/Auth";
 import { useHome } from "../../context/HomeContext";
 import { ToastContainer, toast, Slide, ToastOptions } from "react-toastify";
@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { PulseLoader } from "react-spinners";
 import DetailsLoading from "../../utils/DetailsLoading";
 const BlogDetail: React.FC = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { user, token } = useAuth();
   const { setIsSignInModalOpen } = useHome();
@@ -105,24 +106,25 @@ const BlogDetail: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="flex flex-col items-start space-y-2">
               <p className="text-main-color text-[15px]">
-                {blogDetailsData?.data?.data?.data?.published_at +
+                {blogDetailsData?.data?.data?.data?.blog?.published_at +
                   " " +
-                  blogDetailsData?.data?.data?.data?.reading_time +
+                  blogDetailsData?.data?.data?.data?.blog?.reading_time +
                   " "}
                 to read
               </p>
               <h2 className="text-xl md:text-4xl font-bold">
-                {blogDetailsData?.data?.data?.data?.title}
+                {blogDetailsData?.data?.data?.data?.blog?.title}
               </h2>
               <p className="text-gray-500 text-sm font-normal">
-                {blogDetailsData?.data?.data?.data?.sub_heading}
+                {blogDetailsData?.data?.data?.data?.blog?.sub_heading}
               </p>
             </div>
             {/*  */}
             <div className=" flex items-center justify-center">
               <img
                 src={
-                  blogDetailsData?.data?.data?.data?.blog_cover?.original_url
+                  blogDetailsData?.data?.data?.data?.blog?.blog_cover
+                    ?.original_url
                 }
                 alt=""
                 className="max-h-80 w-full object-contain"
@@ -133,10 +135,10 @@ const BlogDetail: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3 pt-10">
             <div className="md:col-span-8 flex flex-col items-start space-y-4">
               <h2 className="text-xl md:text-2xl font-bold">
-                {blogDetailsData?.data?.data?.data?.sub_heading}
+                {blogDetailsData?.data?.data?.data?.blog?.sub_heading}
               </h2>
               <p className="text-gray-500  font-normal">
-                {blogDetailsData?.data?.data?.data?.body}
+                {blogDetailsData?.data?.data?.data?.blog?.body}
               </p>
               {/* comment */}
               <div className="flex w-full flex-col pt-3">
@@ -151,7 +153,7 @@ const BlogDetail: React.FC = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
                   {!seeAllComments
-                    ? blogDetailsData?.data?.data?.data?.comments
+                    ? blogDetailsData?.data?.data?.data?.blog?.comments
                         ?.slice(0, 2)
                         ?.map((comment: any) => (
                           <div className="border p-3  rounded-sm border-dark-color/70 w-full">
@@ -181,12 +183,12 @@ const BlogDetail: React.FC = () => {
                                 }}
                                 className="text-main-color/70 cursor-pointer font-medium text-[15px]"
                               >
-                                {seeMore ? "...ShowLess" : "...ShowMore"}
+                                {seeMore && selectedComment === comment.id ? "...ShowLess" : "...ShowMore"}
                               </span>
                             </p>
                           </div>
                         ))
-                    : blogDetailsData?.data?.data?.data?.comments?.map(
+                    : blogDetailsData?.data?.data?.data?.blog?.comments?.map(
                         (comment: any) => (
                           <div className="border p-3  rounded-sm border-dark-color/70 w-full">
                             <div className="flex items-center space-x-2">
@@ -215,7 +217,7 @@ const BlogDetail: React.FC = () => {
                                 }}
                                 className="text-main-color/70 cursor-pointer font-medium text-[15px]"
                               >
-                                {seeMore ? "...ShowLess" : "...ShowMore"}
+                                {seeMore && selectedComment === comment.id ? "...ShowLess" : "...ShowMore"}
                               </span>
                             </p>
                           </div>
@@ -251,7 +253,39 @@ const BlogDetail: React.FC = () => {
                 </button>
               </form>
             </div>
-            <div className="md:col-span-4"></div>
+            {/* related */}
+            <div className="md:col-span-4">
+              <h1>Most Popular</h1>
+              <div className="flex flex-col items-start space-y-2">
+              {blogDetailsData?.data?.data?.data?.related?.map((item: any) => (
+                <div
+                  onClick={() => navigate(`/blog/${item.id}`)}
+                  key={item.id}
+                  className="flex items-start space-x-2 cursor-pointer overflow-hidden"
+                >
+                  <img
+                    src={item.blog_cover.original_url}
+                    alt=""
+                    className="h-24   cursor-pointer hover:scale-[1.03] w-24
+                      object-cover transition-all duration-500 ease-out"
+                  />
+                  <div>
+                  <p className=" text-[15px] p-1 cursor-pointer">
+                      {item.category.name}
+                    </p>
+                    <h3 className="font-bold text-gray-900 line-clamp-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-400 text-sm font-light">
+                      {item.created_at}
+                    </p>
+
+                 
+                  </div>
+                </div>
+              ))}
+              </div>
+            </div>
           </div>
         </div>
       ) : (

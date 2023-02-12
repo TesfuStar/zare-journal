@@ -9,11 +9,11 @@ const SearchPageLoading = () => {
           .fill(0)
           .map((item) => (
             <div className="flex items-start space-x-2 w-full">
-              <div className=" bg-gray-100   w-96 h-44 rounded-md"></div>
+              <div className=" bg-gray-200   w-96 h-44 rounded-md"></div>
               <div className="flex flex-col items-start space-y-2 w-full">
-                <div className=" bg-gray-100   w-full h-4 rounded-md"></div>
-                <div className=" bg-gray-100   w-full h-4 rounded-md"></div>
-                <div className=" bg-gray-100   w-full h-4 rounded-md"></div>
+                <div className=" bg-gray-200   w-full h-4 rounded-md"></div>
+                <div className=" bg-gray-200   w-full h-4 rounded-md"></div>
+                <div className=" bg-gray-200   w-full h-4 rounded-md"></div>
               </div>
             </div>
           ))}
@@ -23,11 +23,11 @@ const SearchPageLoading = () => {
           .fill(0)
           .map((item) => (
             <div className="flex items-start space-x-2 w-full">
-              <div className=" bg-gray-100   w-44 h-28 rounded-md"></div>
+              <div className=" bg-gray-200   w-44 h-28 rounded-md"></div>
               <div className="flex flex-col items-start space-y-2 w-full">
-                <div className=" bg-gray-100   w-full h-4 rounded-md"></div>
-                <div className=" bg-gray-100   w-full h-4 rounded-md"></div>
-                <div className=" bg-gray-100   w-full h-4 rounded-md"></div>
+                <div className=" bg-gray-200   w-full h-4 rounded-md"></div>
+                <div className=" bg-gray-200   w-full h-4 rounded-md"></div>
+                <div className=" bg-gray-200   w-full h-4 rounded-md"></div>
               </div>
             </div>
           ))}

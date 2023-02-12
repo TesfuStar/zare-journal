@@ -1,14 +1,55 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useRef } from "react";
 import { useHome } from "../../context/HomeContext";
-import { IoLogoGoogle } from "react-icons/io";
-import { useGoogleLogin } from "@react-oauth/google";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import { FaFacebookF } from "react-icons/fa";
+import { PulseLoader } from "react-spinners";
 import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 const SubscribeModal = () => {
   const { isSubscriptionModalOpen, setIsSubscriptionModalOpen } = useHome();
+  const emailRef = useRef<HTMLInputElement>(null);
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  };
 
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    loginMutationSubmitHandler();
+  };
+  //SUBSCRIPTION POST REQUEST
+  const subscribeMutation = useMutation(
+    async (newData: any) =>
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}subscribe`,
+        newData,
+        {
+          headers,
+        }
+      ),
+    {
+      retry: false,
+    }
+  );
+
+  const loginMutationSubmitHandler = async () => {
+    try {
+      subscribeMutation.mutate(
+        {
+          email: emailRef.current?.value,
+        },
+        {
+          onSuccess: (responseData: any) => {
+            setIsSubscriptionModalOpen(false);
+          },
+          onError: (err: any) => {
+            // setError("something went wrong");
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <Transition appear show={isSubscriptionModalOpen} as={Fragment}>
@@ -58,21 +99,28 @@ const SubscribeModal = () => {
                     every week
                   </p>
 
-                  <div className="mt-2 flex flex-col items-center space-y-2">
+                  <form
+                    onSubmit={handleSubscribe}
+                    className="mt-2 flex flex-col items-center space-y-2"
+                  >
                     <input
                       type="email"
-                      name=""
-                      id=""
+                      ref={emailRef}
                       placeholder="Email"
                       className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+                      required
                     />
                     <button
                       className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
                      hover:bg-main-bg/80  w-full"
                     >
-                      Subscribe
+                      {subscribeMutation.isLoading ? (
+                        <PulseLoader color="#fff" />
+                      ) : (
+                        "Subscribe"
+                      )}
                     </button>
-                  </div>
+                  </form>
 
                   <div className="mt-4"></div>
                 </Dialog.Panel>

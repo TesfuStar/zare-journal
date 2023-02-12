@@ -1,11 +1,13 @@
+/* eslint-disable no-lone-blocks */
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import GridLoading from "../../utils/GridLoading";
 
 const Category: React.FC = () => {
   const { id } = useParams();
+  const [trendingStory, setTrendingStory] = useState<string[]>([]);
   const navigate = useNavigate();
   const headers = {
     "Content-Type": "application/json",
@@ -25,38 +27,143 @@ const Category: React.FC = () => {
       refetchOnWindowFocus: false,
       retry: false,
       // enabled: !!token,
-      onSuccess: (res) => {},
+      onSuccess: (res: any) => {
+        setTrendingStory(
+          res?.data?.data?.todays_pick?.map((item: any, index: number) => ({
+            ...item,
+            index: index + 1,
+          }))
+        );
+      },
     }
   );
+
+  function TrendingStory() {
+    return (
+      <div>
+        <h2 className="font-bold text-xl py-5">Trending Stories</h2>
+        <div className="w-full hidden md:flex">
+          {blogCategoryData?.isFetched ? (
+            <div className="grid grid-rows-5 grid-flow-col gap-4 w-full">
+              {trendingStory?.slice(0, 3)?.map((item: any, index: number) => (
+                <div
+                  key={item.id}
+                  onClick={() => navigate(`/blog/${item.id}`)}
+                  className={`${
+                    index === 0
+                      ? "row-span-4 col-span-2 h-full "
+                      : index === 1
+                      ? "row-span-2 "
+                      : "row-span-2 "
+                  } flex flex-col items-start space-y-1 overflow-hidden w-full`}
+                >
+                  <img
+                    src={item.blog_cover.original_url}
+                    alt=""
+                    className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
+                      item.index === 1 ? "h-auto " : "max-h-52 h-full "
+                    }`}
+                  />
+                  <p className="text-gray-400 text-sm font-light pt-3">
+                    {item.created_at}
+                  </p>
+                  <h3
+                    className={`font-bold text-gray-900 ${
+                      item.index === 1 ? "text-5xl " : " "
+                    } `}
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm font-normal line-clamp-2">
+                    {item.body}
+                  </p>
+                  <h4 className=" text-[15px] p-1 cursor-pointer">
+                    {item.category.name}
+                  </h4>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-rows-5 grid-flow-col gap-4 animate-pulse w-full">
+              <div className="row-span-4 col-span-2 bg-gray-200 p-20"></div>
+              <div className=" row-span-2 bg-gray-200 p-20"></div>
+              <div className="row-span-2  bg-gray-200 p-20"></div>
+            </div>
+          )}
+        </div>
+        {/* for small screen */}
+       <div className="flex md:hidden w-full">
+       {blogCategoryData?.isFetched ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:hidden">
+            <div className="md:col-span-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+              {blogCategoryData?.data?.data?.data?.todays_pick?.map(
+                (item: any) => (
+                  <div
+                    key={item.id}
+                    onClick={() => navigate(`/blog/${item.id}`)}
+                    className="cursor-pointer overflow-hidden flex flex-col items-start "
+                  >
+                    <img
+                      src={item.blog_cover.original_url}
+                      alt=""
+                      className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                      // className="w-full"
+                    />
+                    <p className="text-gray-400 text-sm font-light pt-3">
+                      {item.created_at}
+                    </p>
+                    <h3 className="font-bold text-gray-900">{item.title}</h3>
+                    <p className="text-gray-600 text-sm font-normal line-clamp-2">
+                      {item.body}
+                    </p>
+                    <h4 className=" text-[15px] p-1 cursor-pointer">
+                      {item.category.name}
+                    </h4>
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+        ) : (
+          <GridLoading />
+        )}
+       </div>
+      </div>
+    );
+  }
   return (
     <div className="max-w-7xl mx-auto p-3">
+      <TrendingStory />
+
       {blogCategoryData?.isFetched ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           <div className="md:col-span-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-            {blogCategoryData?.data?.data?.data?.map((item: any) => (
-              <div
-                key={item.id}
-                onClick={() => navigate(`/blog/${item.id}`)}
-                className="cursor-pointer overflow-hidden flex flex-col items-start "
-              >
-                <img
-                  src={item.blog_cover.original_url}
-                  alt=""
-                  className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
-                  // className="w-full"
-                />
-                <p className="text-gray-400 text-sm font-light pt-3">
-                  {item.created_at}
-                </p>
-                <h3 className="font-bold text-gray-900">{item.title}</h3>
-                <p className="text-gray-600 text-sm font-normal line-clamp-2">
-                  {item.body}
-                </p>
-                <h4 className=" text-[15px] p-1 cursor-pointer">
-                  {item.category.name}
-                </h4>
-              </div>
-            ))}
+            {blogCategoryData?.data?.data?.data?.by_category?.map(
+              (item: any) => (
+                <div
+                  key={item.id}
+                  onClick={() => navigate(`/blog/${item.id}`)}
+                  className="cursor-pointer overflow-hidden flex flex-col items-start "
+                >
+                  <img
+                    src={item.blog_cover.original_url}
+                    alt=""
+                    className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                    // className="w-full"
+                  />
+                  <p className="text-gray-400 text-sm font-light pt-3">
+                    {item.created_at}
+                  </p>
+                  <h3 className="font-bold text-gray-900">{item.title}</h3>
+                  <p className="text-gray-600 text-sm font-normal line-clamp-2">
+                    {item.body}
+                  </p>
+                  <h4 className=" text-[15px] p-1 cursor-pointer">
+                    {item.category.name}
+                  </h4>
+                </div>
+              )
+            )}
           </div>
         </div>
       ) : (
@@ -67,3 +174,11 @@ const Category: React.FC = () => {
 };
 
 export default Category;
+
+{
+  /* <div className="grid grid-rows-5 grid-flow-col gap-4">
+<div className="row-span-4 col-span-2 bg-red-500 p-3">01</div>
+<div className=" row-span-2 bg-red-500 p-3">02</div>
+<div className="row-span-2  bg-red-500 p-3">03</div>
+</div> */
+}

@@ -77,7 +77,7 @@ const Search: React.FC = () => {
         {searchPageData.isFetched ? (
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
             <div className="md:col-span-8 flex flex-col items-start space-y-4">
-              {searchPageData?.data?.data?.data?.business_investment?.map(
+              {searchPageData?.data?.data?.data?.map(
                 (item: any) => (
                   <div
                     onClick={() => navigate(`/blog/${item.id}`)}
