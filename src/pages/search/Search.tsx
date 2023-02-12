@@ -1,42 +1,71 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { AiOutlineArrowRight } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import SearchPageLoading from "../../utils/SearchPageLoading";
 const Search: React.FC = () => {
+  const [searchString, setSearchString] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [search, setSearch] = useState<number>(1);
   const navigate = useNavigate();
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
   };
   const searchPageData = useQuery(
-    ["getSearchPageDataApi"],
+    ["getSearchPageDataApi", search],
     async () =>
-      await axios.get(`${process.env.REACT_APP_BACKEND_URL}articles`, {
-        headers,
-      }),
+      await axios.get(
+        search
+          ? `${process.env.REACT_APP_BACKEND_URL}search-articles?${searchString}`
+          : `${process.env.REACT_APP_BACKEND_URL}articles`,
+        {
+          headers,
+        }
+      ),
     {
       keepPreviousData: true,
       refetchOnWindowFocus: false,
       retry: false,
       // enabled: !!token,
       onSuccess: (res) => {},
+      onError: (err) => {
+        setError("something went wrong.");
+      },
     }
   );
+  useEffect(() => {
+    if (searchPageData.isLoading) {
+      setError("");
+    }
+  }, [searchPageData.isLoading]);
+  const handleSearch = () => {
+    if (!searchString) return;
+    setSearch(prev=>prev + 1)
+  };
   return (
     <div className="max-w-7xl mx-auto w-full flex flex-col p-3">
       <div className="flex flex-col items-center justify-center py-10">
         <h3 className="font-bold text-xl md:text-3xl pb-10">Search articles</h3>
 
-        <div className="pl-3 max-w-5xl border border-gray-800 max-auto w-full flex flex-grow items-center h-12 ">
+        <div
+          className="pl-3 max-w-5xl border border-gray-600 max-auto rounded-sm
+         w-full flex flex-grow items-center h-12 "
+        >
           <BiSearch className=" text-xl h-full flex text-gray-500" />
           <input
+            value={searchString}
+            onChange={(e) => setSearchString(e.target.value)}
             type="text"
             placeholder="Search blogs, news, categories"
-            className="w-full p-2 h-full rounded-sm border-none focus:outline-none ring-0 text-sm"
+            className="w-full p-2 h-full rounded-sm border-none text-gray-500 font-medium
+             focus:outline-none ring-0 text-sm"
           />
-          <button className="text-white font-medium px-5 hover:bg-red-500/70  bg-red-500 h-full">
+          <button
+            onClick={handleSearch}
+            className="text-white font-medium px-5 hover:bg-red-500/70  bg-red-500 h-full"
+          >
             search
           </button>
         </div>
@@ -83,7 +112,10 @@ const Search: React.FC = () => {
             <div className="md:col-span-8"></div>
           </div>
         ) : (
-          <div>Loading</div>
+          <SearchPageLoading />
+        )}
+        {error && (
+          <h1 className="font-bold text-xl md:text-3xl pb-10">{error}</h1>
         )}
       </div>
     </div>

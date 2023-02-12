@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
           {/* 2nd grid */}
           <div className="flex flex-col items-start space-y-2">
             <h2 className="font-bold text-xl">More from Zare journal</h2>
-            <p className="font-normal text-[15px] text-gray-500 cursor-pointer">
+            <p className="font-normal text-[15px] text-gray-500 ">
               Zare Journal is a Pan-African Digital Media based in Addis Ababa,
               Ethiopia, that aggregates news primarily on the African Continent.
               Follow us on our socials to get updates and even more Zare

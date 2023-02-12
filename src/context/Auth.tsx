@@ -38,7 +38,7 @@ export default function AuthProvider({
     setToken(token);
     setUser(user);
     localStorage.setItem(
-      "dating_admin_data",
+      "zare_journal_user",
       JSON.stringify({
         token,
         user,
@@ -49,14 +49,14 @@ export default function AuthProvider({
   const logout = useCallback(() => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem("dating_admin_data");
+    localStorage.removeItem("zare_journal_user");
   }, []);
 
   let loginData;
 
   useEffect(() => {
-    // const storedData = JSON.parse(localStorage.getItem("dating_admin_data") || "") as any;
-    const storedData: any | null = localStorage.getItem("dating_admin_data");
+    // const storedData = JSON.parse(localStorage.getItem("zare_journal_user") || "") as any;
+    const storedData: any | null = localStorage.getItem("zare_journal_user");
     const adminData:any = JSON.parse(storedData)
    
     if (adminData) {

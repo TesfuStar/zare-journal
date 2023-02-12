@@ -1,11 +1,15 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { useHome } from "../../context/HomeContext";
 import SignIn from "./SignIn";
 
 const SignInModal = () => {
   const { isSignInModalOpen, setIsSignInModalOpen } = useHome();
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  useEffect(() => {
+    setIsLogin(true);
+  }, [isSignInModalOpen]);
+
   return (
     <>
       <Transition appear show={isSignInModalOpen} as={Fragment}>
@@ -47,7 +51,12 @@ const SignInModal = () => {
                   >
                     {isLogin ? "Sign In" : "Sign UP"}
                   </Dialog.Title>
-                  <SignIn isLogin={isLogin} setIsLogin={setIsLogin}/>
+                  <SignIn
+                    isLogin={isLogin}
+                    setIsLogin={setIsLogin}
+                    setIsSignInModalOpen={setIsSignInModalOpen}
+                    isSignInModalOpen={isSignInModalOpen}
+                  />
                 </Dialog.Panel>
               </Transition.Child>
             </div>
