@@ -1,10 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import React from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.svg";
+import { PulseLoader } from "react-spinners";
 const Footer: React.FC = () => {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -23,6 +25,43 @@ const Footer: React.FC = () => {
       onSuccess: (res) => {},
     }
   );
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    loginMutationSubmitHandler();
+  };
+  //SUBSCRIPTION POST REQUEST
+  const subscribeMutation = useMutation(
+    async (newData: any) =>
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}subscribe`,
+        newData,
+        {
+          headers,
+        }
+      ),
+    {
+      retry: false,
+    }
+  );
+
+  const loginMutationSubmitHandler = async () => {
+    try {
+      subscribeMutation.mutate(
+        {
+          email: emailRef.current?.value,
+        },
+        {
+          onSuccess: (responseData: any) => {},
+          onError: (err: any) => {
+            // setError("something went wrong");
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <div className="max-w-7xl mx-auto border-y border-gray-300 p-2">
@@ -34,7 +73,11 @@ const Footer: React.FC = () => {
                 categoriesData?.data?.data?.data
                   ?.slice(1, 5)
                   ?.map((category: any) => (
-                    <p className="font-medium text-gray-500 cursor-pointer">
+                    <p
+                      key={category.id}
+                      onClick={() => navigate(`/categories/${category.id}`)}
+                      className="font-medium text-gray-500 cursor-pointer"
+                    >
                       {" "}
                       {category.name}
                     </p>
@@ -53,25 +96,31 @@ const Footer: React.FC = () => {
           </div>
           {/* 3rd grid */}
           <div>
-            <p className=" font-bold text-xl ">
-              Subscribe to Our Newsletter
-            </p>
+            <p className=" font-bold text-xl ">Subscribe to Our Newsletter</p>
 
-            <div className="mt-2 flex flex-col space-y-2">
+            <form
+              onSubmit={handleSubscribe}
+              className="mt-2 flex flex-col space-y-2"
+            >
               <input
                 type="email"
-                name=""
-                id=""
+                ref={emailRef}
                 placeholder="Email"
                 className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+                required
               />
               <button
+                type="submit"
                 className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
                      hover:bg-main-bg/80  w-full"
               >
-                Subscribe
+                {subscribeMutation.isLoading ? (
+                  <PulseLoader color="#fff" />
+                ) : (
+                  "Subscribe"
+                )}
               </button>
-            </div>
+            </form>
           </div>
         </div>
         <div className="border-t border-gray-300 pt-1 flex items-center justify-center">

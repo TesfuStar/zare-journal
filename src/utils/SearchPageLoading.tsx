@@ -18,7 +18,7 @@ const SearchPageLoading = () => {
             </div>
           ))}
       </div>
-      <div className="md:col-span-4 w-full flex flex-col space-y-2">
+      <div className="md:col-span-4 w-full flex flex-col space-y-2 animate-pulse">
         {Array(8)
           .fill(0)
           .map((item) => (

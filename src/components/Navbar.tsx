@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
     <>
       <Header />
       <div className=" hidden md:flex bg-white">
-        {categoriesData.isFetched ? (
+        {categoriesData.isFetched && categoriesData.isSuccess ? (
           <div className="max-w-7xl mx-auto flex items-center overflow-x-hidden  p-2">
             <div className=" flex items-center space-x-8 overflow-x-hidden flex-grow">
               {categoriesData?.data?.data?.data?.map((category: any) => (

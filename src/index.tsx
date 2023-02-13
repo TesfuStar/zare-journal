@@ -7,6 +7,7 @@ import { HomeProvider } from "./context/HomeContext";
 import AuthProvider from "./context/Auth";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ScrollToTop from "./ScrollToTop";
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -19,6 +20,7 @@ root.render(
       >
         <HomeProvider>
           <BrowserRouter>
+          <ScrollToTop />
             <App />
           </BrowserRouter>
         </HomeProvider>

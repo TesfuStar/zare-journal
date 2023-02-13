@@ -41,12 +41,12 @@ const Header: React.FC = () => {
               </div>
             ) : (
               <div>
-                <p
-                  onClick={logout}
-                  className="text-dark-color font-medium text-[15px] cursor-pointer"
-                >
-                  Log Out
-                </p>
+                <img
+                  onClick={() => navigate("/profile/account")}
+                  src={user?.profile_photo_url}
+                  alt=""
+                  className="h-12 w-12 rounded-full cursor-pointer"
+                />
               </div>
             )}
           </div>

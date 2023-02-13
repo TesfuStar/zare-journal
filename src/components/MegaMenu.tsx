@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
-import { FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import PulseLoader from "react-spinners/PulseLoader";
 import Logo from "../assets/Logo.svg";

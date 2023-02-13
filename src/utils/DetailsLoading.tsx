@@ -11,11 +11,14 @@ const DetailsLoading = () => {
       </div>
       <div className="md:col-span-4 w-full flex flex-col space-y-2">
         <div className="mt-2 bg-gray-200   w-full h-20 rounded-md"></div>
-        <div className=" bg-gray-200   left-3 w-[80%] h-5 rounded-md"></div>
+        <div className=" bg-gray-200   left-3 w-[60%] h-3 rounded-md"></div>
+        <div className=" bg-gray-200   left-3 w-[50%] h-2 rounded-md"></div>
         <div className="mt-2 bg-gray-200   w-full h-20 rounded-md"></div>
-        <div className=" bg-gray-200   left-3 w-[80%] h-5 rounded-md"></div>
+        <div className=" bg-gray-200   left-3 w-[60%] h-3 rounded-md"></div>
+        <div className=" bg-gray-200   left-3 w-[50%] h-2 rounded-md"></div>
         <div className="mt-2 bg-gray-200   w-full h-20 rounded-md"></div>
-        <div className=" bg-gray-200   left-3 w-[80%] h-5 rounded-md"></div>
+        <div className=" bg-gray-200   left-3 w-[60%] h-3 rounded-md"></div>
+        <div className=" bg-gray-200   left-3 w-[50%] h-2 rounded-md"></div>
       </div>
     </div>
   );

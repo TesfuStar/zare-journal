@@ -78,6 +78,7 @@ const SignIn = ({
               <button
                 className="p-3 w-full hover:opacity-95 flex items-center space-x-2
     justify-center bg-blue-700 font-normal text-white text-[15px] rounded-[4px]"
+                onClick={renderProps.onClick}
               >
                 <FaFacebookF size={22} className="text-white" />{" "}
                 <span className=" text-[15px]">Continue with Facebook</span>
@@ -132,16 +133,14 @@ const SignIn = ({
             },
         {
           onSuccess: (responseData: any) => {
-       
             login(
               responseData?.data?.data?.token,
               responseData?.data?.data?.user
             );
-            setIsSignInModalOpen(false)
+            setIsSignInModalOpen(false);
           },
           onError: (err: any) => {
             setError("Incorrect Email or Password");
-        
           },
         }
       );
@@ -222,11 +221,13 @@ const SignIn = ({
             className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
                    hover:bg-main-bg/70 disabled:hover:bg-main-bg  w-full flex items-center justify-center"
           >
-            {loginMutation.isLoading
-              ? <PulseLoader color="#fff" />
-              : isLogin
-              ? " Sign up"
-              : " sign in"}
+            {loginMutation.isLoading ? (
+              <PulseLoader color="#fff" />
+            ) : isLogin ? (
+              " Sign up"
+            ) : (
+              " sign in"
+            )}
           </button>
         </form>
       </div>
