@@ -198,7 +198,6 @@ const SignIn = ({
             setIsSignInModalOpen(false);
           },
           onError: (err: any) => {
-            setError("Incorrect Email or Password");
           },
         }
       );
