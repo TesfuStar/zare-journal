@@ -4,6 +4,8 @@ import { useHome } from "../../context/HomeContext";
 import { PulseLoader } from "react-spinners";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
+import { ToastContainer, toast, Slide, ToastOptions } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const SubscribeModal = () => {
   const { isSubscriptionModalOpen, setIsSubscriptionModalOpen } = useHome();
   const emailRef = useRef<HTMLInputElement>(null);
@@ -40,6 +42,7 @@ const SubscribeModal = () => {
         {
           onSuccess: (responseData: any) => {
             setIsSubscriptionModalOpen(false);
+            toast.info("successfully subscribed", options);
           },
           onError: (err: any) => {
             // setError("something went wrong");
@@ -49,6 +52,17 @@ const SubscribeModal = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const options: ToastOptions = {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
   };
   return (
     <>
@@ -129,6 +143,18 @@ const SubscribeModal = () => {
           </div>
         </Dialog>
       </Transition>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        transition={Slide}
+      />
     </>
   );
 };

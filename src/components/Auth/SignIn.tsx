@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useHome } from "../../context/HomeContext";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -14,6 +14,13 @@ interface Props {
   setIsLogin: (isLogin: boolean) => void;
   setIsSignInModalOpen: (isSignInModalOpen: boolean) => void;
 }
+interface GoogleData {
+  name: string;
+  email: string;
+  sub: number;
+
+  // define the properties of the GoogleData object here
+}
 const SignIn = ({
   isLogin,
   setIsLogin,
@@ -21,6 +28,7 @@ const SignIn = ({
   isSignInModalOpen,
 }: Props) => {
   const [error, setError] = useState<string>("");
+  const [googleData, setGoogleData] = useState<GoogleData | null>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -30,6 +38,11 @@ const SignIn = ({
     "Content-Type": "application/json",
     Accept: "application/json",
   };
+  useEffect(() => {
+    if (googleData) {
+      googleMutationSubmitHandler();
+    }
+  }, [googleData]);
   //google login
   const googleLogin = useGoogleLogin({
     onSuccess: async (response: any) => {
@@ -43,7 +56,7 @@ const SignIn = ({
           }
         );
 
-        console.log(res?.data);
+        setGoogleData(res?.data);
       } catch (err) {
         console.log(err);
       }
@@ -149,6 +162,50 @@ const SignIn = ({
     }
   };
   //Return
+
+  //google login
+  const googleMutation = useMutation(
+    async (newData: any) =>
+      await axios.post(
+        isLogin
+          ? `${process.env.REACT_APP_BACKEND_URL}social-register`
+          : `${process.env.REACT_APP_BACKEND_URL}social-register`,
+        newData,
+        {
+          headers,
+        }
+      ),
+    {
+      retry: false,
+    }
+  );
+
+  const googleMutationSubmitHandler = async () => {
+    try {
+      googleMutation.mutate(
+        {
+          name: googleData?.name,
+          email: googleData?.email,
+          password: googleData?.sub,
+        },
+        {
+          onSuccess: (responseData: any) => {
+            console.log(responseData?.data);
+            login(
+              responseData?.data?.data?.token,
+              responseData?.data?.data?.user
+            );
+            setIsSignInModalOpen(false);
+          },
+          onError: (err: any) => {
+            setError("Incorrect Email or Password");
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       {error && (

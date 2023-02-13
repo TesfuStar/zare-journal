@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import GridLoading from "../../utils/GridLoading";
-
+import parse from "html-react-parser";
 const Category: React.FC = () => {
   const { id } = useParams();
   const [trendingStory, setTrendingStory] = useState<string[]>([]);
@@ -75,7 +75,7 @@ const Category: React.FC = () => {
                     {item.title}
                   </h3>
                   <p className="text-gray-600 text-sm font-normal line-clamp-2">
-                    {item.body}
+                    {parse(item.body)}
                   </p>
                   <h4 className=" text-[15px] p-1 cursor-pointer">
                     {item.category.name}

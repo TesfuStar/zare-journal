@@ -1,26 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { BiSearch } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import SearchPageLoading from "../../utils/SearchPageLoading";
+import parse from "html-react-parser";
 const Search: React.FC = () => {
+  const homeRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchString, setSearchString] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [search, setSearch] = useState<number>(1);
+  const [sort, setSort] = useState("latest");
   const navigate = useNavigate();
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
   };
   const searchPageData = useQuery(
-    ["getSearchPageDataApi", search, currentPage],
+    ["getSearchPageDataApi", search, currentPage, sort],
     async () =>
       await axios.get(
-         searchString
-          ? `${process.env.REACT_APP_BACKEND_URL}search-articles?${searchString}`
-          : `${process.env.REACT_APP_BACKEND_URL}search-articles?page=${currentPage}`,
+        searchString
+          ? currentPage == 1
+            ? `${process.env.REACT_APP_BACKEND_URL}search-articles?${searchString}&sortBy=${sort}`
+            : `${process.env.REACT_APP_BACKEND_URL}search-articles?page=${currentPage}&sortBy=${sort}`
+          : `${process.env.REACT_APP_BACKEND_URL}search-articles?page=${currentPage}&sortBy=${sort}`,
         {
           headers,
         }
@@ -30,7 +35,12 @@ const Search: React.FC = () => {
       refetchOnWindowFocus: false,
       retry: false,
       // enabled: !!token,
-      onSuccess: (res) => {},
+      onSuccess: (res) => {
+        homeRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      },
       onError: (err) => {
         setError("something went wrong.");
       },
@@ -70,10 +80,21 @@ const Search: React.FC = () => {
             search
           </button>
         </div>
+        <div className="max-w-5xl mx-auto pt-5 w-full flex items-end justify-end self-end">
+          <select
+            name=""
+            onChange={(e) => setSort(e.target.value)}
+            className="p p-2 font-medium text-gray-500  rounded-sm ring-0 w-fit flex items-end justify-end self-end
+               bg-transparent border-gray-400 border focus:outline-none focus:border-gray-400"
+          >
+            <option value="latest">Latest</option>
+            <option value="popular">Popular</option>
+          </select>
+        </div>
       </div>
-
       {/* results */}
       <div className="flex flex-col items-center justify-center py-10">
+        <div ref={homeRef}></div>
         <h3 className="font-bold text-xl md:text-3xl pb-10">Results</h3>
         {searchPageData.isFetched ? (
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
@@ -95,7 +116,7 @@ const Search: React.FC = () => {
                       {item.title}
                     </h3>
                     <p className="text-gray-600 text-sm font-normal line-clamp-2">
-                      {item.body}
+                      {parse(item.body)}
                     </p>
                     <p className="text-gray-400 text-sm font-light">
                       {item.created_at}
@@ -107,20 +128,24 @@ const Search: React.FC = () => {
                 </div>
               ))}
               <div className="flex items-center justify-center w-full space-x-3">
-                {searchPageData?.data?.data?.data?.prev_page_url && <button
-                 onClick={()=>setCurrentPage(prev=>prev -1)}
-                  className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
+                {searchPageData?.data?.data?.data?.prev_page_url && (
+                  <button
+                    onClick={() => setCurrentPage((prev) => prev - 1)}
+                    className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
                    hover:bg-main-bg/70 disabled:hover:bg-main-bg  w-fit flex items-center justify-center"
-                >
-                  prev
-                </button>}
-                {searchPageData?.data?.data?.data?.next_page_url && <button
-                onClick={()=>setCurrentPage(prev=>prev + 1)}
-                  className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
+                  >
+                    prev
+                  </button>
+                )}
+                {searchPageData?.data?.data?.data?.next_page_url && (
+                  <button
+                    onClick={() => setCurrentPage((prev) => prev + 1)}
+                    className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
                    hover:bg-main-bg/70 disabled:hover:bg-main-bg  w-fit flex items-center justify-center"
-                >
-                  Next
-                </button>}
+                  >
+                    Next
+                  </button>
+                )}
               </div>
             </div>
             {/* most popular */}

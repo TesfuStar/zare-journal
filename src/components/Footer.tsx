@@ -4,6 +4,8 @@ import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.svg";
 import { PulseLoader } from "react-spinners";
+import { ToastContainer, toast, Slide, ToastOptions } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Footer: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ const Footer: React.FC = () => {
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
+
     loginMutationSubmitHandler();
   };
   //SUBSCRIPTION POST REQUEST
@@ -52,7 +55,12 @@ const Footer: React.FC = () => {
           email: emailRef.current?.value,
         },
         {
-          onSuccess: (responseData: any) => {},
+          onSuccess: (responseData: any) => {
+            toast.info("successfully subscribed", options);
+            if (emailRef.current) {
+              emailRef.current.value = "";
+            }
+          },
           onError: (err: any) => {
             // setError("something went wrong");
           },
@@ -61,6 +69,16 @@ const Footer: React.FC = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+  const options: ToastOptions = {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
   };
   return (
     <>
@@ -129,6 +147,18 @@ const Footer: React.FC = () => {
           </p>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        transition={Slide}
+      />
     </>
   );
 };

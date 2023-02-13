@@ -34,10 +34,10 @@ const Navbar: React.FC = () => {
   return (
     <>
       <Header />
-      <div className=" hidden md:flex bg-white">
+      <div className=" hidden md:flex bg-white w-full">
         {categoriesData.isFetched && categoriesData.isSuccess ? (
-          <div className="max-w-7xl mx-auto flex items-center overflow-x-hidden  p-2">
-            <div className=" flex items-center space-x-8 overflow-x-hidden flex-grow">
+          <div className="w-full max-w-7xl mx-auto flex items-start justify-start overflow-x-hidden  p-2">
+            <div className="w-full  flex items-start space-x-8 overflow-x-hidden flex-grow">
               {categoriesData?.data?.data?.data?.map((category: any) => (
                 <Link
                   key={category.id}
@@ -50,12 +50,12 @@ const Navbar: React.FC = () => {
               ))}
             </div>
             {/* <div className="absolute top-0 right-0 bg-gradient-to-l from-black h-10 w-1/2"/> */}
-            <div
+            {/* <div
               onClick={() => setIsMegaMenuOpen(!isMegaMenuOpen)}
               className="bg-main-bg p-2 rounded-sm cursor-pointer"
             > 
               <BsThreeDotsVertical className="text-white" />
-            </div>
+            </div> */}
           </div>
         ) : (
           <div></div>

@@ -9,6 +9,7 @@ import { ToastContainer, toast, Slide, ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PulseLoader } from "react-spinners";
 import DetailsLoading from "../../utils/DetailsLoading";
+import parse from 'html-react-parser';
 const BlogDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -80,7 +81,7 @@ const BlogDetail: React.FC = () => {
           onSuccess: (responseData: any) => {
             setCommentValue("");
             setSuccess((prev) => prev + 1);
-            toast.info("Agent deleted successfully", options);
+            toast.info("success", options);
           },
           onError: (err: any) => {
             // setError("Incorrect Email or Password");
@@ -138,7 +139,7 @@ const BlogDetail: React.FC = () => {
                 {blogDetailsData?.data?.data?.data?.blog?.sub_heading}
               </h2>
               <p className="text-gray-500  font-normal">
-                {blogDetailsData?.data?.data?.data?.blog?.body}
+                {parse(blogDetailsData?.data?.data?.data?.blog?.body)}
               </p>
               {/* comment */}
               <div className="flex w-full flex-col pt-3">
@@ -156,7 +157,7 @@ const BlogDetail: React.FC = () => {
                     ? blogDetailsData?.data?.data?.data?.blog?.comments
                         ?.slice(0, 2)
                         ?.map((comment: any) => (
-                          <div className="border p-3  rounded-sm border-dark-color/70 w-full">
+                          <div className="border p-3  rounded-sm border-dark-color/70 w-full h-fit">
                             <div className="flex items-center space-x-2">
                               <img
                                 src={comment.author.profile_photo_url}
@@ -190,7 +191,7 @@ const BlogDetail: React.FC = () => {
                         ))
                     : blogDetailsData?.data?.data?.data?.blog?.comments?.map(
                         (comment: any) => (
-                          <div className="border p-3  rounded-sm border-dark-color/70 w-full">
+                          <div className="border p-3  rounded-sm border-dark-color/70 w-full h-fit">
                             <div className="flex items-center space-x-2">
                               <img
                                 src={comment.author.profile_photo_url}
