@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import GridLoading from "../../utils/GridLoading";
 import HomeGridLoading from "../../utils/HomeGridLoading";
 import parse from "html-react-parser";
+import ReactPlayer from "react-player";
 const HomePage: React.FC = () => {
   const [todaysPick, setTodaysPick] = useState<string[]>([]);
   const [error, setError] = useState<string>("");
@@ -40,6 +41,7 @@ const HomePage: React.FC = () => {
     }
   );
 
+  console.log(homePageData?.data?.data?.data);
   const Error = () => {
     return (
       <div className="flex items-center justify-center py-10">
@@ -66,12 +68,23 @@ const HomePage: React.FC = () => {
                 onClick={() => navigate(`/blog/${item.id}`)}
                 className="flex flex-col items-start cursor-pointer overflow-hidden"
               >
-                <img
-                  src={item.blog_cover.original_url}
-                  alt=""
-                  className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
-                  // className="w-full"
-                />
+                {item.blog_cover.mime_type.includes("video") ? (
+                  <div className="">
+                    <ReactPlayer
+                      url={item.blog_cover.original_url}
+                      controls={true}
+                      width={"100%"}
+                      height={"100%"}
+                    />
+                  </div>
+                ) : (
+                  <img
+                    src={item.blog_cover.original_url}
+                    alt=""
+                    className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                    // className="w-full"
+                  />
+                )}
                 <p className="text-gray-400 text-sm font-light pt-3">
                   {item.created_at}
                 </p>
@@ -112,12 +125,23 @@ const HomePage: React.FC = () => {
                   key={item.id}
                   className="cursor-pointer overflow-hidden flex flex-col items-start"
                 >
-                  <img
-                    src={item.blog_cover.original_url}
-                    alt=""
-                    className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
-                    // className="w-full"
-                  />
+                  {item.blog_cover.mime_type.includes("video") ? (
+                    <div className="">
+                      <ReactPlayer
+                        url={item.blog_cover.original_url}
+                        controls={true}
+                        width={"100%"}
+                        height={"100%"}
+                      />
+                    </div>
+                  ) : (
+                    <img
+                      src={item.blog_cover.original_url}
+                      alt=""
+                      className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                      // className="w-full"
+                    />
+                  )}
                   <p className="text-gray-400 text-sm font-light pt-3">
                     {item.created_at}
                   </p>
@@ -160,12 +184,24 @@ const HomePage: React.FC = () => {
                   onClick={() => navigate(`/blog/${item.id}`)}
                   className="cursor-pointer overflow-hidden flex flex-col items-start"
                 >
-                  <img
-                    src={item.blog_cover.original_url}
-                    alt=""
-                    className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
-                    // className="w-full"
-                  />
+                  {item.blog_cover.mime_type.includes("video") ? (
+                    <div className="">
+                      <ReactPlayer
+                        url={item.blog_cover.original_url}
+                        controls={true}
+                        width={"100%"}
+                        height={"100%"}
+                      />
+                    </div>
+                  ) : (
+                    <img
+                      src={item.blog_cover.original_url}
+                      alt=""
+                      className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                      // className="w-full"
+                    />
+                  )}
+
                   <p className="text-gray-400 text-sm font-light pt-3">
                     {item.created_at}
                   </p>
@@ -212,14 +248,25 @@ const HomePage: React.FC = () => {
                     : index === 4 && " row-span-3 col-span-2"
                 } flex flex-col items-start space-y-1 overflow-hidden`}
               >
-                <img
-                  src={item.blog_cover.original_url}
-                  alt=""
-                  className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                    item.index === 3 ? "h-auto " : "max-h-56 h-full "
-                  }`}
-                  // className="w-full"
-                />
+                {item.blog_cover.mime_type.includes("video") ? (
+                  <div className="">
+                    <ReactPlayer
+                      url={item.blog_cover.original_url}
+                      controls={true}
+                      width={"100%"}
+                      height={"100%"}
+                    />
+                  </div>
+                ) : (
+                  <img
+                    src={item.blog_cover.original_url}
+                    alt=""
+                    className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
+                      item.index === 3 ? "h-auto " : "max-h-56 h-full "
+                    }`}
+                    // className="w-full"
+                  />
+                )}
                 <p className="text-gray-400 text-sm font-light">
                   {item.created_at}
                 </p>
@@ -283,3 +330,16 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
+
+{
+  /* <Player
+                    autoPlay
+                    poster="/assets/poster.png"
+                    src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
+                    
+                  >
+                    <ControlBar autoHide={false} disableDefaultControls={true}>
+                      <PlayToggle />
+                    </ControlBar>
+                  </Player> */
+}

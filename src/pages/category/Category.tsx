@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import GridLoading from "../../utils/GridLoading";
 import parse from "html-react-parser";
+import ReactPlayer from "react-player";
 const Category: React.FC = () => {
   const { id } = useParams();
   const [trendingStory, setTrendingStory] = useState<string[]>([]);
@@ -57,13 +58,24 @@ const Category: React.FC = () => {
                       : "row-span-2 "
                   } flex flex-col items-start space-y-1 overflow-hidden w-full`}
                 >
-                  <img
-                    src={item.blog_cover.original_url}
-                    alt=""
-                    className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                      item.index === 1 ? "h-auto " : "max-h-52 h-full "
-                    }`}
-                  />
+                  {item.blog_cover.mime_type.includes("video") ? (
+                    <div className="w-full ">
+                      <ReactPlayer
+                        url={item.blog_cover.original_url}
+                        controls={true}
+                        width={"100%"}
+                        height={item.index === 1 ? "auto " : "208px"}
+                      />
+                    </div>
+                  ) : (
+                    <img
+                      src={item.blog_cover.original_url}
+                      alt=""
+                      className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
+                        item.index === 1 ? "h-auto " : "max-h-52 h-full "
+                      }`}
+                    />
+                  )}
                   <p className="text-gray-400 text-sm font-light pt-3">
                     {item.created_at}
                   </p>
@@ -92,42 +104,53 @@ const Category: React.FC = () => {
           )}
         </div>
         {/* for small screen */}
-       <div className="flex md:hidden w-full">
-       {blogCategoryData?.isFetched ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:hidden">
-            <div className="md:col-span-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-              {blogCategoryData?.data?.data?.data?.todays_pick?.map(
-                (item: any) => (
-                  <div
-                    key={item.id}
-                    onClick={() => navigate(`/blog/${item.id}`)}
-                    className="cursor-pointer overflow-hidden flex flex-col items-start "
-                  >
-                    <img
-                      src={item.blog_cover.original_url}
-                      alt=""
-                      className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
-                      // className="w-full"
-                    />
-                    <p className="text-gray-400 text-sm font-light pt-3">
-                      {item.created_at}
-                    </p>
-                    <h3 className="font-bold text-gray-900">{item.title}</h3>
-                    <p className="text-gray-600 text-sm font-normal line-clamp-2">
-                      {item.body}
-                    </p>
-                    <h4 className=" text-[15px] p-1 cursor-pointer">
-                      {item.category.name}
-                    </h4>
-                  </div>
-                )
-              )}
+        <div className="flex md:hidden w-full">
+          {blogCategoryData?.isFetched ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:hidden">
+              <div className="md:col-span-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                {blogCategoryData?.data?.data?.data?.todays_pick?.map(
+                  (item: any) => (
+                    <div
+                      key={item.id}
+                      onClick={() => navigate(`/blog/${item.id}`)}
+                      className="cursor-pointer overflow-hidden flex flex-col items-start "
+                    >
+                      {item.blog_cover.mime_type.includes("video") ? (
+                        <div className="w-full ">
+                          <ReactPlayer
+                            url={item.blog_cover.original_url}
+                            controls={true}
+                            width={"100%"}
+                            height={"224px"}
+                          />
+                        </div>
+                      ) : (
+                        <img
+                          src={item.blog_cover.original_url}
+                          alt=""
+                          className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                          // className="w-full"
+                        />
+                      )}
+                      <p className="text-gray-400 text-sm font-light pt-3">
+                        {item.created_at}
+                      </p>
+                      <h3 className="font-bold text-gray-900">{item.title}</h3>
+                      <p className="text-gray-600 text-sm font-normal line-clamp-2">
+                        {parse(item.body)}
+                      </p>
+                      <h4 className=" text-[15px] p-1 cursor-pointer">
+                        {item.category.name}
+                      </h4>
+                    </div>
+                  )
+                )}
+              </div>
             </div>
-          </div>
-        ) : (
-          <GridLoading />
-        )}
-       </div>
+          ) : (
+            <GridLoading />
+          )}
+        </div>
       </div>
     );
   }
@@ -145,18 +168,29 @@ const Category: React.FC = () => {
                   onClick={() => navigate(`/blog/${item.id}`)}
                   className="cursor-pointer overflow-hidden flex flex-col items-start "
                 >
-                  <img
-                    src={item.blog_cover.original_url}
-                    alt=""
-                    className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
-                    // className="w-full"
-                  />
+                  {item.blog_cover.mime_type.includes("video") ? (
+                    <div className="w-full ">
+                      <ReactPlayer
+                        url={item.blog_cover.original_url}
+                        controls={true}
+                        width={"100%"}
+                        height={"224px"}
+                      />
+                    </div>
+                  ) : (
+                    <img
+                      src={item.blog_cover.original_url}
+                      alt=""
+                      className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                      // className="w-full"
+                    />
+                  )}
                   <p className="text-gray-400 text-sm font-light pt-3">
                     {item.created_at}
                   </p>
                   <h3 className="font-bold text-gray-900">{item.title}</h3>
                   <p className="text-gray-600 text-sm font-normal line-clamp-2">
-                    {item.body}
+                    {parse(item.body)}
                   </p>
                   <h4 className=" text-[15px] p-1 cursor-pointer">
                     {item.category.name}

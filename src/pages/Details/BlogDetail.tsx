@@ -9,7 +9,8 @@ import { ToastContainer, toast, Slide, ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PulseLoader } from "react-spinners";
 import DetailsLoading from "../../utils/DetailsLoading";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
+import ReactPlayer from "react-player";
 const BlogDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -122,14 +123,30 @@ const BlogDetail: React.FC = () => {
             </div>
             {/*  */}
             <div className=" flex items-center justify-center">
-              <img
-                src={
-                  blogDetailsData?.data?.data?.data?.blog?.blog_cover
-                    ?.original_url
-                }
-                alt=""
-                className="max-h-80 w-full object-contain"
-              />
+              {blogDetailsData?.data?.data?.data?.blog.blog_cover.mime_type.includes(
+                "video"
+              ) ? (
+                <div className="w-full">
+                  <ReactPlayer
+                    url={
+                      blogDetailsData?.data?.data?.data?.blog?.blog_cover
+                        ?.original_url
+                    }
+                    controls={true}
+                    width={"100%"}
+                    height={"100%"}
+                  />
+                </div>
+              ) : (
+                <img
+                  src={
+                    blogDetailsData?.data?.data?.data?.blog?.blog_cover
+                      ?.original_url
+                  }
+                  alt=""
+                  className="max-h-80 w-full object-contain"
+                />
+              )}
             </div>
           </div>
           {/* detail part */}
@@ -184,7 +201,9 @@ const BlogDetail: React.FC = () => {
                                 }}
                                 className="text-main-color/70 cursor-pointer font-medium text-[15px]"
                               >
-                                {seeMore && selectedComment === comment.id ? "...ShowLess" : "...ShowMore"}
+                                {seeMore && selectedComment === comment.id
+                                  ? "...ShowLess"
+                                  : "...ShowMore"}
                               </span>
                             </p>
                           </div>
@@ -218,7 +237,9 @@ const BlogDetail: React.FC = () => {
                                 }}
                                 className="text-main-color/70 cursor-pointer font-medium text-[15px]"
                               >
-                                {seeMore && selectedComment === comment.id ? "...ShowLess" : "...ShowMore"}
+                                {seeMore && selectedComment === comment.id
+                                  ? "...ShowLess"
+                                  : "...ShowMore"}
                               </span>
                             </p>
                           </div>
@@ -258,33 +279,33 @@ const BlogDetail: React.FC = () => {
             <div className="md:col-span-4">
               <h1>Most Popular</h1>
               <div className="flex flex-col items-start space-y-2">
-              {blogDetailsData?.data?.data?.data?.related?.map((item: any) => (
-                <div
-                  onClick={() => navigate(`/blog/${item.id}`)}
-                  key={item.id}
-                  className="flex items-start space-x-2 cursor-pointer overflow-hidden"
-                >
-                  <img
-                    src={item.blog_cover.original_url}
-                    alt=""
-                    className="h-24   cursor-pointer hover:scale-[1.03] w-24
+                {blogDetailsData?.data?.data?.data?.related?.map(
+                  (item: any) => (
+                    <div
+                      onClick={() => navigate(`/blog/${item.id}`)}
+                      key={item.id}
+                      className="flex items-start space-x-2 cursor-pointer overflow-hidden"
+                    >
+                      <img
+                        src={item.blog_cover.original_url}
+                        alt=""
+                        className="h-24   cursor-pointer hover:scale-[1.03] w-24
                       object-cover transition-all duration-500 ease-out"
-                  />
-                  <div>
-                  <p className=" text-[15px] p-1 cursor-pointer">
-                      {item.category.name}
-                    </p>
-                    <h3 className="font-bold text-gray-900 line-clamp-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-400 text-sm font-light">
-                      {item.created_at}
-                    </p>
-
-                 
-                  </div>
-                </div>
-              ))}
+                      />
+                      <div>
+                        <p className=" text-[15px] p-1 cursor-pointer">
+                          {item.category.name}
+                        </p>
+                        <h3 className="font-bold text-gray-900 line-clamp-2">
+                          {item.title}
+                        </h3>
+                        <p className="text-gray-400 text-sm font-light">
+                          {item.created_at}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                )}
               </div>
             </div>
           </div>
