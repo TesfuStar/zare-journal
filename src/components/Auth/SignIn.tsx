@@ -82,7 +82,7 @@ const SignIn = ({
           </button>
 
           <FacebookLogin
-            appId="450246093961092"
+            appId="2211226365745867"
             autoLoad={false}
             fields="name,email,picture"
             // onClick={responseFacebook
