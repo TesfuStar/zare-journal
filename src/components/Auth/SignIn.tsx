@@ -85,7 +85,7 @@ const SignIn = ({
             appId="450246093961092"
             autoLoad={false}
             fields="name,email,picture"
-            // onClick={responseFacebook}
+            // onClick={responseFacebook
             callback={responseFacebook}
             render={(renderProps: any) => (
               <button
