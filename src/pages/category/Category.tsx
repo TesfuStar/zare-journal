@@ -52,19 +52,21 @@ const Category: React.FC = () => {
                   onClick={() => navigate(`/blog/${item.id}`)}
                   className={`${
                     index === 0
-                      ? "row-span-4 col-span-2 h-full "
+                      ? "row-span-4 col-span-2 h-full w-full"
                       : index === 1
                       ? "row-span-2 "
                       : "row-span-2 "
                   } flex flex-col items-start space-y-1 overflow-hidden w-full`}
                 >
                   {item.blog_cover.mime_type.includes("video") ? (
-                    <div className="w-full ">
+                    <div  className={` object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
+                      item.index === 1 ? "h-auto " : "max-h-52 h-full "
+                    } `}>
                       <ReactPlayer
                         url={item.blog_cover.original_url}
                         controls={true}
                         width={"100%"}
-                        height={item.index === 1 ? "auto " : "208px"}
+                        height={"100%"}
                       />
                     </div>
                   ) : (

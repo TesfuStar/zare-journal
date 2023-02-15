@@ -1,7 +1,7 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.svg";
 import { PulseLoader } from "react-spinners";
 import { ToastContainer, toast, Slide, ToastOptions } from "react-toastify";
@@ -85,7 +85,9 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto border-y border-gray-300 p-2">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pb-2">
           <div className="flex flex-col items-start space-y-2">
+            <Link to={'/'}>
             <img src={Logo} alt="" />
+            </Link>
             <div className="flex flex-col items-start space-y-2 pt-3 text-[15px]">
               {categoriesData.isFetched &&
                 categoriesData?.data?.data?.data

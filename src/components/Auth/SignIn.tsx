@@ -197,8 +197,7 @@ const SignIn = ({
             );
             setIsSignInModalOpen(false);
           },
-          onError: (err: any) => {
-          },
+          onError: (err: any) => {},
         }
       );
     } catch (err) {
@@ -227,82 +226,90 @@ const SignIn = ({
           </span>
         </div>
       )}
-      <div className="mt-2 flex flex-col items-center space-y-2">
-        <form
-          action=""
-          onSubmit={handleSubmit}
-          className="w-full flex flex-col items-center space-y-2"
-        >
-          {!isLogin && (
-            <input
-              ref={nameRef}
-              type="text"
-              name=""
-              id=""
-              placeholder="Name"
-              className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
-              required
-            />
-          )}
-          <input
-            ref={emailRef}
-            type="email"
-            name=""
-            id=""
-            placeholder="Email"
-            className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
-            required
-          />
-          <input
-            ref={passwordRef}
-            type="password"
-            name=""
-            id=""
-            placeholder="Password"
-            className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
-            required
-          />
-          {!isLogin && (
-            <input
-              ref={confirmPasswordRef}
-              type="password"
-              placeholder="Confirm Password"
-              className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
-              required
-            />
-          )}
-          <button
-            disabled={loginMutation.isLoading}
-            type="submit"
-            className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
+      {googleMutation.isLoading ? (
+        <div className="py-10">
+          <PulseLoader color="#EF5138" />
+        </div>
+      ) : (
+        <div className="flex flex-col w-full ">
+          <div className="mt-2 flex flex-col items-center space-y-2">
+            <form
+              action=""
+              onSubmit={handleSubmit}
+              className="w-full flex flex-col items-center space-y-2"
+            >
+              {!isLogin && (
+                <input
+                  ref={nameRef}
+                  type="text"
+                  name=""
+                  id=""
+                  placeholder="Name"
+                  className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+                  required
+                />
+              )}
+              <input
+                ref={emailRef}
+                type="email"
+                name=""
+                id=""
+                placeholder="Email"
+                className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+                required
+              />
+              <input
+                ref={passwordRef}
+                type="password"
+                name=""
+                id=""
+                placeholder="Password"
+                className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+                required
+              />
+              {!isLogin && (
+                <input
+                  ref={confirmPasswordRef}
+                  type="password"
+                  placeholder="Confirm Password"
+                  className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+                  required
+                />
+              )}
+              <button
+                disabled={loginMutation.isLoading}
+                type="submit"
+                className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
                    hover:bg-main-bg/70 disabled:hover:bg-main-bg  w-full flex items-center justify-center"
-          >
-            {loginMutation.isLoading ? (
-              <PulseLoader color="#fff" />
-            ) : isLogin ? (
-              " Sign up"
-            ) : (
-              " sign in"
-            )}
-          </button>
-        </form>
-      </div>
-      <p className="text-gray-400 font-normal py-2">
-        {isLogin ? "Don't have account ?" : "Already have account ?"}
-        <span
-          onClick={() => setIsLogin(!isLogin)}
-          className="text-main-color font-medium cursor-pointer"
-        >
-          {isLogin ? " Sign up" : " sign in"}
-        </span>
-      </p>
+              >
+                {loginMutation.isLoading ? (
+                  <PulseLoader color="#fff" />
+                ) : isLogin ? (
+                  " Sign up"
+                ) : (
+                  " sign in"
+                )}
+              </button>
+            </form>
+          </div>
+          <p className="text-gray-400 font-normal py-2">
+            {isLogin ? "Don't have account ?" : "Already have account ?"}
+            <span
+              onClick={() => setIsLogin(!isLogin)}
+              className="text-main-color font-medium cursor-pointer"
+            >
+              {isLogin ? " Sign up" : " sign in"}
+            </span>
+          </p>
 
-      <div className="flex items-center justify-center space-x-2 py-4">
-        <div className="w-20 h-[1px] bg-gray-300" />
-        <p className="font-medium text-dark-color">or</p>
-        <div className="w-20 h-[1px] bg-gray-300" />
-      </div>
-      <SocialLogin />
+          <div className="flex items-center justify-center space-x-2 py-4">
+            <div className="w-20 h-[1px] bg-gray-300" />
+            <p className="font-medium text-dark-color">or</p>
+            <div className="w-20 h-[1px] bg-gray-300" />
+          </div>
+          <SocialLogin />
+        </div>
+      )}
     </>
   );
 };

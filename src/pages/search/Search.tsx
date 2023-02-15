@@ -136,16 +136,18 @@ const Search: React.FC = () => {
                     ref={lastBookElementRef}
                     onClick={() => navigate(`/blog/${blog.id}`)}
                     key={blog.id}
-                    className="flex item-start space-x-2 cursor-pointer overflow-hidden"
+                    className="flex item-start space-x-2 cursor-pointer overflow-hidden w-full"
                   >
                     {blog.blog_cover.mime_type.includes("video") ? (
-                      <div className="">
+                      <div  className="h-full  md:h-44 cursor-pointer hover:scale-[1.03] w-36 md:w-56 
+                      object-cover transition-all duration-500 ease-out">
                         <ReactPlayer
-                          url={blog.blog_cover.original_url}
-                          controls={true}
-                          width={"100%"}
-                          height={"144px"}
-                        />
+                        url={blog.blog_cover.original_url}
+                        controls={true}
+                        width={"100%"}
+                        height={"100%"}
+                     
+                      />
                       </div>
                     ) : (
                       <img
@@ -177,21 +179,18 @@ const Search: React.FC = () => {
                   <div
                     onClick={() => navigate(`/blog/${blog.id}`)}
                     key={blog.id}
-                    className="flex item-start space-x-2 cursor-pointer overflow-hidden"
+                    className="flex item-start space-x-2 cursor-pointer overflow-hidden  w-full"
                   >
                     {blog.blog_cover.mime_type.includes("video") ? (
-                      <div className="bg-red-500 flex items-start justify-start self-start">
+                      <div  className="h-full  md:h-44 cursor-pointer hover:scale-[1.03] w-36 md:w-56 
+                      object-cover transition-all duration-500 ease-out">
                         <ReactPlayer
-                          url={blog.blog_cover.original_url}
-                          controls={true}
-                          width={"244px"}
-                          height={"144px"}
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
-                            justifyContent: "flex-start",
-                          }}
-                        />
+                        url={blog.blog_cover.original_url}
+                        controls={true}
+                        width={"100%"}
+                        height={"100%"}
+                     
+                      />
                       </div>
                     ) : (
                       <img

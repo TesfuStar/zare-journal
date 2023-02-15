@@ -109,7 +109,7 @@ const HomePage: React.FC = () => {
   function BusinessInvestment() {
     return (
       <>
-        <div className="border-b border-gray-300 flex items-center justify-between pb-2 mb-4">
+        <div className="border-b border-gray-300 flex items-center justify-between pb-2 my-4">
           <h2 className="font-bold text-xl">Business & investment</h2>
           <div className="bg-main-bg p-2 rounded-sm cursor-pointer">
             <AiOutlineArrowRight className="text-white" />
@@ -169,7 +169,7 @@ const HomePage: React.FC = () => {
     return (
       <>
         <div className="border-b border-gray-300 flex items-center justify-between pb-2 mb-4">
-          <h2 className="font-bold text-xl">Videos</h2>
+          <h2 className="font-bold text-xl pt-4">Videos</h2>
           <div className="bg-main-bg p-2 rounded-sm cursor-pointer">
             <AiOutlineArrowRight className="text-white" />
           </div>
@@ -249,7 +249,9 @@ const HomePage: React.FC = () => {
                 } flex flex-col items-start space-y-1 overflow-hidden`}
               >
                 {item.blog_cover.mime_type.includes("video") ? (
-                  <div className="">
+                  <div    className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
+                    item.index === 3 ? "h-auto " : "max-h-56 h-full "
+                  }`}>
                     <ReactPlayer
                       url={item.blog_cover.original_url}
                       controls={true}
@@ -272,7 +274,7 @@ const HomePage: React.FC = () => {
                 </p>
                 <h3
                   className={`font-bold text-gray-900 ${
-                    item.index === 3 ? "text-5xl " : " "
+                    item.index === 3 ? "text-6xl " : " "
                   } `}
                 >
                   {item.title}

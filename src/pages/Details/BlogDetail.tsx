@@ -277,7 +277,7 @@ const BlogDetail: React.FC = () => {
             </div>
             {/* related */}
             <div className="md:col-span-4">
-              <h1>Most Popular</h1>
+              <h1  className="text-xl  font-bold pb-3">Most Popular</h1>
               <div className="flex flex-col items-start space-y-2">
                 {blogDetailsData?.data?.data?.data?.related?.map(
                   (item: any) => (

@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 declare var URL: any;
 const Account = () => {
   const nameRef = useRef<HTMLInputElement>(null);
-  const { user, token, logout } = useAuth();
+  const { user, token, logout,login } = useAuth();
   const [name, setName] = useState<string>("");
   const [image, setImage] = useState(null);
   const [selectedImage, setSelectedImage] = useState();
@@ -19,8 +19,8 @@ const Account = () => {
   const [isUpdatingPassword, setSIsUpdatingPassword] = useState<boolean>(false);
 
   const headers = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
+    "Content-Type": "multipart/form-data",
+    Accept: "multipart/form-data",
     Authorization: `Bearer ${token}`,
   };
 
@@ -78,6 +78,7 @@ const Account = () => {
       image && formData.append("profile_photo", image[0]);
       updateProfileMutation.mutate(formData, {
         onSuccess: (responseData: any) => {
+          login(token,responseData?.data?.data)
           toast.info("success", options);
           setSIsUpdatingPassword(false);
           setSIsEditName(false);
