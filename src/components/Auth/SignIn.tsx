@@ -65,7 +65,7 @@ const SignIn = ({
   //facebook
   const responseFacebook = (response: any) => {
     console.log(response);
-    setGoogleData(res?.data);
+    setGoogleData(response);
   };
 
   function SocialLogin() {
