@@ -18,7 +18,7 @@ interface GoogleData {
   name: string;
   email: string;
   sub: number;
-
+  userID:string
   // define the properties of the GoogleData object here
 }
 const SignIn = ({
@@ -65,6 +65,7 @@ const SignIn = ({
   //facebook
   const responseFacebook = (response: any) => {
     console.log(response);
+    setGoogleData(res?.data);
   };
 
   function SocialLogin() {
