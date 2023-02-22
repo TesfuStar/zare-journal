@@ -1,7 +1,6 @@
 import React from "react";
 
 const SearchPageLoading = () => {
-  //0953855698
   return (
     <div className=" w-full h-full">
       <div className=" w-full flex flex-col space-y-2  animate-pulse ">

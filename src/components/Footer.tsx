@@ -6,7 +6,10 @@ import Logo from "../assets/Logo.svg";
 import { PulseLoader } from "react-spinners";
 import { ToastContainer, toast, Slide, ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DarkLogo from "../assets/Dark-Logo.svg";
+import { useThemeContext } from "../context/ThemeContext";
 const Footer: React.FC = () => {
+  const { currentMode, setMode } = useThemeContext();
   const emailRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const headers = {
@@ -82,11 +85,15 @@ const Footer: React.FC = () => {
   };
   return (
     <>
-      <div className="max-w-7xl mx-auto border-y border-gray-300 p-2">
+      <div className="max-w-7xl mx-auto border-y border-gray-300  dark:border-gray-500 py-3 pb-3">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pb-2">
           <div className="flex flex-col items-start space-y-2">
-            <Link to={'/'}>
-            <img src={Logo} alt="" />
+            <Link to={"/"}>
+              {currentMode === "Light" ? (
+                <img src={Logo} alt="" className="h-10" />
+              ) : (
+                <img src={DarkLogo} alt="" className="h-10" />
+              )}
             </Link>
             <div className="flex flex-col items-start space-y-2 pt-3 text-[15px]">
               {categoriesData.isFetched &&
@@ -96,7 +103,7 @@ const Footer: React.FC = () => {
                     <p
                       key={category.id}
                       onClick={() => navigate(`/categories/${category.id}`)}
-                      className="font-medium text-gray-500 cursor-pointer"
+                      className="font-medium text-gray-500 cursor-pointer dark:text-gray-300"
                     >
                       {" "}
                       {category.name}
@@ -106,8 +113,10 @@ const Footer: React.FC = () => {
           </div>
           {/* 2nd grid */}
           <div className="flex flex-col items-start space-y-2">
-            <h2 className="font-bold text-xl">More from Zare journal</h2>
-            <p className="font-normal text-[15px] text-gray-500 ">
+            <h2 className="font-bold text-xl dark:text-white">
+              More from Zare journal
+            </h2>
+            <p className="font-normal text-[15px] text-gray-500 dark:text-gray-300">
               Zare Journal is a Pan-African Digital Media based in Addis Ababa,
               Ethiopia, that aggregates news primarily on the African Continent.
               Follow us on our socials to get updates and even more Zare
@@ -116,7 +125,9 @@ const Footer: React.FC = () => {
           </div>
           {/* 3rd grid */}
           <div>
-            <p className=" font-bold text-xl ">Subscribe to Our Newsletter</p>
+            <p className=" font-bold text-xl dark:text-white">
+              Subscribe to Our Newsletter
+            </p>
 
             <form
               onSubmit={handleSubscribe}
@@ -126,7 +137,7 @@ const Footer: React.FC = () => {
                 type="email"
                 ref={emailRef}
                 placeholder="Email"
-                className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+                className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0 bg-transparent dark:border-gray-500 dark:text-white"
                 required
               />
               <button
@@ -143,8 +154,8 @@ const Footer: React.FC = () => {
             </form>
           </div>
         </div>
-        <div className="border-t border-gray-300 pt-1 flex items-center justify-center">
-          <p className="text-sm font-medium text-gray-500 text-center">
+        <div className="border-t border-gray-300 pt-3 dark:border-gray-500 flex items-center justify-center ">
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-300 text-center">
             {new Date().getFullYear()} Zare Journal. All Right Reserved
           </p>
         </div>

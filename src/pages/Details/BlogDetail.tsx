@@ -11,6 +11,9 @@ import { PulseLoader } from "react-spinners";
 import DetailsLoading from "../../utils/DetailsLoading";
 import parse from "html-react-parser";
 import ReactPlayer from "react-player";
+import Header from "../../components/Header";
+import { Footer } from "../../components";
+import { Helmet } from "react-helmet";
 const BlogDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -102,229 +105,258 @@ const BlogDetail: React.FC = () => {
     theme: "colored",
   };
   return (
-    <div className="max-w-7xl mx-auto p-3 py-4">
-      {blogDetailsData.isFetched && blogDetailsData.isSuccess ? (
-        <div className="flex flex-col items-start space-y-2">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="flex flex-col items-start space-y-2">
-              <p className="text-main-color text-[15px]">
-                {blogDetailsData?.data?.data?.data?.blog?.published_at +
-                  " " +
-                  blogDetailsData?.data?.data?.data?.blog?.reading_time +
-                  " "}
-                to read
-              </p>
-              <h2 className="text-xl md:text-4xl font-bold">
-                {blogDetailsData?.data?.data?.data?.blog?.title}
-              </h2>
-              <p className="text-gray-500 text-sm font-normal">
-                {blogDetailsData?.data?.data?.data?.blog?.sub_heading}
-              </p>
-            </div>
-            {/*  */}
-            <div className=" flex items-center justify-center">
+    <div className="bg-white dark:bg-dark-bg">
+      <Header />
+      <div className="max-w-7xl mx-auto p-3 py-4">
+        {blogDetailsData.isFetched && blogDetailsData.isSuccess ? (
+          <div className="flex flex-col items-start space-y-2">
+            <Helmet>
+              <meta charSet="utf-8" />
+              <title>{blogDetailsData?.data?.data?.data?.blog?.title}</title>
+              <meta
+                name="description"
+                content={blogDetailsData?.data?.data?.data?.blog?.sub_heading}
+              />
+
               {blogDetailsData?.data?.data?.data?.blog.blog_cover.mime_type.includes(
                 "video"
               ) ? (
-                <div className="w-full">
-                  <ReactPlayer
-                    url={
-                      blogDetailsData?.data?.data?.data?.blog?.blog_cover
-                        ?.original_url
-                    }
-                    controls={true}
-                    width={"100%"}
-                    height={"100%"}
-                  />
-                </div>
-              ) : (
-                <img
-                  src={
+                <meta
+                  property="og:video"
+                  content={
                     blogDetailsData?.data?.data?.data?.blog?.blog_cover
                       ?.original_url
                   }
-                  alt=""
-                  className="max-h-80 w-full object-contain"
+                />
+              ) : (
+                <meta
+                  property="og:image"
+                  content={
+                    blogDetailsData?.data?.data?.data?.blog?.blog_cover
+                      ?.original_url
+                  }
                 />
               )}
-            </div>
-          </div>
-          {/* detail part */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-3 pt-10">
-            <div className="md:col-span-8 flex flex-col items-start space-y-4">
-              <h2 className="text-xl md:text-2xl font-bold">
-                {blogDetailsData?.data?.data?.data?.blog?.sub_heading}
-              </h2>
-              <p className="text-gray-500  font-normal">
-                {parse(blogDetailsData?.data?.data?.data?.blog?.body)}
-              </p>
-              {/* comment */}
-              <div className="flex w-full flex-col pt-3">
-                <div className=" flex items-center justify-between">
-                  <h2 className="text-lg  font-semibold ">Comment</h2>
-                  <p
-                    onClick={() => setSeeAllComments(!seeAllComments)}
-                    className="font-medium text-main-color cursor-pointer"
-                  >
-                    {!seeAllComments ? "See All" : "See less"}
-                  </p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
-                  {!seeAllComments
-                    ? blogDetailsData?.data?.data?.data?.blog?.comments
-                        ?.slice(0, 2)
-                        ?.map((comment: any) => (
-                          <div className="border p-3  rounded-sm border-dark-color/70 w-full h-fit">
-                            <div className="flex items-center space-x-2">
-                              <img
-                                src={comment.author.profile_photo_url}
-                                alt=""
-                                className="rounded-full"
-                              />
-                              <div className="flex flex-col items-start space-y-1">
-                                <h3 className="capitalize font-semibold">
-                                  {comment.author.name}
-                                </h3>
-                                <p className="text-main-color text-normal">
-                                  {comment.created_at}
-                                </p>
-                              </div>
-                            </div>
-                            <p className={`text-gray-500 `}>
-                              {seeMore && selectedComment === comment.id
-                                ? comment.body
-                                : comment.body.slice(1, 150)}
-                              <span
-                                onClick={() => {
-                                  setSelectedComment(comment.id);
-                                  setSeeMore(!seeMore);
-                                }}
-                                className="text-main-color/70 cursor-pointer font-medium text-[15px]"
-                              >
-                                {seeMore && selectedComment === comment.id
-                                  ? "...ShowLess"
-                                  : "...ShowMore"}
-                              </span>
-                            </p>
-                          </div>
-                        ))
-                    : blogDetailsData?.data?.data?.data?.blog?.comments?.map(
-                        (comment: any) => (
-                          <div className="border p-3  rounded-sm border-dark-color/70 w-full h-fit">
-                            <div className="flex items-center space-x-2">
-                              <img
-                                src={comment.author.profile_photo_url}
-                                alt=""
-                                className="rounded-full"
-                              />
-                              <div className="flex flex-col items-start space-y-1">
-                                <h3 className="capitalize font-semibold">
-                                  {comment.author.name}
-                                </h3>
-                                <p className="text-main-color text-normal">
-                                  {comment.created_at}
-                                </p>
-                              </div>
-                            </div>
-                            <p className={`text-gray-500 `}>
-                              {seeMore && selectedComment === comment.id
-                                ? comment.body
-                                : comment.body.slice(1, 150)}
-                              <span
-                                onClick={() => {
-                                  setSelectedComment(comment.id);
-                                  setSeeMore(!seeMore);
-                                }}
-                                className="text-main-color/70 cursor-pointer font-medium text-[15px]"
-                              >
-                                {seeMore && selectedComment === comment.id
-                                  ? "...ShowLess"
-                                  : "...ShowMore"}
-                              </span>
-                            </p>
-                          </div>
-                        )
-                      )}
-                </div>
-              </div>
-              {/* write comment */}
-              <form
-                onSubmit={handleComment}
-                className="flex flex-col items-start space-y-2 w-full"
-              >
-                <h2 className="text-xl  font-bold ">Write Your Comment</h2>
-                <textarea
-                  disabled={commentMutation.isLoading}
-                  required
-                  value={commentValue}
-                  onChange={(e) => setCommentValue(e.target.value)}
-                  rows={4}
-                  className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
-                ></textarea>
-                <button
-                  disabled={commentMutation.isLoading}
-                  type="submit"
-                  className="px-5 rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
-                   hover:bg-main-bg/70  w-fit flex items-center justify-center"
-                >
-                  {commentMutation.isLoading ? (
-                    <PulseLoader color="#fff" />
-                  ) : (
-                    "comment"
-                  )}
-                </button>
-              </form>
-            </div>
-            {/* related */}
-            <div className="md:col-span-4">
-              <h1  className="text-xl  font-bold pb-3">Most Popular</h1>
+            </Helmet>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="flex flex-col items-start space-y-2">
-                {blogDetailsData?.data?.data?.data?.related?.map(
-                  (item: any) => (
-                    <div
-                      onClick={() => navigate(`/blog/${item.id}`)}
-                      key={item.id}
-                      className="flex items-start space-x-2 cursor-pointer overflow-hidden"
-                    >
-                      <img
-                        src={item.blog_cover.original_url}
-                        alt=""
-                        className="h-24   cursor-pointer hover:scale-[1.03] w-24
-                      object-cover transition-all duration-500 ease-out"
-                      />
-                      <div>
-                        <p className=" text-[15px] p-1 cursor-pointer">
-                          {item.category.name}
-                        </p>
-                        <h3 className="font-bold text-gray-900 line-clamp-2">
-                          {item.title}
-                        </h3>
-                        <p className="text-gray-400 text-sm font-light">
-                          {item.created_at}
-                        </p>
-                      </div>
-                    </div>
-                  )
+                <p className="text-main-color text-[15px]">
+                  {blogDetailsData?.data?.data?.data?.blog?.published_at +
+                    " " +
+                    blogDetailsData?.data?.data?.data?.blog?.reading_time +
+                    " "}
+                  to read
+                </p>
+                <h2 className="text-xl md:text-4xl font-bold dark:text-white">
+                  {blogDetailsData?.data?.data?.data?.blog?.title}
+                </h2>
+                <p className="text-gray-500 text-sm font-normal dark:text-gray-300">
+                  {blogDetailsData?.data?.data?.data?.blog?.sub_heading}
+                </p>
+              </div>
+              {/*  */}
+              <div className=" flex items-center justify-center">
+                {blogDetailsData?.data?.data?.data?.blog.blog_cover.mime_type.includes(
+                  "video"
+                ) ? (
+                  <div className="w-full">
+                    <ReactPlayer
+                      url={
+                        blogDetailsData?.data?.data?.data?.blog?.blog_cover
+                          ?.original_url
+                      }
+                      controls={true}
+                      width={"100%"}
+                      height={"100%"}
+                    />
+                  </div>
+                ) : (
+                  <img
+                    src={
+                      blogDetailsData?.data?.data?.data?.blog?.blog_cover
+                        ?.original_url
+                    }
+                    alt=""
+                    className="max-h-80 w-full object-contain"
+                  />
                 )}
               </div>
             </div>
+            {/* detail part */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-3 pt-10">
+              <div className="md:col-span-8 flex flex-col items-start space-y-4">
+                <p className="text-gray-500  font-normal dark:text-gray-300">
+                  {parse(blogDetailsData?.data?.data?.data?.blog?.body)}
+                </p>
+                {/* comment */}
+                <div className="flex w-full flex-col pt-3">
+                  <div className=" flex items-center justify-between">
+                    <h2 className="text-lg  font-semibold dark:text-gray-300">Comment</h2>
+                    <p
+                      onClick={() => setSeeAllComments(!seeAllComments)}
+                      className="font-medium text-main-color cursor-pointer"
+                    >
+                      {!seeAllComments ? "See All" : "See less"}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
+                    {!seeAllComments
+                      ? blogDetailsData?.data?.data?.data?.blog?.comments
+                          ?.slice(0, 2)
+                          ?.map((comment: any) => (
+                            <div className={`border p-3  rounded-sm border-dark-color/70 dark:border-gray-500 w-full ${seeMore ? "h-fit" : "h-full"}`}>
+                              <div className="flex items-center space-x-2">
+                                <img
+                                  src={comment.author.profile_photo_url}
+                                  alt=""
+                                  className="rounded-full"
+                                />
+                                <div className="flex flex-col items-start space-y-1">
+                                  <h3 className="capitalize font-semibold dark:text-white">
+                                    {comment.author.name}
+                                  </h3>
+                                  <p className="text-main-color text-normal dark:text-gray-300 text[13px]">
+                                    {comment.created_at}
+                                  </p>
+                                </div>
+                              </div>
+                              <p className={`text-gray-500 dark:text-gray-300`}>
+                                {seeMore && selectedComment === comment.id
+                                  ? comment.body
+                                  : comment.body.slice(1, 150)}
+                                {comment.body?.length > 150 && <span
+                                  onClick={() => {
+                                    setSelectedComment(comment.id);
+                                    setSeeMore(!seeMore);
+                                  }}
+                                  className="text-main-color/70 cursor-pointer font-medium text-[15px]"
+                                >
+                                  {seeMore && selectedComment === comment.id
+                                    ? "...ShowLess"
+                                    : "...ShowMore"}
+                                </span>}
+                              </p>
+                            </div>
+                          ))
+                      : blogDetailsData?.data?.data?.data?.blog?.comments?.map(
+                          (comment: any) => (
+                            <div className={`border p-3  rounded-sm border-dark-color/70 w-full  ${seeMore ? "h-fit" : "h-full"}`}>
+                              <div className="flex items-center space-x-2">
+                                <img
+                                  src={comment.author.profile_photo_url}
+                                  alt=""
+                                  className="rounded-full"
+                                />
+                                <div className="flex flex-col items-start space-y-1">
+                                  <h3 className="capitalize font-semibold">
+                                    {comment.author.name}
+                                  </h3>
+                                  <p className="text-main-color text-normal">
+                                    {comment.created_at}
+                                  </p>
+                                </div>
+                              </div>
+                              <p className={`text-gray-500 `}>
+                                {seeMore && selectedComment === comment.id
+                                  ? comment.body
+                                  : comment.body.slice(1, 150)}
+                                <span
+                                  onClick={() => {
+                                    setSelectedComment(comment.id);
+                                    setSeeMore(!seeMore);
+                                  }}
+                                  className="text-main-color/70 cursor-pointer font-medium text-[15px]"
+                                >
+                                  {seeMore && selectedComment === comment.id
+                                    ? "...ShowLess"
+                                    : "...ShowMore"}
+                                </span>
+                              </p>
+                            </div>
+                          )
+                        )}
+                  </div>
+                </div>
+                {/* write comment */}
+                <form
+                  onSubmit={handleComment}
+                  className="flex flex-col items-start space-y-2 w-full"
+                >
+                  <h2 className="text-xl  font-bold dark:text-white">Write Your Comment</h2>
+                  <textarea
+                    disabled={commentMutation.isLoading}
+                    required
+                    value={commentValue}
+                    onChange={(e) => setCommentValue(e.target.value)}
+                    rows={4}
+                    className="w-full p-2 rounded-sm border border-gray-300 dark:border-gray-500 focus:outline-none ring-0 bg-transparent dark:text-gray-300"
+                  ></textarea>
+                  <button
+                    disabled={commentMutation.isLoading}
+                    type="submit"
+                    className="px-5 rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
+                   hover:bg-main-bg/70  w-fit flex items-center justify-center"
+                  >
+                    {commentMutation.isLoading ? (
+                      <PulseLoader color="#fff" />
+                    ) : (
+                      "comment"
+                    )}
+                  </button>
+                </form>
+              </div>
+              {/* related */}
+              <div className="md:col-span-4">
+                <h1 className="text-xl  font-bold pb-3 dark:text-white">Most Popular</h1>
+                <div className="flex flex-col items-start space-y-2 ">
+                  {blogDetailsData?.data?.data?.data?.related?.map(
+                    (item: any) => (
+                      <div
+                        onClick={() => navigate(`/blog/${item.id}`)}
+                        key={item.id}
+                        className="w-full flex items-start pb-2 space-x-2 cursor-pointer overflow-hidden border-b border-gray-300 dark:border-gray-600"
+                      >
+                        <img
+                          src={item.blog_cover.original_url}
+                          alt=""
+                          className="h-24   cursor-pointer hover:scale-[1.03] w-24
+                      object-cover transition-all duration-500 ease-out"
+                        />
+                        <div>
+                          <p className=" text-[15px] p-1 cursor-pointer dark:text-gray-200">
+                            {item.category.name}
+                          </p>
+                          <h3 className="font-bold text-gray-900 line-clamp-2 dark:text-white">
+                            {item.title}
+                          </h3>
+                          <p className="text-gray-400 text-sm font-light dark:text-gray-300">
+                            {item.created_at}
+                          </p>
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      ) : (
-        <DetailsLoading />
-      )}
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover={false}
-        transition={Slide}
-      />
+        ) : (
+          <DetailsLoading />
+        )}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+          transition={Slide}
+        />
+      </div>
+      <Footer />
     </div>
   );
 };

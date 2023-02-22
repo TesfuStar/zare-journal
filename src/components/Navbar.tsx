@@ -68,7 +68,9 @@ const Navbar: React.FC = () => {
           }}
           className="  bg-main-bg p-2 rounded-sm cursor-pointer w-fit  "
         >
-          <FaBars className="text-white" />
+          <FaBars   onClick={() => {
+            setIsDrawerOpen(true);
+          }} className="text-white" />
         </div>
       </div>
       <Drawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
