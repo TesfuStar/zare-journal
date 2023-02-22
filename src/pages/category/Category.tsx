@@ -6,6 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import GridLoading from "../../utils/GridLoading";
 import parse from "html-react-parser";
 import ReactPlayer from "react-player";
+import Header from "../../components/Header";
+import { Footer } from "../../components";
 const Category: React.FC = () => {
   const { id } = useParams();
   const [trendingStory, setTrendingStory] = useState<string[]>([]);
@@ -59,9 +61,11 @@ const Category: React.FC = () => {
                   } flex flex-col items-start space-y-1 overflow-hidden w-full`}
                 >
                   {item.blog_cover.mime_type.includes("video") ? (
-                    <div  className={` object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                      item.index === 1 ? "h-auto " : "max-h-52 h-full "
-                    } `}>
+                    <div
+                      className={` object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
+                        item.index === 1 ? "h-auto " : "max-h-52 h-full "
+                      } `}
+                    >
                       <ReactPlayer
                         url={item.blog_cover.original_url}
                         controls={true}
@@ -157,54 +161,57 @@ const Category: React.FC = () => {
     );
   }
   return (
-    <div className="max-w-7xl mx-auto p-3">
-      <TrendingStory />
-
-      {blogCategoryData?.isFetched ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          <div className="md:col-span-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-            {blogCategoryData?.data?.data?.data?.by_category?.map(
-              (item: any) => (
-                <div
-                  key={item.id}
-                  onClick={() => navigate(`/blog/${item.id}`)}
-                  className="cursor-pointer overflow-hidden flex flex-col items-start "
-                >
-                  {item.blog_cover.mime_type.includes("video") ? (
-                    <div className="w-full ">
-                      <ReactPlayer
-                        url={item.blog_cover.original_url}
-                        controls={true}
-                        width={"100%"}
-                        height={"224px"}
+    <div className="bg-white dark:bg-dark-bg">
+      <Header />
+      <div className="max-w-7xl mx-auto p-3">
+        <TrendingStory />
+        {blogCategoryData?.isFetched ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="md:col-span-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+              {blogCategoryData?.data?.data?.data?.by_category?.map(
+                (item: any) => (
+                  <div
+                    key={item.id}
+                    onClick={() => navigate(`/blog/${item.id}`)}
+                    className="cursor-pointer overflow-hidden flex flex-col items-start "
+                  >
+                    {item.blog_cover.mime_type.includes("video") ? (
+                      <div className="w-full ">
+                        <ReactPlayer
+                          url={item.blog_cover.original_url}
+                          controls={true}
+                          width={"100%"}
+                          height={"224px"}
+                        />
+                      </div>
+                    ) : (
+                      <img
+                        src={item.blog_cover.original_url}
+                        alt=""
+                        className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                        // className="w-full"
                       />
-                    </div>
-                  ) : (
-                    <img
-                      src={item.blog_cover.original_url}
-                      alt=""
-                      className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
-                      // className="w-full"
-                    />
-                  )}
-                  <p className="text-gray-400 text-sm font-light pt-3">
-                    {item.created_at}
-                  </p>
-                  <h3 className="font-bold text-gray-900">{item.title}</h3>
-                  <p className="text-gray-600 text-sm font-normal line-clamp-2">
-                    {parse(item.body)}
-                  </p>
-                  <h4 className=" text-[15px] p-1 cursor-pointer">
-                    {item.category.name}
-                  </h4>
-                </div>
-              )
-            )}
+                    )}
+                    <p className="text-gray-400 text-sm font-light pt-3">
+                      {item.created_at}
+                    </p>
+                    <h3 className="font-bold text-gray-900">{item.title}</h3>
+                    <p className="text-gray-600 text-sm font-normal line-clamp-2">
+                      {parse(item.body)}
+                    </p>
+                    <h4 className=" text-[15px] p-1 cursor-pointer">
+                      {item.category.name}
+                    </h4>
+                  </div>
+                )
+              )}
+            </div>
           </div>
-        </div>
-      ) : (
-        <GridLoading />
-      )}
+        ) : (
+          <GridLoading />
+        )}
+      </div>
+      <Footer />
     </div>
   );
 };

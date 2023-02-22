@@ -406,7 +406,9 @@ const HomePage: React.FC = () => {
                     <h2 className="font-bold text-xl pt-4 capitalize dark:text-white">
                       {home.name}
                     </h2>
-                    <div className="bg-main-bg p-2 rounded-sm cursor-pointer">
+                    <div 
+                    onClick={()=>navigate(`/categories/${home.id}`)}
+                    className="bg-main-bg p-2 rounded-sm cursor-pointer">
                       <AiOutlineArrowRight className="text-white" />
                     </div>
                   </div>
@@ -450,7 +452,9 @@ const HomePage: React.FC = () => {
                         <p className="text-gray-600 text-sm font-normal line-clamp-2 dark:text-gray-300">
                           {parse(article.body)}
                         </p>
-                        <h4 className="font-medium flex items-end justify-end text-[15px] p-1 cursor-pointer dark:text-gray-300 pt-3">
+                        <h4 
+                         onClick={()=>navigate(`/categories/${article.category.id}`)}
+                        className="font-medium flex items-end justify-end text-[15px] p-1 cursor-pointer dark:text-gray-300 pt-3">
                           {article.category.name}
                         </h4>
                       </div>
