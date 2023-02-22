@@ -307,7 +307,7 @@ const HomePage: React.FC = () => {
                     </p>
                     <h3
                       className={`font-semibold text-gray-900 dark:text-white ${
-                        item.index === 3 ? "text-6xl " : " "
+                        item.index === 3 ? "md:text-3xl lg:text-6xl " : " "
                       } `}
                     >
                       {item.title}
@@ -335,12 +335,39 @@ const HomePage: React.FC = () => {
                     onClick={() => navigate(`/blog/${item.id}`)}
                     className="cursor-pointer overflow-hidden flex flex-col items-start"
                   >
-                    <img
+                        {item.blog_cover.mime_type.includes("video") ? (
+                      <div
+                        className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
+                          item.index === 2 ? "h-auto " : "max-h-56 h-full "
+                        }`}
+                      >
+                        <ReactPlayer
+                          url={item.blog_cover.original_url}
+                          light={
+                            <img
+                              src={item.thumbnail.original_url}
+                              alt="My video thumbnail"
+                              className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
+                                item.index === 3
+                                  ? "h-auto "
+                                  : "max-h-56 h-full "
+                              }`}
+                            />
+                          }
+                          controls={true}
+                          width={"100%"}
+                          height={"100%"}
+                        />
+                      </div>
+                    ) : (
+                      <img
                       src={item.blog_cover.original_url}
                       alt=""
                       className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
                       // className="w-full"
                     />
+                    )}
+                  
                     <p className="text-gray-400 dark:text-gray-300 text-sm font-light pt-3">
                       {item.created_at}
                     </p>
