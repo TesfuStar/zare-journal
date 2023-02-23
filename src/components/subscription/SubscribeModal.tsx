@@ -50,9 +50,9 @@ const SubscribeModal = () => {
 
   function Subscription() {
     return (
-      <div className="w-full grid grid-cols-1 md:grid-cols-2  py-5 md:py-0">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2  md:py-0">
         <img src={Frame} alt="" className="h-full hidden md:flex" />
-        <div className="flex flex-col items-center justify-center space-y-2 p-2 w-full">
+        <div className="flex flex-col items-center justify-center space-y-2 p-2 w-full  py-5">
           <p
             className={`pt-3 font-semibold text-lg  ${
               currentMode === "Dark" ? "text-gray-300" : "text-gray-700"
@@ -86,9 +86,9 @@ const SubscribeModal = () => {
   }
 
   const panelLight =
-    " w-full max-w-2xlc transform overflow-hidden rounded-2xl bg-white p-3 text-left align-middle shadow-xl transition-all";
+    " w-full max-w-2xlc transform overflow-hidden rounded-2xl bg-white  text-left align-middle shadow-xl transition-all";
   const panelDark =
-    "w-full max-w-2xl transform overflow-hidden rounded-2xl bg-dark-bg p-3 text-left align-middle shadow-xl transition-all";
+    "w-full max-w-2xl transform overflow-hidden rounded-2xl bg-dark-bg  text-left align-middle shadow-xl transition-all";
 
   return (
     <>

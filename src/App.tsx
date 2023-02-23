@@ -10,6 +10,7 @@ import React, { useEffect, Suspense } from "react";
 //   Account,
 //   SignIn,
 //   HomeSection,
+// VideoDetail
 // } from "./pages";
 import SideMenu from "./pages/profile/components/SideMenu";
 import { useThemeContext } from "./context/ThemeContext";
@@ -20,7 +21,6 @@ const HomeSection = React.lazy<React.FC>(() =>
     default: module.default,
   }))
 );
-
 
 const HomePage = React.lazy<React.FC>(() =>
   import("./pages/home/HomePage").then((module) => ({
@@ -39,6 +39,11 @@ const Category = React.lazy<React.FC>(() =>
 );
 const BlogDetail = React.lazy<React.FC>(() =>
   import("./pages/Details/BlogDetail").then((module) => ({
+    default: module.default,
+  }))
+);
+const VideoDetail = React.lazy<React.FC>(() =>
+  import("./pages/Details/VideoDetail").then((module) => ({
     default: module.default,
   }))
 );
@@ -69,6 +74,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/home/:id" element={<HomeSection />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/video/:id" element={<BlogDetail />} />
         <Route path="/search" element={<Search />} />
         <Route path="/categories/:id" element={<Category />} />
         <Route path="profile" element={<SideMenu />}>
@@ -85,6 +91,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/home/:id" element={<HomeSection />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/video/:id" element={<BlogDetail />} />
         <Route path="/search" element={<Search />} />
         <Route path="/categories/:id" element={<Category />} />
         <Route path="/signin" element={<SignIn />} />
@@ -116,7 +123,9 @@ const App = () => {
           </Suspense>
         </div>
       ) : (
-        <PulseLoader color="#EF5138" />
+        <div className="flex items-center justify-center">
+          <PulseLoader color="#EF5138" />
+        </div>
       )}
     </>
   );
