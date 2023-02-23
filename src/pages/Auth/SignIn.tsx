@@ -99,7 +99,7 @@ const SignIn = () => {
         justify-center border border-gray-600  font-normal text-dark-color text-[15px] rounded-[4px]"
         >
           <FcGoogle size={20} className="text-white" />{" "}
-          <span className=" text-[15px]">Google</span>
+          <span className=" text-[15px] dark:text-white">Google</span>
         </button>
         <FacebookLogin
           appId="2211226365745867"
@@ -113,7 +113,7 @@ const SignIn = () => {
         justify-center border border-gray-600  font-normal text-dark-color text-[15px] rounded-[4px]"
             >
               <BsFacebook size={20} className="text-sky-600" />{" "}
-              <span className=" text-[15px]">Facebook</span>
+              <span className=" text-[15px] dark:text-white">Facebook</span>
             </button>
           )}
         />
@@ -121,16 +121,16 @@ const SignIn = () => {
     );
   }
   return (
-    <div className="relative">
+    <div className="relative bg-white dark:bg-dark-bg">
       <img
         src={Frame}
         alt=""
         className="absolute inset-0 w-full h-full object-cover flex md:hidden"
       />
       <div className="max-w-2xl mx-auto w-full min-h-screen flex items-center justify-center p-3">
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-1">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-1 bg-white dark:bg-gray-800">
           <img src={Frame} alt="" className="h-full hidden md:flex" />
-          <div className="w-full relative flex flex-col item-start justify-center space-y-2 pr-3 py-5  bg-white md:bg-transparent p-4">
+          <div className="w-full relative flex flex-col item-start justify-center space-y-2 pr-3 py-5   md:bg-transparent p-4">
             <p
               onClick={() => {
                 isCoverPage
@@ -146,8 +146,8 @@ const SignIn = () => {
             {/*  */}
             {isCoverPage ? (
               <div className="flex flex-col items-start space-y-1 w-full">
-                <p className="text-normal">Welcome to zare-journal </p>
-                <h3 className="font-semibold text-lg">
+                <p className="text-normal dark:text-white">Welcome to zare-journal </p>
+                <h3 className="font-semibold text-lg dark:text-white">
                   Please Create an account.
                 </h3>
                 <button

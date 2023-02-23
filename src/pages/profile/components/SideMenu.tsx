@@ -3,6 +3,8 @@ import { Fragment } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { profileDashboard } from "../../../utils/Data";
 import { NavLink, Outlet } from "react-router-dom";
+import Header from "../../../components/Header";
+import { Footer } from "../../../components";
 const SideMenu = () => {
   const activeLink = `flex items-center font-medium  gap-3  py-2 px-2
     rounded-md  text-main-color    m-2 `;
@@ -12,9 +14,10 @@ const SideMenu = () => {
     hover:bg-gray-300/50 dark:hover:bg-gray-300/10  m-2   m-2 `;
 
   return (
-    <>
+    <div className="dark:bg-dark-bg">
+      <Header />
       <div className="max-w-7xl mx-auto p-3 grid grid-cols-1 md:grid-cols-12 gap-3">
-        <div className="hidden h-fit md:flex md:col-span-3 bg-white  dark:bg-secondary-dark-bg  flex-col p-3 rounded-md">
+        <div className="hidden h-fit md:flex md:col-span-3 bg-white dark:bg-dark-gray  dark:bg-secondary-dark-bg  flex-col p-3 rounded-md">
           {profileDashboard.map((item) => (
             <div key={item.title}>
               <h1
@@ -93,11 +96,12 @@ const SideMenu = () => {
             </Transition>
           </Menu>
         </div>
-        <div className="md:col-span-9 w-full">
+        <div className="dark:bg-dark-bg md:col-span-9 w-full min-h-screen">
           <Outlet />
         </div>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 

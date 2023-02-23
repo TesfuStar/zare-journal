@@ -69,7 +69,7 @@ const SubscribeModal = () => {
               type="email"
               ref={emailRef}
               placeholder="Email"
-              className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+              className={`w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0 bg-transparent ${currentMode === "Dark" ? "text-white" : ""}`}
               required
             />
             <button

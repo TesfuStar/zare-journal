@@ -106,23 +106,23 @@ const Account = () => {
                 name=""
                 id=""
                 required
-                className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+                className="w-full p-2 rounded-sm border border-gray-300 bg-transparent dark:text-white focus:outline-none ring-0"
               />
               <button
                 type="submit"
-                className="bg-gray-300 p-2 font-semibold px-5 rounded-sm text-black text-[15px] hover:bg-gray-400/80"
+                className="bg-gray-300 dark:bg-gray-700 dark:text-white p-2 font-semibold px-5 rounded-sm text-black text-[15px] hover:bg-gray-400/80"
               >
                 Save
               </button>
             </form>
           ) : (
-            <h1 className="font-semibold text-gray-700">{user?.name}</h1>
+            <h1 className="font-semibold text-gray-700 dark:text-white">{user?.name}</h1>
           )}
           <button
             onClick={() => {
               setSIsEditName(!isEditName);
             }}
-            className="bg-gray-300 p-2 font-semibold px-5 rounded-sm text-black text-[15px] hover:bg-gray-400/80"
+            className="bg-gray-300 dark:bg-gray-700 dark:text-white p-2 font-semibold px-5 rounded-sm text-black text-[15px] hover:bg-gray-400/80"
           >
             {isEditName ? "Cancel" : "Edit"}
           </button>
@@ -132,15 +132,15 @@ const Account = () => {
   }
 
   return (
-    <div>
+    <div className="dark:bg-dark-bg h-fit w-full">
       <div className="flex flex-col items-start space-y-3 w-full">
         <div className="flex items-center justify-between space-x-2 pb-10 w-full">
-          <h1 className="font-semibold text-lg text-gray-700">
+          <h1 className="font-semibold text-lg text-gray-700 dark:text-white">
             user Information
           </h1>
           <button
             onClick={logout}
-            className="bg-gray-300 p-2 font-semibold px-5 rounded-sm text-black text-[15px] hover:bg-gray-400/80"
+            className="bg-gray-300 dark:bg-gray-700 dark:text-white p-2 font-semibold px-5 rounded-sm text-black text-[15px] hover:bg-gray-400/80"
           >
             Log Out
           </button>
@@ -176,7 +176,7 @@ const Account = () => {
           </Dropzone>
           <button
             onClick={handleUpdateProfile}
-            className="bg-gray-300 p-2 font-semibold px-5 rounded-sm text-black text-[15px] hover:bg-gray-400/80"
+            className="bg-gray-300 p-2 font-semibold dark:bg-gray-700 dark:text-white px-5 rounded-sm text-black text-[15px] hover:bg-gray-400/80"
           >
             Update Profile
           </button>
@@ -188,11 +188,11 @@ const Account = () => {
               <input
                 type="password"
                 value={"01451515454"}
-                className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+                className="w-full p-2 rounded-sm border border-gray-300 bg-transparent dark:text-white focus:outline-none ring-0"
               />
               <button
                 onClick={() => setSIsUpdatingPassword(true)}
-                className="bg-gray-300 p-2 font-semibold px-5 rounded-sm text-black text-[15px] hover:bg-gray-400/80"
+                className="bg-gray-300 dark:bg-gray-700 dark:text-white p-2 font-semibold px-5 rounded-sm text-black text-[15px] hover:bg-gray-400/80"
               >
                 change
               </button>

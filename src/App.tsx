@@ -81,9 +81,6 @@ const App = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/categories/:id" element={<Category />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="profile" element={<SideMenu />}>
-          <Route path="account" element={<Account />} />
-        </Route>
       </Routes>
     );
   }

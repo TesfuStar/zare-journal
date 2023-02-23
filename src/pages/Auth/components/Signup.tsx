@@ -106,7 +106,7 @@ const Signup = () => {
               name=""
               id=""
               placeholder="Name"
-              className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+              className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0 bg-transparent dark:text-white"
               required
             />
             <input
@@ -115,7 +115,7 @@ const Signup = () => {
               name=""
               id=""
               placeholder="Email"
-              className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+              className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0 bg-transparent dark:text-white"
               required
             />
             <input
@@ -124,14 +124,14 @@ const Signup = () => {
               name=""
               id=""
               placeholder="Password"
-              className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+              className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0 bg-transparent dark:text-white"
               required
             />
             <input
               ref={confirmPasswordRef}
               type="password"
               placeholder="Confirm Password"
-              className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0"
+              className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0 bg-transparent dark:text-white"
               required
             />
             <button

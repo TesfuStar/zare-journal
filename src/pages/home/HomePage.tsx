@@ -15,6 +15,7 @@ import SubscribeBanner from "./components/SubscribeBanner";
 const HomePage: React.FC = () => {
   const { user } = useAuth();
   const [todaysPick, setTodaysPick] = useState<string[]>([]);
+  const isSubscribed = localStorage.getItem("zare-journal-subscriber")
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
   const headers = {
@@ -467,9 +468,10 @@ const HomePage: React.FC = () => {
           )}
         </div>
         {/* <TrendingStory /> */}
-        <Videos />
+        {homePageData.isFetched &&
+          homePageData?.data?.data?.data?.videos?.length > 0 && <Videos />}
       </div>
-      {!user?.subscribed && <SubscribeBanner />}
+      {(!user?.subscribed && !isSubscribed) && <SubscribeBanner />}
       <Footer />
     </div>
   );

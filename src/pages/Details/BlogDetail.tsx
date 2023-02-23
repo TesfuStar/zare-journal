@@ -18,7 +18,6 @@ const BlogDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { user, token } = useAuth();
-  const { setIsSignInModalOpen } = useHome();
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const [commentValue, setCommentValue] = useState<string>("");
   const [success, setSuccess] = useState<number>(1);
@@ -54,7 +53,7 @@ const BlogDetail: React.FC = () => {
   const handleComment = (e: React.FormEvent) => {
     e.preventDefault();
     if (!user && !token) {
-      setIsSignInModalOpen(true);
+      navigate('/signin')
       return;
     }
     if (commentRef.current?.value) {

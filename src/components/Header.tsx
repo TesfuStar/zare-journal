@@ -18,6 +18,7 @@ import { FaBars } from "react-icons/fa";
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const { user, token, logout } = useAuth();
+  const isSubscribed = localStorage.getItem("zare-journal-subscriber")
   const { currentMode, setMode } = useThemeContext();
   const { setIsSubscriptionModalOpen, setIsSignInModalOpen } = useHome();
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState<boolean>(false);
@@ -118,7 +119,7 @@ const Header: React.FC = () => {
                 size={20}
                 className="cursor-pointer dark:text-white"
               />
-              {!user?.subscribed && (
+              {(!user?.subscribed && !isSubscribed)&& (
                 <button
                   onClick={() => setIsSubscriptionModalOpen(true)}
                   className="bg-main-bg hover:bg-main-bg/70 p-2 px-3 rounded-sm text-white font-normal text-[15px] uppercase"

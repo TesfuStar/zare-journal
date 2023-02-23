@@ -14,16 +14,17 @@ interface Cat {
 }
 interface Props {
   emailRef: React.RefObject<HTMLInputElement>;
-  email:string
+  email: string;
 }
-const CategorySelection = ({ emailRef,email }:Props) => {
+const CategorySelection = ({ emailRef, email }: Props) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [cats, setCats] = useState<string[]>([]);
   const { isSubscriptionModalOpen, setIsSubscriptionModalOpen } = useHome();
+
   const { user, token, logout } = useAuth();
   const mySet = new Set();
   const { currentMode } = useThemeContext();
-  let myCategories:any = [];
+  let myCategories: any = [];
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -47,28 +48,26 @@ const CategorySelection = ({ emailRef,email }:Props) => {
   console.log(categoriesData?.data?.data?.data);
 
   function handleAddCategory(id: any) {
-    myCategories.some((category:any) => category.id === id);
-    if (!myCategories.some((category:any) => category === id)) {
-       myCategories.push(id);
-       myCategories && setCats(myCategories)
+    myCategories.some((category: any) => category.id === id);
+    if (!myCategories.some((category: any) => category === id)) {
+      myCategories.push(id);
+      myCategories && setCats(myCategories);
     } else {
       const category = myCategories.indexOf(id);
       myCategories.splice(category, 1);
-      myCategories && setCats(myCategories)
+      myCategories && setCats(myCategories);
     }
-    
   }
-  console.log({ myCategories,email });
+  console.log({ myCategories, email });
 
-
-  const handleSubmit=()=>{
-    if(myCategories.length > 0){
-      return
+  const handleSubmit = () => {
+    if (myCategories.length > 0) {
+      return;
     }
-    categoryAddSubmitHandler()
-  }
+    categoryAddSubmitHandler();
+  };
   //submit the categories
-  console.log({ mySet});
+  console.log({ mySet });
   const categoryAddMutation = useMutation(
     async (newData: any) =>
       await axios.post(
@@ -92,7 +91,8 @@ const CategorySelection = ({ emailRef,email }:Props) => {
         },
         {
           onSuccess: (responseData: any) => {
-            setIsSubscriptionModalOpen(false)
+            setIsSubscriptionModalOpen(false);
+            localStorage.setItem("zare-journal-subscriber","1")
           },
           onError: (err: any) => {
             // setError("something went wrong");
@@ -104,27 +104,26 @@ const CategorySelection = ({ emailRef,email }:Props) => {
     }
   };
 
-
   return (
     <div className="py-10 p-3 ">
       {categoriesData.isFetched ? (
         <div className="flex flex-col items-center overflow-y-scroll scrollbar-hide">
           <h3
             className={`font-semibold text-xl   pb-3 ${
-              currentMode === "dark" ? "text-gray-300" : "text-gray-500"
+              currentMode === "Dark" ? "text-gray-100" : "text-gray-500"
             }`}
           >
             Select a Categories
           </h3>
           <p
             className={`font-normal   pb-3 ${
-              currentMode === "dark" ? "text-gray-300" : "text-gray-500"
+              currentMode === "Dark" ? "text-gray-100" : "text-gray-500"
             }`}
           >
             You can select a multiple categories.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pb-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 pb-3">
             {categoriesData?.data?.data?.data?.map((category: any) => (
               <div
                 onClick={() => {
@@ -153,9 +152,9 @@ const CategorySelection = ({ emailRef,email }:Props) => {
 
           <button
             disabled={categoryAddMutation.isLoading}
-            className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
+            className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white flex items-center justify-center
                      hover:bg-main-bg/80  w-44"
-                     onClick={handleSubmit}
+            onClick={handleSubmit}
           >
             {categoryAddMutation.isLoading ? (
               <PulseLoader color="#fff" />
