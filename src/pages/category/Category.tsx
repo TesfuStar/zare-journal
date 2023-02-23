@@ -40,11 +40,12 @@ const Category: React.FC = () => {
       },
     }
   );
-
   function TrendingStory() {
     return (
       <div>
-        <h2 className="font-bold text-xl py-5">Trending Stories</h2>
+        <h2 className="font-bold text-xl py-5 dark:text-white">
+          {blogCategoryData?.data?.data?.data?.category?.name}
+        </h2>
         <div className="w-full hidden md:flex">
           {blogCategoryData?.isFetched ? (
             <div className="grid grid-rows-5 grid-flow-col gap-4 w-full">
@@ -71,6 +72,15 @@ const Category: React.FC = () => {
                         controls={true}
                         width={"100%"}
                         height={"100%"}
+                        light={
+                          <img
+                            src={item.thumbnail.original_url}
+                            alt="My video thumbnail"
+                            className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                          />
+                        }
+                        style={{ backgroundImage: "none" }}
+                        // playIcon={<button>Play</button>}
                       />
                     </div>
                   ) : (
@@ -82,20 +92,20 @@ const Category: React.FC = () => {
                       }`}
                     />
                   )}
-                  <p className="text-gray-400 text-sm font-light pt-3">
+                  <p className="text-gray-400  dark:text-gray-300 text-sm font-light pt-3">
                     {item.created_at}
                   </p>
                   <h3
-                    className={`font-bold text-gray-900 ${
+                    className={`font-bold text-gray-900 dark:text-white ${
                       item.index === 1 ? "text-5xl " : " "
                     } `}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-gray-600 text-sm font-normal line-clamp-2">
+                  <p className="text-gray-600 text-sm font-normal line-clamp-2 dark:text-gray-200">
                     {parse(item.body)}
                   </p>
-                  <h4 className=" text-[15px] p-1 cursor-pointer">
+                  <h4 className=" text-[15px] p-1 cursor-pointer dark:text-gray-200">
                     {item.category.name}
                   </h4>
                 </div>
@@ -103,9 +113,9 @@ const Category: React.FC = () => {
             </div>
           ) : (
             <div className="grid grid-rows-5 grid-flow-col gap-4 animate-pulse w-full">
-              <div className="row-span-4 col-span-2 bg-gray-200 p-20"></div>
-              <div className=" row-span-2 bg-gray-200 p-20"></div>
-              <div className="row-span-2  bg-gray-200 p-20"></div>
+              <div className="row-span-4 col-span-2 bg-gray-200 dark:bg-gray-600 p-20"></div>
+              <div className=" row-span-2 bg-gray-200 dark:bg-gray-600 p-20"></div>
+              <div className="row-span-2  bg-gray-200 dark:bg-gray-600 p-20"></div>
             </div>
           )}
         </div>
@@ -192,14 +202,16 @@ const Category: React.FC = () => {
                         // className="w-full"
                       />
                     )}
-                    <p className="text-gray-400 text-sm font-light pt-3">
+                    <p className="text-gray-400 text-sm font-light pt-3 dark:text-gray-300">
                       {item.created_at}
                     </p>
-                    <h3 className="font-bold text-gray-900">{item.title}</h3>
-                    <p className="text-gray-600 text-sm font-normal line-clamp-2">
+                    <h3 className="font-bold text-gray-900 dark:text-white">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm font-normal line-clamp-2 dark:text-gray-200">
                       {parse(item.body)}
                     </p>
-                    <h4 className=" text-[15px] p-1 cursor-pointer">
+                    <h4 className=" text-[15px] p-1 cursor-pointer dark:text-gray-300">
                       {item.category.name}
                     </h4>
                   </div>

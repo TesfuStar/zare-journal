@@ -8,8 +8,17 @@ import { ToastContainer, toast, Slide, ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DarkLogo from "../assets/Dark-Logo.svg";
 import { useThemeContext } from "../context/ThemeContext";
+import { useHome } from "../context/HomeContext";
 const Footer: React.FC = () => {
   const { currentMode, setMode } = useThemeContext();
+  const {
+    isSubscriptionModalOpen,
+    setIsSubscriptionModalOpen,
+    isSubscriptionSuccess,
+    setIsSubscriptionSuccess,
+    email,
+    setEmail,
+  } = useHome();
   const emailRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const headers = {
@@ -33,46 +42,15 @@ const Footer: React.FC = () => {
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-
-    loginMutationSubmitHandler();
-  };
-  //SUBSCRIPTION POST REQUEST
-  const subscribeMutation = useMutation(
-    async (newData: any) =>
-      await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}subscribe`,
-        newData,
-        {
-          headers,
-        }
-      ),
-    {
-      retry: false,
-    }
-  );
-
-  const loginMutationSubmitHandler = async () => {
-    try {
-      subscribeMutation.mutate(
-        {
-          email: emailRef.current?.value,
-        },
-        {
-          onSuccess: (responseData: any) => {
-            toast.info("successfully subscribed", options);
-            if (emailRef.current) {
-              emailRef.current.value = "";
-            }
-          },
-          onError: (err: any) => {
-            // setError("something went wrong");
-          },
-        }
-      );
-    } catch (err) {
-      console.log(err);
+    e.preventDefault();
+    setEmail(emailRef?.current?.value);
+    setIsSubscriptionModalOpen(true);
+    setIsSubscriptionSuccess(true);
+    if (emailRef && emailRef.current) {
+      emailRef.current.value = "";
     }
   };
+
   const options: ToastOptions = {
     position: "top-right",
     autoClose: 3000,
@@ -136,6 +114,7 @@ const Footer: React.FC = () => {
               <input
                 type="email"
                 ref={emailRef}
+                
                 placeholder="Email"
                 className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0 bg-transparent dark:border-gray-500 dark:text-white"
                 required
@@ -145,11 +124,7 @@ const Footer: React.FC = () => {
                 className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
                      hover:bg-main-bg/80  w-full"
               >
-                {subscribeMutation.isLoading ? (
-                  <PulseLoader color="#fff" />
-                ) : (
-                  "Subscribe"
-                )}
+                Subscribe
               </button>
             </form>
           </div>

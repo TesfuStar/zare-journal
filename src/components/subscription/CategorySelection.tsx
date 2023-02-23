@@ -7,13 +7,23 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import Frame from "../../assets/login.png";
 import { useAuth } from "../../context/Auth";
 import { FaTablet } from "react-icons/fa";
+import { useThemeContext } from "../../context/ThemeContext";
 
 interface Cat {
   id: string[];
 }
-const CategorySelection: React.FC = () => {
+interface Props {
+  emailRef: React.RefObject<HTMLInputElement>;
+  email:string
+}
+const CategorySelection = ({ emailRef,email }:Props) => {
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [cats, setCats] = useState<string[]>([]);
+  const { isSubscriptionModalOpen, setIsSubscriptionModalOpen } = useHome();
   const { user, token, logout } = useAuth();
-  let myCategories: Cat[] = [];
+  const mySet = new Set();
+  const { currentMode } = useThemeContext();
+  let myCategories:any = [];
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -37,17 +47,28 @@ const CategorySelection: React.FC = () => {
   console.log(categoriesData?.data?.data?.data);
 
   function handleAddCategory(id: any) {
-    myCategories.some((category) => category.id === id);
-    if (!myCategories.some((category) => category === id)) {
-      myCategories.push(id);
+    myCategories.some((category:any) => category.id === id);
+    if (!myCategories.some((category:any) => category === id)) {
+       myCategories.push(id);
+       myCategories && setCats(myCategories)
     } else {
       const category = myCategories.indexOf(id);
       myCategories.splice(category, 1);
+      myCategories && setCats(myCategories)
     }
-    console.log(myCategories.some((cat) => cat === id));
+    
   }
+  console.log({ myCategories,email });
 
+
+  const handleSubmit=()=>{
+    if(myCategories.length > 0){
+      return
+    }
+    categoryAddSubmitHandler()
+  }
   //submit the categories
+  console.log({ mySet});
   const categoryAddMutation = useMutation(
     async (newData: any) =>
       await axios.post(
@@ -66,10 +87,13 @@ const CategorySelection: React.FC = () => {
     try {
       categoryAddMutation.mutate(
         {
-          // email: emailRef.current?.value,
+          email: email,
+          categories: cats,
         },
         {
-          onSuccess: (responseData: any) => {},
+          onSuccess: (responseData: any) => {
+            setIsSubscriptionModalOpen(false)
+          },
           onError: (err: any) => {
             // setError("something went wrong");
           },
@@ -79,24 +103,38 @@ const CategorySelection: React.FC = () => {
       console.log(err);
     }
   };
+
+
   return (
-    <div className="py-10 p-3">
+    <div className="py-10 p-3 ">
       {categoriesData.isFetched ? (
-        <div className="flex flex-col items-center ">
-          <h3 className="font-semibold text-dark-color  text-xl">
+        <div className="flex flex-col items-center overflow-y-scroll scrollbar-hide">
+          <h3
+            className={`font-semibold text-xl   pb-3 ${
+              currentMode === "dark" ? "text-gray-300" : "text-gray-500"
+            }`}
+          >
             Select a Categories
           </h3>
-          <p className="font-normal text-gray-500  pb-3">
+          <p
+            className={`font-normal   pb-3 ${
+              currentMode === "dark" ? "text-gray-300" : "text-gray-500"
+            }`}
+          >
             You can select a multiple categories.
           </p>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pb-3">
             {categoriesData?.data?.data?.data?.map((category: any) => (
               <div
-                onClick={() => handleAddCategory(category.id)}
+                onClick={() => {
+                  handleAddCategory(category.id);
+                  setIsClicked((prev) => !prev);
+                }}
                 className="relative overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500"
               >
                 <div className="absolute top-5 right-5 bg-white rounded-t-full p-1">
-                  {!myCategories.some((cat) => cat === category.id) && (
+                  {myCategories.includes(category.id) && (
                     <FaTablet className="text-red-500" />
                   )}
                 </div>
@@ -117,6 +155,7 @@ const CategorySelection: React.FC = () => {
             disabled={categoryAddMutation.isLoading}
             className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
                      hover:bg-main-bg/80  w-44"
+                     onClick={handleSubmit}
           >
             {categoryAddMutation.isLoading ? (
               <PulseLoader color="#fff" />

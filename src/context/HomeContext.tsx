@@ -10,8 +10,10 @@ export function HomeProvider({ children }: any) {
   const [checked, setChecked] = useState<boolean>(false);
   const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] =
     useState<boolean>(false);
+  const [isSubscriptionSuccess, setIsSubscriptionSuccess] =
+    useState<boolean>(false);
   const [isSignInModalOpen, setIsSignInModalOpen] = useState<boolean>(false);
-
+  const [email, setEmail] = useState<string>("");
   useEffect(() => {
     setTimeout(() => setChecked(true), 2000);
   }, []);
@@ -25,6 +27,10 @@ export function HomeProvider({ children }: any) {
         setIsSubscriptionModalOpen,
         setIsSignInModalOpen,
         isSignInModalOpen,
+        email,
+        setEmail,
+        isSubscriptionSuccess,
+        setIsSubscriptionSuccess,
       }}
     >
       {children}

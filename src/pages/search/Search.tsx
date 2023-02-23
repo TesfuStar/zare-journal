@@ -59,6 +59,26 @@ const Search: React.FC = () => {
       },
     }
   );
+  //subcategories
+  const subCategoriesData = useQuery(
+    ["getSubCategoriesDataApi"],
+    async () =>
+      await axios.get(`${process.env.REACT_APP_BACKEND_URL}sub-categories`, {
+        headers,
+      }),
+    {
+      keepPreviousData: true,
+      refetchOnWindowFocus: false,
+      retry: false,
+      // enabled: !!token,
+      onSuccess: (res) => {},
+      onError: (err) => {
+        setError("something went wrong.");
+      },
+    }
+  );
+
+  console.log(subCategoriesData?.data?.data?.data);
   useEffect(() => {
     if (searchPageData.isLoading) {
       setError("");
@@ -86,6 +106,28 @@ const Search: React.FC = () => {
     [loading, hasMore]
   );
 
+  function SubCategories() {
+    return (
+      <div>
+        {subCategoriesData.isFetched ? (
+          <div className="flex items-center space-x-2 overflow-x-scroll scrollbar-hide">
+            {subCategoriesData?.data?.data?.data
+              ?.slice(0, 10)
+              ?.map((item: any) => (
+                <p
+                  onClick={() => setSearchString(item.name)}
+                  className="text-dark-color dark:text-white cursor-pointer text-sm hover:underline bg-gray-500/20 p-1 rounded-full"
+                >
+                  {item.name}
+                </p>
+              ))}
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </div>
+    );
+  }
   return (
     <div className="bg-white dark:bg-dark-bg">
       <Header />
@@ -129,9 +171,10 @@ const Search: React.FC = () => {
             </select>
           </div>
         </div>
+        <SubCategories />
         {/* results */}
         {searchString && (
-          <div className="flex items-start justify-start self-start">
+          <div className="flex items-start justify-start self-start pt-5">
             <h4 className="font-medium text-center dark:text-gray-300">
               search results for {searchString}
             </h4>
@@ -236,7 +279,13 @@ const Search: React.FC = () => {
                 }
               })}
             </div>
-
+            {blogs.length < 1 && !loading && (
+              <div>
+                <h1 className="text-xl font-semibold text-dark-color dark:text-white">
+                  No Blogs found..
+                </h1>
+              </div>
+            )}
             <div className="w-full">{loading && <SearchPageLoading />}</div>
             <div>{error && "Error"}</div>
           </div>
@@ -290,11 +339,11 @@ const Search: React.FC = () => {
                   .fill(0)
                   .map((item) => (
                     <div className="flex items-start space-x-2 w-full">
-                      <div className=" bg-gray-200   w-44 h-28 rounded-md"></div>
+                      <div className=" bg-gray-200 dark:bg-gray-600 w-44 h-28 rounded-md"></div>
                       <div className="flex flex-col items-start space-y-2 w-full">
-                        <div className=" bg-gray-200   w-full h-4 rounded-md"></div>
-                        <div className=" bg-gray-200   w-full h-4 rounded-md"></div>
-                        <div className=" bg-gray-200   w-full h-4 rounded-md"></div>
+                        <div className=" bg-gray-200 dark:bg-gray-600 w-full h-4 rounded-md"></div>
+                        <div className=" bg-gray-200 dark:bg-gray-600 w-full h-4 rounded-md"></div>
+                        <div className=" bg-gray-200 dark:bg-gray-600 w-full h-4 rounded-md"></div>
                       </div>
                     </div>
                   ))}

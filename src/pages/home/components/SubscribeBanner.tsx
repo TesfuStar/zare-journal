@@ -3,8 +3,17 @@ import Frame from "../../../assets/login.png";
 import { PulseLoader } from "react-spinners";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
+import { useHome } from "../../../context/HomeContext";
 const SubscribeBanner: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null);
+  const {
+    isSubscriptionModalOpen,
+    setIsSubscriptionModalOpen,
+    isSubscriptionSuccess,
+    setIsSubscriptionSuccess,
+    email,
+    setEmail,
+  } = useHome();
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -12,40 +21,14 @@ const SubscribeBanner: React.FC = () => {
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    loginMutationSubmitHandler();
-  };
-  //SUBSCRIPTION POST REQUEST
-  const subscribeMutation = useMutation(
-    async (newData: any) =>
-      await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}subscribe`,
-        newData,
-        {
-          headers,
-        }
-      ),
-    {
-      retry: false,
-    }
-  );
-
-  const loginMutationSubmitHandler = async () => {
-    try {
-      subscribeMutation.mutate(
-        {
-          email: emailRef.current?.value,
-        },
-        {
-          onSuccess: (responseData: any) => {},
-          onError: (err: any) => {
-            // setError("something went wrong");
-          },
-        }
-      );
-    } catch (err) {
-      console.log(err);
+    setEmail(emailRef?.current?.value);
+    setIsSubscriptionModalOpen(true)
+    setIsSubscriptionSuccess(true);
+    if (emailRef && emailRef.current) {
+      emailRef.current.value = "";
     }
   };
+  
 
   return (
     <div
@@ -79,11 +62,7 @@ const SubscribeBanner: React.FC = () => {
             className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
                      hover:bg-main-bg/80  w-full"
           >
-            {subscribeMutation.isLoading ? (
-              <PulseLoader color="#fff" />
-            ) : (
-              "Subscribe"
-            )}
+           Subscribe
           </button>
         </form>
       </div>

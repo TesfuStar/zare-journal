@@ -8,10 +8,19 @@ import { ToastContainer, toast, Slide, ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CategorySelection from "./CategorySelection";
 import Frame from "../../assets/login.png";
+import { useThemeContext } from "../../context/ThemeContext";
 const SubscribeModal = () => {
-  const { isSubscriptionModalOpen, setIsSubscriptionModalOpen } = useHome();
-  const [isSubscriptionSuccess, setIsSubscriptionSuccess] =
-    useState<boolean>(true);
+  const {
+    isSubscriptionModalOpen,
+    setIsSubscriptionModalOpen,
+    isSubscriptionSuccess,
+    setIsSubscriptionSuccess,
+    email,
+    setEmail,
+  } = useHome();
+
+  const isUserSubscribed = localStorage.getItem("zare-journal-subscribed");
+  const { currentMode } = useThemeContext();
   const emailRef = useRef<HTMLInputElement>(null);
   const headers = {
     "Content-Type": "application/json",
@@ -20,44 +29,13 @@ const SubscribeModal = () => {
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    loginMutationSubmitHandler();
+    emailRef?.current?.value && setEmail(emailRef?.current?.value);
+    setIsSubscriptionSuccess(true);
+    if (emailRef && emailRef.current) {
+      emailRef.current.value = "";
+    }
   };
   //SUBSCRIPTION POST REQUEST
-  const subscribeMutation = useMutation(
-    async (newData: any) =>
-      await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}subscribe`,
-        newData,
-        {
-          headers,
-        }
-      ),
-    {
-      retry: false,
-    }
-  );
-
-  const loginMutationSubmitHandler = async () => {
-    try {
-      subscribeMutation.mutate(
-        {
-          email: emailRef.current?.value,
-        },
-        {
-          onSuccess: (responseData: any) => {
-            setIsSubscriptionModalOpen(false);
-            toast.info("successfully subscribed", options);
-            setIsSubscriptionSuccess(true);
-          },
-          onError: (err: any) => {
-            // setError("something went wrong");
-          },
-        }
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const options: ToastOptions = {
     position: "top-right",
@@ -75,7 +53,11 @@ const SubscribeModal = () => {
       <div className="w-full grid grid-cols-1 md:grid-cols-2  py-5 md:py-0">
         <img src={Frame} alt="" className="h-full hidden md:flex" />
         <div className="flex flex-col items-center justify-center space-y-2 p-2 w-full">
-          <p className="pt-3 font-semibold text-lg text-gray-700">
+          <p
+            className={`pt-3 font-semibold text-lg  ${
+              currentMode === "Dark" ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
             Subscribe to Our Newsletter
           </p>
 
@@ -94,24 +76,29 @@ const SubscribeModal = () => {
               className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
                      hover:bg-main-bg/80  w-full"
             >
-              {subscribeMutation.isLoading ? (
-                <PulseLoader color="#fff" />
-              ) : (
-                "Subscribe"
-              )}
+              Subscribe
             </button>
           </form>
         </div>
       </div>
     );
   }
+
+  const panelLight =
+    " w-full max-w-2xlc transform overflow-hidden rounded-2xl bg-white p-3 text-left align-middle shadow-xl transition-all";
+  const panelDark =
+    "w-full max-w-2xl transform overflow-hidden rounded-2xl bg-dark-bg p-3 text-left align-middle shadow-xl transition-all";
+
   return (
     <>
       <Transition appear show={isSubscriptionModalOpen} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={() => setIsSubscriptionModalOpen(false)}
+          onClose={() => {
+            setIsSubscriptionModalOpen(false);
+            setIsSubscriptionSuccess(false);
+          }}
         >
           <Transition.Child
             as={Fragment}
@@ -137,13 +124,12 @@ const SubscribeModal = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel
-                  className="w-full max-w-2xl transform overflow-hidden rounded-md bg-white 
-              align-middle shadow-xl transition-all"
+                  className={currentMode === "Dark" ? panelDark : panelLight}
                 >
                   {!isSubscriptionSuccess ? (
                     <Subscription />
                   ) : (
-                    <CategorySelection />
+                    <CategorySelection emailRef={emailRef} email={email} />
                   )}
                 </Dialog.Panel>
               </Transition.Child>

@@ -9,6 +9,7 @@ import {
   Category,
   Account,
   SignIn,
+  HomeSection,
 } from "./pages";
 import SideMenu from "./pages/profile/components/SideMenu";
 import { useThemeContext } from "./context/ThemeContext";
@@ -59,6 +60,7 @@ const App = () => {
       <Routes>
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/home/:id" element={<HomeSection />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/search" element={<Search />} />
         <Route path="/categories/:id" element={<Category />} />
@@ -74,6 +76,7 @@ const App = () => {
       <Routes>
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/home/:id" element={<HomeSection />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/search" element={<Search />} />
         <Route path="/categories/:id" element={<Category />} />
@@ -121,7 +124,7 @@ export default App;
 //   <Routes>
 //     <Route path="*" element={<Navigate to="/" />} />
 //     <Route path="/" element={<HomePage />} />
-//     <Route path="/blog/:id" element={<BlogDetail />} />
+//     <Route path="/blog/:id" element={<HomeSection />} />
 //     <Route path="/search" element={<Search />} />
 //     <Route path="/categories/:id" element={<Category />} />
 //     <Route path="profile" element={<SideMenu />}>

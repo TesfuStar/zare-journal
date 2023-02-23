@@ -295,9 +295,7 @@ const HomePage: React.FC = () => {
                         src={item.blog_cover.original_url}
                         alt=""
                         className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                          item.index === 3
-                            ? "h-auto bg-red-500"
-                            : "max-h-56 h-full bg-amber-500 "
+                          item.index === 3 ? "h-auto " : "max-h-56 h-full  "
                         }`}
                         // className="w-full"
                       />
@@ -315,9 +313,9 @@ const HomePage: React.FC = () => {
                     <h4 className=" text-[15px] p-1 cursor-pointer line-clamp-2 dark:text-gray-200">
                       {item.index === 3 && item.sub_heading}
                     </h4>
-                    <h4 className="border border-gray-300 text-[15px] p-1 cursor-pointer dark:text-gray-200">
+                    <p className="border border-gray-300 dark:border-gray-500 text-sm p-1 cursor-pointer dark:text-gray-200">
                       {item.category.name}
-                    </h4>
+                    </p>
                   </div>
                 ))}
               </div>
@@ -335,7 +333,7 @@ const HomePage: React.FC = () => {
                     onClick={() => navigate(`/blog/${item.id}`)}
                     className="cursor-pointer overflow-hidden flex flex-col items-start"
                   >
-                        {item.blog_cover.mime_type.includes("video") ? (
+                    {item.blog_cover.mime_type.includes("video") ? (
                       <div
                         className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
                           item.index === 2 ? "h-auto " : "max-h-56 h-full "
@@ -361,13 +359,13 @@ const HomePage: React.FC = () => {
                       </div>
                     ) : (
                       <img
-                      src={item.blog_cover.original_url}
-                      alt=""
-                      className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
-                      // className="w-full"
-                    />
+                        src={item.blog_cover.original_url}
+                        alt=""
+                        className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                        // className="w-full"
+                      />
                     )}
-                  
+
                     <p className="text-gray-400 dark:text-gray-300 text-sm font-light pt-3">
                       {item.created_at}
                     </p>
@@ -377,9 +375,9 @@ const HomePage: React.FC = () => {
                     <p className="text-gray-600 dark:text-gray-300 text-sm font-normal line-clamp-2">
                       {parse(item.body)}
                     </p>
-                    <h4 className=" text-[15px] p-1 cursor-pointer dark:text-gray-300">
+                    <p className="border border-gray-300 dark:border-gray-500 text-sm p-1 cursor-pointer dark:text-gray-200">
                       {item.category.name}
-                    </h4>
+                    </p>
                   </div>
                 ))}
               </div>
@@ -406,9 +404,10 @@ const HomePage: React.FC = () => {
                     <h2 className="font-bold text-xl pt-4 capitalize dark:text-white">
                       {home.name}
                     </h2>
-                    <div 
-                    onClick={()=>navigate(`/categories/${home.id}`)}
-                    className="bg-main-bg p-2 rounded-sm cursor-pointer">
+                    <div
+                      onClick={() => navigate(`/home/${home.id}`)}
+                      className="bg-main-bg p-2 rounded-sm cursor-pointer"
+                    >
                       <AiOutlineArrowRight className="text-white" />
                     </div>
                   </div>
@@ -452,9 +451,12 @@ const HomePage: React.FC = () => {
                         <p className="text-gray-600 text-sm font-normal line-clamp-2 dark:text-gray-300">
                           {parse(article.body)}
                         </p>
-                        <h4 
-                         onClick={()=>navigate(`/categories/${article.category.id}`)}
-                        className="font-medium flex items-end justify-end text-[15px] p-1 cursor-pointer dark:text-gray-300 pt-3">
+                        <h4
+                          onClick={() =>
+                            navigate(`/categories/${article.category.id}`)
+                          }
+                          className="font-medium flex items-end justify-end text-[15px] p-1 cursor-pointer dark:text-gray-300 pt-3"
+                        >
                           {article.category.name}
                         </h4>
                       </div>
