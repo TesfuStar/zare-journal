@@ -18,6 +18,7 @@ const BlogDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { user, token } = useAuth();
+  const { searchString, setSearchString } = useHome();
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const [commentValue, setCommentValue] = useState<string>("");
   const [success, setSuccess] = useState<number>(1);
@@ -53,7 +54,7 @@ const BlogDetail: React.FC = () => {
   const handleComment = (e: React.FormEvent) => {
     e.preventDefault();
     if (!user && !token) {
-      navigate('/signin')
+      navigate("/signin");
       return;
     }
     if (commentRef.current?.value) {
@@ -106,7 +107,7 @@ const BlogDetail: React.FC = () => {
   return (
     <div className="bg-white dark:bg-dark-bg">
       <Header />
-      <div className="max-w-7xl mx-auto p-3 py-4">
+      <div className="max-w-7xl mx-auto p-3 md:p-0 py-4">
         {blogDetailsData.isFetched && blogDetailsData.isSuccess ? (
           <div className="flex flex-col items-start space-y-2">
             <Helmet>
@@ -137,24 +138,24 @@ const BlogDetail: React.FC = () => {
                 />
               )}
             </Helmet>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-10  w-full">
               <div className="flex flex-col items-start space-y-2">
-                <p className="text-main-color text-[15px]">
+                <p className="text-gray-500 dark:text-gray-300 text-[15px]">
                   {blogDetailsData?.data?.data?.data?.blog?.published_at +
-                    " " +
+                    " • " +
                     blogDetailsData?.data?.data?.data?.blog?.reading_time +
                     " "}
                   to read
                 </p>
-                <h2 className="text-xl md:text-4xl font-bold dark:text-white">
+                <h2 className="text-xl md:text-4xl lg:text-5xl font-bold dark:text-white w-full md:w-[400px]">
                   {blogDetailsData?.data?.data?.data?.blog?.title}
                 </h2>
-                <p className="text-gray-500 text-sm font-normal dark:text-gray-300">
+                <p className="text-gray-500 text-sm font-normal dark:text-gray-300 w-full md:w-96">
                   {blogDetailsData?.data?.data?.data?.blog?.sub_heading}
                 </p>
               </div>
               {/*  */}
-              <div className=" flex items-center justify-center">
+              <div className="  flex items-end  justify-end self-end">
                 {blogDetailsData?.data?.data?.data?.blog.blog_cover.mime_type.includes(
                   "video"
                 ) ? (
@@ -176,21 +177,38 @@ const BlogDetail: React.FC = () => {
                         ?.original_url
                     }
                     alt=""
-                    className="max-h-80 w-full object-contain"
+                    className="max-h-80 w-full object-cover  flex items-end  justify-end self-end"
                   />
                 )}
               </div>
             </div>
             {/* detail part */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-3 pt-10">
-              <div className="md:col-span-8 flex flex-col items-start space-y-4">
-                <p className="text-gray-500  font-normal dark:text-gray-300">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-10">
+              <div className="md:col-span-7 flex flex-col items-start space-y-4">
+                <p className="text-gray-500  font-normal dark:text-gray-300 text-left">
                   {parse(blogDetailsData?.data?.data?.data?.blog?.body)}
                 </p>
+                <div className="flex items-center gap-2 flex-wrap">
+                  {blogDetailsData?.data?.data?.data?.blog?.sub_categories?.map(
+                    (item: any) => (
+                      <p
+                        onClick={() => {
+                          navigate("/search");
+                          setSearchString(item.name);
+                        }}
+                        className={`text-dark-color dark:text-white bg-gray-500/20  cursor-pointer text-[13px] hover:underline p-1 rounded-full `}
+                      >
+                        {item.name}
+                      </p>
+                    )
+                  )}
+                </div>
                 {/* comment */}
                 <div className="flex w-full flex-col pt-3">
                   <div className=" flex items-center justify-between">
-                    <h2 className="text-lg  font-semibold dark:text-gray-300">Comment</h2>
+                    <h2 className="text-lg  font-semibold dark:text-gray-300">
+                      Comment
+                    </h2>
                     <p
                       onClick={() => setSeeAllComments(!seeAllComments)}
                       className="font-medium text-main-color cursor-pointer"
@@ -203,74 +221,89 @@ const BlogDetail: React.FC = () => {
                       ? blogDetailsData?.data?.data?.data?.blog?.comments
                           ?.slice(0, 2)
                           ?.map((comment: any) => (
-                            <div className={`border p-3  rounded-sm border-dark-color/70 dark:border-gray-500 w-full ${seeMore ? "h-fit" : "h-full"}`}>
-                              <div className="flex items-center space-x-2">
+                            <div
+                              className={`border p-3  rounded-sm border-dark-color/50 dark:border-gray-500 w-full ${
+                                seeMore ? "h-fit" : "h-full"
+                              }`}
+                            >
+                              <div className="flex items-start space-x-2">
                                 <img
                                   src={comment.author.profile_photo_url}
                                   alt=""
-                                  className="rounded-full"
+                                  className="rounded-full bg-main-bg h-12 w-12 "
                                 />
                                 <div className="flex flex-col items-start space-y-1">
                                   <h3 className="capitalize font-semibold dark:text-white">
                                     {comment.author.name}
                                   </h3>
-                                  <p className="text-main-color text-normal dark:text-gray-300 text[13px]">
+                                  <p className="text-gray-400 dark:text-white text-normal text-[12px]">
                                     {comment.created_at}
+                                  </p>
+                                  <p
+                                    className={`text-gray-500 dark:text-gray-300  text-[15px]`}
+                                  >
+                                    {seeMore && selectedComment === comment.id
+                                      ? comment.body
+                                      : comment.body.slice(0, 90)}
+                                    {comment.body?.length > 90 && (
+                                      <span
+                                        onClick={() => {
+                                          setSelectedComment(comment.id);
+                                          setSeeMore(!seeMore);
+                                        }}
+                                        className="text-main-color cursor-pointer  font-medium text-[13px]"
+                                      >
+                                        {seeMore &&
+                                        selectedComment === comment.id
+                                          ? "...see less"
+                                          : "...see more"}
+                                      </span>
+                                    )}
                                   </p>
                                 </div>
                               </div>
-                              <p className={`text-gray-500 dark:text-gray-300`}>
-                                {seeMore && selectedComment === comment.id
-                                  ? comment.body
-                                  : comment.body.slice(1, 150)}
-                                {comment.body?.length > 150 && <span
-                                  onClick={() => {
-                                    setSelectedComment(comment.id);
-                                    setSeeMore(!seeMore);
-                                  }}
-                                  className="text-main-color/70 cursor-pointer font-medium text-[15px]"
-                                >
-                                  {seeMore && selectedComment === comment.id
-                                    ? "...ShowLess"
-                                    : "...ShowMore"}
-                                </span>}
-                              </p>
                             </div>
                           ))
                       : blogDetailsData?.data?.data?.data?.blog?.comments?.map(
                           (comment: any) => (
-                            <div className={`border p-3  rounded-sm border-dark-color/70 w-full  ${seeMore ? "h-fit" : "h-full"}`}>
-                              <div className="flex items-center space-x-2">
+                            <div
+                              className={`border p-3  rounded-sm border-dark-color/50 w-full  dark:border-gray-500  ${
+                                seeMore ? "h-fit" : "h-full"
+                              }`}
+                            >
+                              <div className="flex items-start space-x-2">
                                 <img
                                   src={comment.author.profile_photo_url}
                                   alt=""
-                                  className="rounded-full"
+                                  className="rounded-full bg-main-bg h-12 w-12 "
                                 />
                                 <div className="flex flex-col items-start space-y-1">
-                                  <h3 className="capitalize font-semibold">
+                                  <h3 className="capitalize font-semibold dark:text-white">
                                     {comment.author.name}
                                   </h3>
-                                  <p className="text-main-color text-normal">
+                                  <p className="text-gray-400 dark:text-white text-normal text-[12px]">
                                     {comment.created_at}
+                                  </p>
+                                  <p
+                                    className={`text-gray-500 dark:text-gray-300  text-[15px]`}
+                                  >
+                                    {seeMore && selectedComment === comment.id
+                                      ? comment.body
+                                      : comment.body.slice(0, 90)}
+                                    <span
+                                      onClick={() => {
+                                        setSelectedComment(comment.id);
+                                        setSeeMore(!seeMore);
+                                      }}
+                                      className="text-main-color cursor-pointer font-medium text-[13px] "
+                                    >
+                                      {seeMore && selectedComment === comment.id
+                                        ? "...see less"
+                                        : "...see more"}
+                                    </span>
                                   </p>
                                 </div>
                               </div>
-                              <p className={`text-gray-500 `}>
-                                {seeMore && selectedComment === comment.id
-                                  ? comment.body
-                                  : comment.body.slice(1, 150)}
-                                <span
-                                  onClick={() => {
-                                    setSelectedComment(comment.id);
-                                    setSeeMore(!seeMore);
-                                  }}
-                                  className="text-main-color/70 cursor-pointer font-medium text-[15px]"
-                                >
-                                  {seeMore && selectedComment === comment.id
-                                    ? "...ShowLess"
-                                    : "...ShowMore"}
-                                </span>
-                              </p>
                             </div>
                           )
                         )}
@@ -279,11 +312,14 @@ const BlogDetail: React.FC = () => {
                 {/* write comment */}
                 <form
                   onSubmit={handleComment}
-                  className="flex flex-col items-start space-y-2 w-full"
+                  className="flex flex-col items-start space-y-2 w-full pb-3"
                 >
-                  <h2 className="text-xl  font-bold dark:text-white">Write Your Comment</h2>
+                  <h2 className="text-xl  font-bold dark:text-white">
+                    Write Your Comment
+                  </h2>
                   <textarea
                     disabled={commentMutation.isLoading}
+                    placeholder="Type your comment..."
                     required
                     value={commentValue}
                     onChange={(e) => setCommentValue(e.target.value)}
@@ -305,8 +341,10 @@ const BlogDetail: React.FC = () => {
                 </form>
               </div>
               {/* related */}
-              <div className="md:col-span-4">
-                <h1 className="text-xl  font-bold pb-3 dark:text-white">Most Popular</h1>
+              <div className="md:col-span-5">
+                <h1 className="text-xl  font-bold pb-3 dark:text-white">
+                  Most Popular
+                </h1>
                 <div className="flex flex-col items-start space-y-2 ">
                   {blogDetailsData?.data?.data?.data?.related?.map(
                     (item: any) => (

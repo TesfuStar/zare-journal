@@ -198,7 +198,7 @@ const HomeSection = () => {
                     <img
                       src={blog.blog_cover.original_url}
                       alt=""
-                      className="h-full  md:h-44 cursor-pointer hover:scale-[1.03] w-36 md:w-56 
+                      className="h-full w-full md:h-44 cursor-pointer hover:scale-[1.03]  
                    object-cover transition-all duration-500 ease-out"
                     />
                   )}

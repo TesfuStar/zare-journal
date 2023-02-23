@@ -2,50 +2,57 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { Navbar, Footer } from "./components";
 import { useAuth } from "./context/Auth";
 import React, { useEffect, Suspense } from "react";
-import {
-  HomePage,
-  BlogDetail,
-  Search,
-  Category,
-  Account,
-  SignIn,
-  HomeSection,
-} from "./pages";
+// import {
+//   HomePage,
+//   BlogDetail,
+//   Search,
+//   Category,
+//   Account,
+//   SignIn,
+//   HomeSection,
+// } from "./pages";
 import SideMenu from "./pages/profile/components/SideMenu";
 import { useThemeContext } from "./context/ThemeContext";
 import { PulseLoader } from "react-spinners";
 
-// const HomePage = React.lazy<React.FC>(() =>
-//   import("./pages/home/HomePage").then((module) => ({
-//     default: module.default,
-//   }))
-// );
-// const Search = React.lazy<React.FC>(() =>
-//   import("./pages/search/Search").then((module) => ({
-//     default: module.default,
-//   }))
-// );
-// const Category = React.lazy<React.FC>(() =>
-//   import("./pages/category/Category").then((module) => ({
-//     default: module.default,
-//   }))
-// );
-// const BlogDetail = React.lazy<React.FC>(() =>
-//   import("./pages/Details/BlogDetail").then((module) => ({
-//     default: module.default,
-//   }))
-// );
-// const Account = React.lazy<React.FC>(() =>
-//   import("./pages/profile/Account").then((module) => ({
-//     default: module.default,
-//   }))
-// );
+const HomeSection = React.lazy<React.FC>(() =>
+  import("./pages/home/HomeSection").then((module) => ({
+    default: module.default,
+  }))
+);
 
-// const SignIn = React.lazy<React.FC>(() =>
-//   import("./pages/Auth/SignIn").then((module) => ({
-//     default: module.default,
-//   }))
-// );
+
+const HomePage = React.lazy<React.FC>(() =>
+  import("./pages/home/HomePage").then((module) => ({
+    default: module.default,
+  }))
+);
+const Search = React.lazy<React.FC>(() =>
+  import("./pages/search/Search").then((module) => ({
+    default: module.default,
+  }))
+);
+const Category = React.lazy<React.FC>(() =>
+  import("./pages/category/Category").then((module) => ({
+    default: module.default,
+  }))
+);
+const BlogDetail = React.lazy<React.FC>(() =>
+  import("./pages/Details/BlogDetail").then((module) => ({
+    default: module.default,
+  }))
+);
+const Account = React.lazy<React.FC>(() =>
+  import("./pages/profile/Account").then((module) => ({
+    default: module.default,
+  }))
+);
+
+const SignIn = React.lazy<React.FC>(() =>
+  import("./pages/Auth/SignIn").then((module) => ({
+    default: module.default,
+  }))
+);
 const App = () => {
   const { user, token, checked } = useAuth();
   const { currentMode, setCurrentMode } = useThemeContext();

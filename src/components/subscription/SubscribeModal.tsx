@@ -71,6 +71,7 @@ const SubscribeModal = () => {
               placeholder="Email"
               className={`w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0 bg-transparent ${currentMode === "Dark" ? "text-white" : ""}`}
               required
+             pattern="[a-zA-Z0-9._%+-]+@gmail\.com$"
             />
             <button
               className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white

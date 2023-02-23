@@ -91,13 +91,13 @@ export default function Drawer({ isDrawerOpen, setIsDrawerOpen }: Props) {
               <p className="cursor-pointer dark:text-white text-[15px]">search</p>
             </div>
             {!user && !token ? (
-              <div className="pt-3">
-                <p
-                  onClick={() => navigate("/signin")}
-                  className="text-dark-color dark:text-white font-medium text-[15px] cursor-pointer"
-                >
-                  SIGN IN
-                </p>
+              <div className="pt-3 w-full">
+                 <Link
+                    to={"/signin"}
+                    className="w-full font-medium text-lg dark:text-white border-b border-gray-300 dark:border-gray-700 pb-2"
+                  >
+                     SIGN IN
+                  </Link>
               </div>
             ) : (
               <div className="pt-3">
@@ -105,7 +105,7 @@ export default function Drawer({ isDrawerOpen, setIsDrawerOpen }: Props) {
                   onClick={() => navigate("/profile/account")}
                   className="text-dark-color dark:text-white font-medium text-[15px] cursor-pointer"
                 >
-                  SIGN OUT
+                  Account
                 </p>
               </div>
             )}

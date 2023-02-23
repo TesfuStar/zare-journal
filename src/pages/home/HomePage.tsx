@@ -115,6 +115,7 @@ const HomePage: React.FC = () => {
   function MostRecent() {
     return (
       <>
+      <h1 className=" pb-3  cursor-pointer font-semibold dark:text-gray-300">Most Recent</h1>
         {homePageData.isFetched ? (
           <div className="flex flex-col items-start space-y-2 gap-3">
             {homePageData?.data?.data?.data?.most_recent?.map((item: any) => (
@@ -127,11 +128,11 @@ const HomePage: React.FC = () => {
                   <h4 className=" text-[15px]  cursor-pointer font-medium dark:text-gray-300">
                     {item.category.name}
                   </h4>
-                  <p className="text-gray-400 text-sm font-light pt-3 dark:text-gray-300">
-                    {item.created_at}
-                  </p>
                   <h3 className="font-semibold text-gray-900 dark:text-white">
                     {item.title}
+                  <p className="text-gray-400 text-sm font-light  dark:text-gray-300">
+                    {item.created_at}
+                  </p>
                   </h3>
                 </div>
                 {item.blog_cover.mime_type.includes("video") ? (
@@ -247,12 +248,16 @@ const HomePage: React.FC = () => {
         {/* todays pick */}
         {homePageData.isFetched ? (
           <>
-            <h1 className="border-b border-gray-300 font-bold mb-3 text-lg dark:text-gray-100">
+            <div className="hidden md:grid grid-col-1 md:grid-cols-12 gap-3 md:gap-5 order-last">
+            <div className="md:col-span-8  w-full">
+              <div className="flex flex-col w-full items-start space-y-1 ">
+
+            <h1 className="border-b w-full border-gray-300 font-bold mb-3 text-lg dark:text-gray-100">
               Today’s Pick
             </h1>
-            <div className="hidden md:grid grid-col-1 md:grid-cols-12 gap-3 md:gap-5 order-last">
-              <div className="md:col-span-8 grid grid-rows-4 grid-flow-col gap-3 ">
-                {todaysPick?.map((item: any, index: number) => (
+            <div className="w-full grid grid-rows-4 grid-flow-col gap-3">
+
+            {todaysPick?.map((item: any, index: number) => (
                   <div
                     onClick={() =>
                       !item.blog_cover.mime_type.includes("video") &&
@@ -265,7 +270,7 @@ const HomePage: React.FC = () => {
                         : index === 1
                         ? "row-span-2 w-52"
                         : "row-span-4 h-full w-full"
-                    } flex flex-col items-start space-y-1 overflow-hidden`}
+                    } flex flex-col items-start space-y-1 overflow-hidden w-full`}
                   >
                     {item.blog_cover.mime_type.includes("video") ? (
                       <div
@@ -319,6 +324,9 @@ const HomePage: React.FC = () => {
                     </p>
                   </div>
                 ))}
+            </div>
+              </div>
+              
               </div>
               <div className="md:col-span-4 w-full">
                 <MostRecent />

@@ -40,7 +40,7 @@ export default function MegaMenu({ isMegaMenuOpen, setIsMegaMenuOpen }: Props) {
         >
           <section
             className={
-              "absolute h-fit  z-50 bg-white  flex-grow p-5 max-w-7xl mx-auto  w-full  top-[100px]  flex items-center justify-center delay-400 duration-500 ease-in-out transition-all transform  " +
+              "absolute h-fit  z-50 bg-white dark:bg-gray-800  flex-grow p-5 max-w-7xl mx-auto  w-full  top-[100px]  flex items-center justify-center delay-400 duration-500 ease-in-out transition-all transform  " +
               (isMegaMenuOpen ? "translate-y-0 " : " translate-y-20")
             }
           >
@@ -51,7 +51,7 @@ export default function MegaMenu({ isMegaMenuOpen, setIsMegaMenuOpen }: Props) {
                   onClick={() => setIsMegaMenuOpen(false)}
                   to={`/categories/${category.id}`}
                   className="group whitespace-nowrap flex items-center 
-                 text-[15px] font-medium rounded-md"
+                 text-[15px] font-medium rounded-md dark:text-white"
                 >
                   {category.name}
                 </Link>

@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 declare var URL: any;
 const Account = () => {
   const nameRef = useRef<HTMLInputElement>(null);
-  const { user, token, logout,login } = useAuth();
+  const { user, token, logout, login } = useAuth();
   const [name, setName] = useState<string>("");
   const [image, setImage] = useState(null);
   const [selectedImage, setSelectedImage] = useState();
@@ -78,7 +78,7 @@ const Account = () => {
       image && formData.append("profile_photo", image[0]);
       updateProfileMutation.mutate(formData, {
         onSuccess: (responseData: any) => {
-          login(token,responseData?.data?.data)
+          login(token, responseData?.data?.data);
           toast.info("success", options);
           setSIsUpdatingPassword(false);
           setSIsEditName(false);
@@ -116,7 +116,9 @@ const Account = () => {
               </button>
             </form>
           ) : (
-            <h1 className="font-semibold text-gray-700 dark:text-white">{user?.name}</h1>
+            <h1 className="font-semibold text-gray-700 dark:text-white">
+              {user?.name}
+            </h1>
           )}
           <button
             onClick={() => {

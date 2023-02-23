@@ -114,7 +114,7 @@ const Footer: React.FC = () => {
               <input
                 type="email"
                 ref={emailRef}
-                
+                pattern="[a-zA-Z0-9._%+-]+@gmail\.com$"
                 placeholder="Email"
                 className="w-full p-2 rounded-sm border border-gray-300 focus:outline-none ring-0 bg-transparent dark:border-gray-500 dark:text-white"
                 required

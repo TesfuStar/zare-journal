@@ -8,10 +8,12 @@ import parse from "html-react-parser";
 import useBlogSearch from "./components/useBlogSearch";
 import ReactPlayer from "react-player";
 import Header from "../../components/Header";
+import { useHome } from "../../context/HomeContext";
 const Search: React.FC = () => {
   const homeRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [searchString, setSearchString] = useState<string>("");
+  // const [searchString, setSearchString] = useState<string>("");
+  const {searchString, setSearchString} =useHome()
   const [error, setError] = useState<string>("");
   const [search, setSearch] = useState<number>(1);
   const [sort, setSort] = useState("latest");
@@ -108,15 +110,15 @@ const Search: React.FC = () => {
 
   function SubCategories() {
     return (
-      <div>
+      <div className="">
         {subCategoriesData.isFetched ? (
-          <div className="flex items-center space-x-2 overflow-x-scroll scrollbar-hide">
+          <div className="flex items-center gap- flex-wrap">
             {subCategoriesData?.data?.data?.data
-              ?.slice(0, 10)
+              ?.slice(0, 100)
               ?.map((item: any) => (
                 <p
                   onClick={() => setSearchString(item.name)}
-                  className="text-dark-color dark:text-white cursor-pointer text-sm hover:underline bg-gray-500/20 p-1 rounded-full"
+                  className={`text-dark-color dark:text-white ${searchString === item.name ? "bg-main-color/50" : "bg-gray-500/20 "} cursor-pointer text-sm hover:underline p-1 rounded-full font-medium`}
                 >
                   {item.name}
                 </p>
@@ -157,11 +159,12 @@ const Search: React.FC = () => {
               search
             </button>
           </div>
-          <div className="max-w-5xl mx-auto pt-5 w-full flex items-end justify-end self-end">
+          <div className="max-w-5xl mx-auto pt-5 w-full flex items-start justify-between ">
+          <SubCategories />
             <select
               name=""
               onChange={(e) => setSort(e.target.value)}
-              className="p p-2 font-medium text-gray-500  rounded-sm ring-0 w-fit flex items-end justify-end self-end px-5
+              className="p p-2 font-medium text-gray-500  rounded-sm ring-0 w-fit  px-5
                bg-transparent border-gray-400 border focus:outline-none focus:border-gray-400 dark:text-gray-200"
             >
               <option value="latest" className="text-gray-700 p-2">
@@ -171,7 +174,7 @@ const Search: React.FC = () => {
             </select>
           </div>
         </div>
-        <SubCategories />
+        
         {/* results */}
         {searchString && (
           <div className="flex items-start justify-start self-start pt-5">

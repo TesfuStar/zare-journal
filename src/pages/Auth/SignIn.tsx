@@ -130,7 +130,7 @@ const SignIn = () => {
       <div className="max-w-2xl mx-auto w-full min-h-screen flex items-center justify-center p-3">
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-1 bg-white dark:bg-gray-800">
           <img src={Frame} alt="" className="h-full hidden md:flex" />
-          <div className="w-full relative flex flex-col item-start justify-center space-y-2 pr-3 py-5   md:bg-transparent p-4">
+          <div className="bg-white dark:bg-gray-800 w-full relative flex flex-col item-start justify-center space-y-2 pr-3 py-5   md:bg-transparent p-4">
             <p
               onClick={() => {
                 isCoverPage
@@ -145,7 +145,7 @@ const SignIn = () => {
             </p>
             {/*  */}
             {isCoverPage ? (
-              <div className="flex flex-col items-start space-y-1 w-full">
+              <div className="flex flex-col items-start space-y-1 w-full ">
                 <p className="text-normal dark:text-white">Welcome to zare-journal </p>
                 <h3 className="font-semibold text-lg dark:text-white">
                   Please Create an account.

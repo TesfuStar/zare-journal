@@ -8,6 +8,7 @@ export function useHome() {
 
 export function HomeProvider({ children }: any) {
   const [checked, setChecked] = useState<boolean>(false);
+  const [searchString, setSearchString] = useState<string>("");
   const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] =
     useState<boolean>(false);
   const [isSubscriptionSuccess, setIsSubscriptionSuccess] =
@@ -30,7 +31,7 @@ export function HomeProvider({ children }: any) {
         email,
         setEmail,
         isSubscriptionSuccess,
-        setIsSubscriptionSuccess,
+        setIsSubscriptionSuccess,searchString, setSearchString
       }}
     >
       {children}

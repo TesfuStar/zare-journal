@@ -92,7 +92,7 @@ const CategorySelection = ({ emailRef, email }: Props) => {
         {
           onSuccess: (responseData: any) => {
             setIsSubscriptionModalOpen(false);
-            localStorage.setItem("zare-journal-subscriber","1")
+            localStorage.setItem("zare-journal-subscriber", "1");
           },
           onError: (err: any) => {
             // setError("something went wrong");
@@ -150,18 +150,20 @@ const CategorySelection = ({ emailRef, email }: Props) => {
             ))}
           </div>
 
-          <button
-            disabled={categoryAddMutation.isLoading}
-            className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white flex items-center justify-center
+          <div className="flex items-end justify-end w-full">
+            <button
+              disabled={categoryAddMutation.isLoading}
+              className=" rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white flex items-center justify-center
                      hover:bg-main-bg/80  w-44"
-            onClick={handleSubmit}
-          >
-            {categoryAddMutation.isLoading ? (
-              <PulseLoader color="#fff" />
-            ) : (
-              "Send"
-            )}
-          </button>
+              onClick={handleSubmit}
+            >
+              {categoryAddMutation.isLoading ? (
+                <PulseLoader color="#fff" />
+              ) : (
+                "Done"
+              )}
+            </button>
+          </div>
         </div>
       ) : (
         <></>
