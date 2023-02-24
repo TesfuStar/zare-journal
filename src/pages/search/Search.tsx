@@ -191,8 +191,8 @@ const Search: React.FC = () => {
         {/* results */}
         {searchString && (
           <div className="flex items-start justify-start self-start pt-5">
-            <h4 className="font-medium text-center dark:text-gray-300">
-              search results for {searchString}
+            <h4 className="font-medium text-center dark:text-gray-300 ">
+              Search results for: "{searchString}"
             </h4>
           </div>
         )}
@@ -327,7 +327,7 @@ const Search: React.FC = () => {
                     : navigate(`/blog/${blog.id}`)
                 }
                 key={blog.id}
-                className="flex items-start pb-2 space-x-2 cursor-pointer overflow-hidden border-b border-gray-300 dark:border-gray-600"
+                className="flex items-start pb-2 space-x-2 cursor-pointer overflow-hidden border-b border-gray-300 dark:border-gray-600 w-full"
               >
                 {blog.blog_cover.mime_type.includes("video") ? (
                   <div className="">
@@ -336,6 +336,13 @@ const Search: React.FC = () => {
                       controls={true}
                       width={"80px"}
                       height={"80px"}
+                      light={
+                        <img
+                          src={blog.thumbnail.original_url}
+                          alt="My video thumbnail"
+                          className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                        />
+                      }
                     />
                   </div>
                 ) : (
@@ -347,7 +354,7 @@ const Search: React.FC = () => {
                   />
                 )}
 
-                <div>
+                <div className="">
                   <h4 className=" text-[15px] p-1 cursor-pointer dark:text-gray-200">
                     {blog.category.name}
                   </h4>

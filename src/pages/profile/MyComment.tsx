@@ -39,11 +39,7 @@ const MyComment = () => {
             return (
               <div
                 ref={lastCommentElementRef}
-                onClick={() =>
-                  comment.blog.blog_cover.mime_type.includes("video")
-                    ? navigate(`/video/${comment.blog_id}`)
-                    : navigate(`/blog/${comment.blog_id}`)
-                }
+             
                 key={index}
                 className="border p-3  rounded-sm border-dark-color/50 dark:border-gray-500 w-full"
               >
@@ -54,15 +50,19 @@ const MyComment = () => {
                     className="rounded-full bg-main-bg h-12 w-12 "
                   />
                   <div className="flex flex-col items-start space-y-1">
-                    <h3 className="capitalize font-semibold dark:text-white">
-                      {comment.author.name}
+                    <h3 
+                       onClick={() =>
+                        comment.blog.blog_cover.mime_type.includes("video")
+                          ? navigate(`/video/${comment.blog_id}`)
+                          : navigate(`/blog/${comment.blog_id}`)
+                      }
+                    className="capitalize font-semibold dark:text-white cursor-pointer hover:underline">
+                      Article: {comment.blog.title}
                     </h3>
                     <p className="text-gray-400 dark:text-white text-normal text-[12px]">
-                      {comment.created_at}
+                      {comment.diffForHumans}
                     </p>
-                    <h3 className="capitalize font-semibold dark:text-white">
-                      {comment.blog.title}
-                    </h3>
+
                     <p
                       className={`text-gray-500 dark:text-gray-300  text-[15px]`}
                     >
@@ -90,11 +90,7 @@ const MyComment = () => {
           } else {
             return (
               <div
-                onClick={() =>
-                  comment.blog.blog_cover.mime_type.includes("video")
-                    ? navigate(`/video/${comment.blog_id}`)
-                    : navigate(`/blog/${comment.blog_id}`)
-                }
+             
                 key={index}
                 className="border p-3  rounded-sm border-dark-color/50 dark:border-gray-500 w-full"
               >
@@ -105,16 +101,19 @@ const MyComment = () => {
                     className="rounded-full bg-main-bg h-12 w-12 "
                   />
                   <div className="flex flex-col items-start space-y-1">
-                    <h3 className="capitalize font-semibold dark:text-white">
-                      {comment.author.name}
+                    <h3
+                       onClick={() =>
+                        comment.blog.blog_cover.mime_type.includes("video")
+                          ? navigate(`/video/${comment.blog_id}`)
+                          : navigate(`/blog/${comment.blog_id}`)
+                      }
+                    className="capitalize font-semibold dark:text-white cursor-pointer hover:underline">
+                    Article: {comment.blog.title}
                     </h3>
                     <p className="text-gray-400 dark:text-white text-normal text-[12px]">
-                      {comment.created_at}
+                      {comment.diffForHumans}
                     </p>
 
-                    <h3 className="capitalize font-semibold dark:text-white">
-                      {comment.blog.title}
-                    </h3>
                     <p
                       className={`text-gray-500 dark:text-gray-300  text-[15px]`}
                     >

@@ -13,6 +13,7 @@ interface Comment {
   body: string;
   blog_id: string;
   created_at: string;
+  diffForHumans:string;
   author: {
     name: string;
     profile_photo_url: string;

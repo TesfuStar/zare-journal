@@ -1,3 +1,4 @@
+// @typescript-eslint/no-unused-vars
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { BiChevronDown } from "react-icons/bi";
@@ -111,7 +112,7 @@ const SideMenu = () => {
                           className=" text-[#bdcadf]"
                           size={20}
                         />
-                        <h1 className={"text-white "}>Logout</h1>
+                        <h1 className={"dark:text-white "}>Logout</h1>
                       </div>
                     </Menu.Item>
                   </div>

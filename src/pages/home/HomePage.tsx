@@ -147,7 +147,7 @@ const HomePage: React.FC = () => {
                       url={item.blog_cover.original_url}
                       controls={true}
                       width={"100%"}
-                      height={"100%"}
+                      height={"224px"}
                       light={
                         <img
                           src={item.thumbnail.original_url}
@@ -410,14 +410,14 @@ const HomePage: React.FC = () => {
                               }
                               controls={true}
                               width={"100%"}
-                              height={"100%"}
+                              height={"224px"}
                             />
                           </div>
                         ) : (
                           <img
                             src={article.blog_cover.original_url}
                             alt=""
-                            className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                            className="object-cover w-full h-56  hover:scale-105 duration-300"
                             // className="w-full"
                           />
                         )}

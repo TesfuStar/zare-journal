@@ -221,14 +221,17 @@ const VideoDetail: React.FC = () => {
                     0 && (
                     <div className=" flex items-center justify-between">
                       <h2 className="text-lg  font-semibold dark:text-gray-300">
-                        Comment
+                        Comment({blogDetailsData?.data?.data?.data?.blog?.comment_count})
                       </h2>
-                      <p
-                        onClick={() => setSeeAllComments(!seeAllComments)}
-                        className="font-medium text-main-color cursor-pointer"
-                      >
-                        {!seeAllComments ? "See All" : "See less"}
-                      </p>
+                      {blogDetailsData?.data?.data?.data?.blog?.comments
+                        ?.length > 10 && (
+                        <p
+                          onClick={() => setSeeAllComments(!seeAllComments)}
+                          className="font-medium text-main-color cursor-pointer"
+                        >
+                          {!seeAllComments ? "See All" : "See less"}
+                        </p>
+                      )}
                     </div>
                   )}
                   <div className="grid grid-cols-1 gap-3 w-full">
@@ -252,7 +255,7 @@ const VideoDetail: React.FC = () => {
                                     {comment.author.name}
                                   </h3>
                                   <p className="text-gray-400 dark:text-white text-normal text-[12px]">
-                                    {comment.created_at}
+                                    {comment.diffForHumans}
                                   </p>
                                   <p
                                     className={`text-gray-500 dark:text-gray-300  text-[15px]`}
@@ -297,7 +300,7 @@ const VideoDetail: React.FC = () => {
                                     {comment.author.name}
                                   </h3>
                                   <p className="text-gray-400 dark:text-white text-normal text-[12px]">
-                                    {comment.created_at}
+                                    {comment.diffForHumans}
                                   </p>
                                   <p
                                     className={`text-gray-500 dark:text-gray-300  text-[15px]`}

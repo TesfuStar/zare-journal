@@ -1,3 +1,4 @@
+// @typescript-eslint/no-unused-vars
 import React, { useState, useRef } from "react";
 import { useAuth } from "../../../context/Auth";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";

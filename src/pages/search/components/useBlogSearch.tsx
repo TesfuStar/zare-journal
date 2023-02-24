@@ -16,6 +16,9 @@ interface Blog {
     original_url: string;
     mime_type:string;
   };
+  thumbnail:{
+    original_url: string;
+  }
   created_at: string;
   category: {
     name: string;
