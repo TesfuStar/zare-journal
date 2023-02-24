@@ -57,6 +57,7 @@ export default function Drawer({ isDrawerOpen, setIsDrawerOpen }: Props) {
             ) : (
               <img src={DarkLogo} alt="" className="h-10" />
             )}
+           
             <FaTimes
               size={20}
               onClick={() => {
