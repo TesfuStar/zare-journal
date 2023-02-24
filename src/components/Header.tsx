@@ -49,7 +49,7 @@ const Header: React.FC = () => {
           <div className="w-full flex items-start justify-start overflow-x-hidden  ">
             <div className="w-full  flex items-start space-x-8 overflow-x-hidden flex-grow">
               {categoriesData?.data?.data?.data
-                ?.slice(0, 4)
+                ?.slice(0, 5)
                 ?.map((category: any) => (
                   <Link
                     key={category.id}
@@ -61,12 +61,12 @@ const Header: React.FC = () => {
                   </Link>
                 ))}
             </div>
-            <div
+           {categoriesData?.data?.data?.data?.length > 5 && <div
               onClick={() => setIsMegaMenuOpen(!isMegaMenuOpen)}
               className=" rounded-sm cursor-pointer"
             >
               <BsThreeDotsVertical className="dark:text-white" />
-            </div>
+            </div>}
           </div>
         ) : (
           <div></div>

@@ -40,12 +40,12 @@ export default function MegaMenu({ isMegaMenuOpen, setIsMegaMenuOpen }: Props) {
         >
           <section
             className={
-              "absolute h-fit  z-50 bg-white dark:bg-gray-800  flex-grow p-5 max-w-7xl mx-auto  w-full  top-[100px]  flex items-center justify-center delay-400 duration-500 ease-in-out transition-all transform  " +
+              "absolute h-fit  z-50 bg-white dark:bg-gray-800  flex-grow p-5   max-w-5xl w-full  top-[55px]  flex items-center justify-center delay-400 duration-500 ease-in-out transition-all transform  " +
               (isMegaMenuOpen ? "translate-y-0 " : " translate-y-20")
             }
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full">
-              {categoriesData?.data?.data?.data?.map((category: any) => (
+              {categoriesData?.data?.data?.data?.slice(5, categoriesData?.data?.data?.data?.length)?.map((category: any) => (
                 <Link
                   key={category.id}
                   onClick={() => setIsMegaMenuOpen(false)}

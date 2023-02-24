@@ -259,7 +259,7 @@ const HomePage: React.FC = () => {
               />
             </Helmet>
             <div className="hidden md:grid grid-col-1 md:grid-cols-12 gap-3 md:gap-5 order-last">
-              <div className="md:col-span-8  w-full">
+              <div className="md:col-span-9  w-full">
                 <div className="flex flex-col w-full items-start space-y-1 ">
                   <h1 className="border-b w-full border-gray-300 font-bold mb-3 text-lg dark:text-gray-100">
                     Today’s Pick
@@ -274,10 +274,10 @@ const HomePage: React.FC = () => {
                         key={index}
                         className={`${
                           index === 0
-                            ? "row-span-2 w-52"
+                            ? "row-span-2 w-[270px] "
                             : index === 1
-                            ? "row-span-2 w-52"
-                            : "row-span-4 h-full w-full"
+                            ? "row-span-2 w-[270px]"
+                            : "row-span-4 h-full w-full "
                         } flex flex-col items-start space-y-1 overflow-hidden w-full`}
                       >
                         {item.blog_cover.mime_type.includes("video") ? (
@@ -309,7 +309,7 @@ const HomePage: React.FC = () => {
                             src={item.blog_cover.original_url}
                             alt=""
                             className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                              item.index === 3 ? "h-auto " : "max-h-56 h-full  "
+                              item.index == 3 ? "h-[400px] " : "max-h-56 h-full  "
                             }`}
                             // className="w-full"
                           />
@@ -318,8 +318,8 @@ const HomePage: React.FC = () => {
                           {item.created_at}
                         </p>
                         <h3
-                          className={`font-semibold text-gray-900 dark:text-white ${
-                            item.index === 3 ? "md:text-3xl lg:text-6xl " : " "
+                          className={`font-semibold text-gray-900 dark:text-white w-full ${
+                            item.index === 3 ? "md:text-3xl lg:text-5xl  " : " "
                           } `}
                         >
                           {item.title}
@@ -335,7 +335,7 @@ const HomePage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="md:col-span-4 w-full">
+              <div className="md:col-span-3 w-full">
                 <MostRecent />
               </div>
               {/* most recent */}

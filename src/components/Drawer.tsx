@@ -50,7 +50,7 @@ export default function Drawer({ isDrawerOpen, setIsDrawerOpen }: Props) {
           (isDrawerOpen ? " translate-x-0 " : " translate-x-full ")
         }
       >
-        <article className="relative w-screen max-w-lg pb-10 flex flex-col space-y-6 overflow-y-scroll h-full ">
+        <article className="pl-3 relative w-screen max-w-lg pb-10 flex flex-col space-y-6 overflow-y-scroll h-full ">
           <header className="fixed flex items-center justify-between p-4 font-bold text-lg  w-full">
             {currentMode === "Light" ? (
               <img src={Logo} alt="" className="h-10" />
@@ -85,19 +85,24 @@ export default function Drawer({ isDrawerOpen, setIsDrawerOpen }: Props) {
             )}
           </div>
           {/*  */}
-          <div onClick={() => navigate("/search")} className="px-4">
-            <div className="flex items-center space-x-2 border-b border-gray-300 dark:border-gray-700 pb-2">
+          <div className="px-4">
+            <div
+              onClick={() => navigate("/search")}
+              className="flex items-center space-x-2 border-b border-gray-300 dark:border-gray-700 pb-2"
+            >
               <BiSearch size={16} className="cursor-pointer dark:text-white" />
-              <p className="cursor-pointer dark:text-white text-[15px]">search</p>
+              <p className="cursor-pointer dark:text-white text-[15px]">
+                search
+              </p>
             </div>
             {!user && !token ? (
               <div className="pt-3 w-full">
-                 <Link
-                    to={"/signin"}
-                    className="w-full font-medium text-lg dark:text-white border-b border-gray-300 dark:border-gray-700 pb-2"
-                  >
-                     SIGN IN
-                  </Link>
+                <Link
+                  to={"/signin"}
+                  className="w-full font-medium text-lg dark:text-white border-b border-gray-300 dark:border-gray-700 pb-2"
+                >
+                  SIGN IN
+                </Link>
               </div>
             ) : (
               <div className="pt-3">

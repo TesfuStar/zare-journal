@@ -56,7 +56,7 @@ const Category: React.FC = () => {
       <div>
         {(blogCategoryData?.isFetched && blogCategoryData?.isSuccess) && (
           <Helmet>
-            <title>ZareJournal-{trendingStory[0]?.title}</title>
+            <title>{`ZareJournal-${trendingStory[0]?.title}`}</title>
             <meta
               name="description"
               content={`${trendingStory[0]?.sub_heading}`}

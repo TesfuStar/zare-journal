@@ -14,7 +14,7 @@ import { useAuth } from "../../context/Auth";
 import SubscribeBanner from "./components/SubscribeBanner";
 import useHomeSection from "./components/useHomeSection";
 import SearchPageLoading from "../../utils/SearchPageLoading";
-
+import { Helmet } from "react-helmet";
 const HomeSection = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -46,6 +46,17 @@ const HomeSection = () => {
   function TrendingStory() {
     return (
       <div className=" w-full">
+        <Helmet>
+            <title>{`${todayPick[0]?.title}`}</title>
+            <meta
+              name="description"
+              content={`${todayPick[0]?.sub_heading}`}
+            />
+            <meta
+              property="og:image"
+              content={todayPick[0]?.blog_cover?.original_url}
+            />
+          </Helmet>
         <div className="w-full hidden md:flex">
           <div className="grid grid-rows-5 grid-flow-col gap-4 w-full">
             {todayPick?.map((item: any, index: number) => (
@@ -111,13 +122,13 @@ const HomeSection = () => {
             ))}
           </div>
         </div>
-        {loading && (
+        {/* {loading && (
           <div className="hidden md:grid grid-rows-5 grid-flow-col gap-4 animate-pulse w-full">
             <div className=" w-full row-span-4 col-span-2 bg-gray-200 dark:bg-gray-600 p-20"></div>
             <div className="  w-full row-span-2 bg-gray-200 dark:bg-gray-600 p-20"></div>
             <div className=" w-full row-span-2  bg-gray-200 dark:bg-gray-600 p-20"></div>
           </div>
-        )}
+        )} */}
         {/* for small screen */}
         <div className="flex md:hidden w-full">
           <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">

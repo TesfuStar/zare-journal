@@ -14,6 +14,7 @@ interface Blog {
   id: string;
   title: string;
   body: string;
+  sub_heading:string;
   blog_cover: {
     original_url: string;
     mime_type: string;
