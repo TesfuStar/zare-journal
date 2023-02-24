@@ -104,6 +104,44 @@ const VideoDetail: React.FC = () => {
     progress: undefined,
     theme: "colored",
   };
+
+  const RelatedVideos = () => {
+    return (
+      <div className="flex flex-col items-start space-y-2">
+        {blogDetailsData?.data?.data?.data?.related?.map((item: any) => (
+          <div
+            onClick={() => navigate(`/video/${item.id}`)}
+            key={item.id}
+            className="w-full flex items-start pb-2 space-x-2 cursor-pointer overflow-hidden border-b border-gray-300 dark:border-gray-600"
+          >
+            <ReactPlayer
+              url={item.blog_cover.original_url}
+              controls={true}
+              width={"130px"}
+              height={"100px"}
+              light={
+                <img
+                  src={item.thumbnail.original_url}
+                  alt="My video thumbnail"
+                  className="object-cover w-[130px] h-[130px]  hover:scale-105 duration-300"
+                />
+              }
+              style={{ backgroundImage: "none" }}
+              // playIcon={<button>Play</button>}
+            />
+            <div>
+              <h3 className="font-semibold text-gray-900 line-clamp-2 dark:text-white">
+                {item.title}
+              </h3>
+              <p className="text-gray-400 text-sm font-light dark:text-gray-300">
+                {item.created_at}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
   return (
     <div className="bg-white dark:bg-dark-bg">
       <Header />
@@ -138,57 +176,31 @@ const VideoDetail: React.FC = () => {
                 />
               )}
             </Helmet>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-10  w-full">
-              <div className="flex flex-col items-start space-y-2">
-                <p className="text-gray-500 dark:text-gray-300 text-[15px]">
-                  {blogDetailsData?.data?.data?.data?.blog?.published_at +
-                    " • " +
-                    blogDetailsData?.data?.data?.data?.blog?.reading_time +
-                    " "}
-                  to read
-                </p>
-                <h2 className="text-xl md:text-4xl lg:text-5xl font-bold dark:text-white w-full md:w-[400px]">
-                  {blogDetailsData?.data?.data?.data?.blog?.title}
-                </h2>
-                <p className="text-gray-500 text-sm font-normal dark:text-gray-300 w-full md:w-96">
-                  {blogDetailsData?.data?.data?.data?.blog?.sub_heading}
-                </p>
-              </div>
-              {/*  */}
-              <div className="  flex items-end  justify-end self-end">
-                {blogDetailsData?.data?.data?.data?.blog.blog_cover.mime_type.includes(
-                  "video"
-                ) ? (
-                  <div className="w-full">
-                    <ReactPlayer
-                      url={
-                        blogDetailsData?.data?.data?.data?.blog?.blog_cover
-                          ?.original_url
-                      }
-                      controls={true}
-                      width={"100%"}
-                      height={"100%"}
-                    />
-                  </div>
-                ) : (
-                  <img
-                    src={
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-3 pt-10  w-full">
+              <div className="md:col-span-8 flex flex-col items-start">
+                <div className="w-full">
+                  <ReactPlayer
+                    url={
                       blogDetailsData?.data?.data?.data?.blog?.blog_cover
                         ?.original_url
                     }
-                    alt=""
-                    className="max-h-80 w-full object-cover  flex items-end  justify-end self-end"
+                    controls={true}
+                    width={"100%"}
+                    height={"100%"}
                   />
-                )}
-              </div>
-            </div>
-            {/* detail part */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-10">
-              <div className="md:col-span-7 flex flex-col items-start space-y-4">
-                <p className="text-gray-500  font-normal dark:text-gray-300 text-left">
-                  {parse(blogDetailsData?.data?.data?.data?.blog?.body)}
-                </p>
-                <div className="flex items-center gap-2 flex-wrap">
+                </div>
+                <div className="flex flex-col items-start space-y-2">
+                  <h2 className="text-xl md:text-4xl lg:text-5xl font-semibold dark:text-white w-full ">
+                    {blogDetailsData?.data?.data?.data?.blog?.title}
+                  </h2>
+                  <p className="text-gray-700 text-sm font-normal dark:text-gray-300 w-full ">
+                    {blogDetailsData?.data?.data?.data?.blog?.sub_heading}
+                  </p>
+                  <p className="text-gray-500  font-normal dark:text-gray-300 text-left pt-5">
+                    {parse(blogDetailsData?.data?.data?.data?.blog?.body)}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 flex-wrap pt-3">
                   {blogDetailsData?.data?.data?.data?.blog?.sub_categories?.map(
                     (item: any) => (
                       <p
@@ -205,18 +217,21 @@ const VideoDetail: React.FC = () => {
                 </div>
                 {/* comment */}
                 <div className="flex w-full flex-col pt-3">
-                  <div className=" flex items-center justify-between">
-                    <h2 className="text-lg  font-semibold dark:text-gray-300">
-                      Comment
-                    </h2>
-                    <p
-                      onClick={() => setSeeAllComments(!seeAllComments)}
-                      className="font-medium text-main-color cursor-pointer"
-                    >
-                      {!seeAllComments ? "See All" : "See less"}
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
+                  {blogDetailsData?.data?.data?.data?.blog?.comments?.length >
+                    0 && (
+                    <div className=" flex items-center justify-between">
+                      <h2 className="text-lg  font-semibold dark:text-gray-300">
+                        Comment
+                      </h2>
+                      <p
+                        onClick={() => setSeeAllComments(!seeAllComments)}
+                        className="font-medium text-main-color cursor-pointer"
+                      >
+                        {!seeAllComments ? "See All" : "See less"}
+                      </p>
+                    </div>
+                  )}
+                  <div className="grid grid-cols-1 gap-3 w-full">
                     {!seeAllComments
                       ? blogDetailsData?.data?.data?.data?.blog?.comments
                           ?.slice(0, 2)
@@ -308,72 +323,43 @@ const VideoDetail: React.FC = () => {
                           )
                         )}
                   </div>
-                </div>
-                {/* write comment */}
-                <form
-                  onSubmit={handleComment}
-                  className="flex flex-col items-start space-y-2 w-full pb-3"
-                >
-                  <h2 className="text-xl  font-bold dark:text-white">
-                    Write Your Comment
-                  </h2>
-                  <textarea
-                    disabled={commentMutation.isLoading}
-                    placeholder="Type your comment..."
-                    required
-                    value={commentValue}
-                    onChange={(e) => setCommentValue(e.target.value)}
-                    rows={4}
-                    className="w-full p-2 rounded-sm border border-gray-300 dark:border-gray-500 focus:outline-none ring-0 bg-transparent dark:text-gray-300"
-                  ></textarea>
-                  <button
-                    disabled={commentMutation.isLoading}
-                    type="submit"
-                    className="px-5 rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
-                   hover:bg-main-bg/70  w-fit flex items-center justify-center"
+                  {/* write comment */}
+                  <form
+                    onSubmit={handleComment}
+                    className="flex flex-col items-start space-y-2 w-full pb-3"
                   >
-                    {commentMutation.isLoading ? (
-                      <PulseLoader color="#fff" />
-                    ) : (
-                      "comment"
-                    )}
-                  </button>
-                </form>
-              </div>
-              {/* related */}
-              <div className="md:col-span-5">
-                <h1 className="text-xl  font-bold pb-3 dark:text-white">
-                  Most Popular
-                </h1>
-                <div className="flex flex-col items-start space-y-2 ">
-                  {blogDetailsData?.data?.data?.data?.related?.map(
-                    (item: any) => (
-                      <div
-                        onClick={() => navigate(`/blog/${item.id}`)}
-                        key={item.id}
-                        className="w-full flex items-start pb-2 space-x-2 cursor-pointer overflow-hidden border-b border-gray-300 dark:border-gray-600"
-                      >
-                        <img
-                          src={item.blog_cover.original_url}
-                          alt=""
-                          className="h-24   cursor-pointer hover:scale-[1.03] w-24
-                      object-cover transition-all duration-500 ease-out"
-                        />
-                        <div>
-                          <p className=" text-[15px] p-1 cursor-pointer dark:text-gray-200">
-                            {item.category.name}
-                          </p>
-                          <h3 className="font-bold text-gray-900 line-clamp-2 dark:text-white">
-                            {item.title}
-                          </h3>
-                          <p className="text-gray-400 text-sm font-light dark:text-gray-300">
-                            {item.created_at}
-                          </p>
-                        </div>
-                      </div>
-                    )
-                  )}
+                    <h2 className="text-xl  font-bold dark:text-white">
+                      Write Your Comment
+                    </h2>
+                    <textarea
+                      disabled={commentMutation.isLoading}
+                      placeholder="Type your comment..."
+                      required
+                      value={commentValue}
+                      onChange={(e) => setCommentValue(e.target.value)}
+                      rows={4}
+                      className="w-full p-2 rounded-sm border border-gray-300 dark:border-gray-500 focus:outline-none ring-0 bg-transparent dark:text-gray-300"
+                    ></textarea>
+                    <button
+                      disabled={commentMutation.isLoading}
+                      type="submit"
+                      className="px-5 rounded-sm  bg-main-bg p-3 text-[15px] font-normal text-white
+                   hover:bg-main-bg/70  w-fit flex items-center justify-center"
+                    >
+                      {commentMutation.isLoading ? (
+                        <PulseLoader color="#fff" />
+                      ) : (
+                        "comment"
+                      )}
+                    </button>
+                  </form>
                 </div>
+              </div>
+              <div className="md:col-span-4">
+                <h1 className="text-xl  font-semibold pb-3 dark:text-white">
+                  Up Next
+                </h1>
+                <RelatedVideos />
               </div>
             </div>
           </div>

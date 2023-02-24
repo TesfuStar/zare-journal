@@ -49,7 +49,6 @@ const useHomeSection = ({ pageNumber, id }: Props) => {
     setBlogs([]);
   }, [id]);
 
-  console.log({ hasMore });
 
   useEffect(() => {
     setLoading(true);

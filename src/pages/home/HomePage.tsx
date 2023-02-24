@@ -189,10 +189,7 @@ const HomePage: React.FC = () => {
             {homePageData?.data?.data?.data?.videos?.map((item: any) => (
               <div
                 key={item.id}
-                onClick={() =>
-                  !item.blog_cover.mime_type.includes("video") &&
-                  navigate(`/blog/${item.id}`)
-                }
+                onClick={() =>navigate(`/video/${item.id}`)}
                 className="cursor-pointer overflow-hidden flex flex-col items-start  w-full"
               >
                 {item.blog_cover.mime_type.includes("video") ? (

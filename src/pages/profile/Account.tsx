@@ -143,16 +143,10 @@ const Account = () => {
         />
       </Helmet>
       <div className="flex flex-col items-start space-y-3 w-full">
-        <div className="flex items-center justify-between space-x-2 pb-10 w-full">
+        <div className="flex items-start space-x-2 pb-10 w-full">
           <h1 className="font-semibold text-lg text-gray-700 dark:text-white">
             user Information
           </h1>
-          <button
-            onClick={logout}
-            className="bg-gray-300 dark:bg-gray-700 dark:text-white p-2 font-semibold px-5 rounded-sm text-black text-[15px] hover:bg-gray-400/80"
-          >
-            Log Out
-          </button>
         </div>
 
         {/* image upload */}

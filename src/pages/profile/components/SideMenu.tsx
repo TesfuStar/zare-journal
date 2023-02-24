@@ -5,6 +5,9 @@ import { profileDashboard } from "../../../utils/Data";
 import { NavLink, Outlet } from "react-router-dom";
 import Header from "../../../components/Header";
 import { Footer } from "../../../components";
+import { MdOutlineLogout } from "react-icons/md";
+import { useAuth } from "../../../context/Auth";
+import { useThemeContext } from "../../../context/ThemeContext";
 const SideMenu = () => {
   const activeLink = `flex items-center font-medium  gap-3  py-2 px-2
     rounded-md  text-main-color    m-2 `;
@@ -12,7 +15,8 @@ const SideMenu = () => {
    py-2 rounded-lg text-dark-gray dark:text-gray-200  pl-2 font-medium text-sm
    hover:text-main-color dark:hover:text-main-color
     hover:bg-gray-300/50 dark:hover:bg-gray-300/10  m-2   m-2 `;
-
+  const { logout } = useAuth();
+  const { currentMode } = useThemeContext();
   return (
     <div className="dark:bg-dark-bg">
       <Header />
@@ -40,6 +44,13 @@ const SideMenu = () => {
               ))}
             </div>
           ))}
+          <div
+            onClick={logout}
+            className="flex items-center pl-5 space-x-4 cursor-pointer"
+          >
+            <MdOutlineLogout className="text-white" size={20} />
+            <h1 className={"text-white "}>Logout</h1>
+          </div>
         </div>
         {/* small sidebar */}
         <div className="flex md:hidden items-end justify-end z-50">
@@ -65,7 +76,7 @@ const SideMenu = () => {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute z-50 right-0 mt-2 p-2 w-56 origin-top-right  rounded-md bg-white dark:bg-secondary-dark-bg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <Menu.Items className=" absolute z-50 right-0 mt-2 p-2 w-56 origin-top-right  rounded-md bg-white dark:bg-dark-bg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 {profileDashboard.map((item) => (
                   <div key={item.title}>
                     <h1
@@ -78,18 +89,26 @@ const SideMenu = () => {
                         <NavLink
                           key={link.name}
                           to={`/profile/${link.link}`}
-                          // onClick={handleCloseSideBar}
-                          className={({ isActive }) =>
-                            isActive ? activeLink : normalLink
-                          }
+                          className={"flex items-center pb-2 space-x-4 cursor-pointer"}
                         >
                           {link.icon}
-                          <span className={`capitalize font-medium `}>
+                          <span
+                            className={`capitalize font-medium dark:text-white`}
+                          >
                             {link.name}
                           </span>
                         </NavLink>
                       </Menu.Item>
                     ))}
+                    <Menu.Item>
+                      <div
+                        onClick={logout}
+                        className="flex items-center pb-2 space-x-4 cursor-pointer"
+                      >
+                        <MdOutlineLogout className="text-white" size={20} />
+                        <h1 className={"text-white "}>Logout</h1>
+                      </div>
+                    </Menu.Item>
                   </div>
                 ))}
               </Menu.Items>

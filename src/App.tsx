@@ -52,6 +52,11 @@ const Account = React.lazy<React.FC>(() =>
     default: module.default,
   }))
 );
+const MyComment = React.lazy<React.FC>(() =>
+  import("./pages/profile/MyComment").then((module) => ({
+    default: module.default,
+  }))
+);
 
 const SignIn = React.lazy<React.FC>(() =>
   import("./pages/Auth/SignIn").then((module) => ({
@@ -74,11 +79,12 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/home/:id" element={<HomeSection />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
-        <Route path="/video/:id" element={<BlogDetail />} />
+        <Route path="/video/:id" element={<VideoDetail />} />
         <Route path="/search" element={<Search />} />
         <Route path="/categories/:id" element={<Category />} />
         <Route path="profile" element={<SideMenu />}>
           <Route path="account" element={<Account />} />
+          <Route path="my-comments" element={<MyComment />} />
         </Route>
       </Routes>
     );
@@ -91,7 +97,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/home/:id" element={<HomeSection />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
-        <Route path="/video/:id" element={<BlogDetail />} />
+        <Route path="/video/:id" element={<VideoDetail />} />
         <Route path="/search" element={<Search />} />
         <Route path="/categories/:id" element={<Category />} />
         <Route path="/signin" element={<SignIn />} />

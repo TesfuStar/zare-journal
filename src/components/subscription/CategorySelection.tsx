@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useHome } from "../../context/HomeContext";
 import { PulseLoader } from "react-spinners";
 import axios from "axios";
@@ -8,6 +8,7 @@ import Frame from "../../assets/login.png";
 import { useAuth } from "../../context/Auth";
 import { FaTablet } from "react-icons/fa";
 import { useThemeContext } from "../../context/ThemeContext";
+import CategoryCard from "./CategoryCard";
 
 interface Cat {
   id: string[];
@@ -17,14 +18,10 @@ interface Props {
   email: string;
 }
 const CategorySelection = ({ emailRef, email }: Props) => {
-  const [isClicked, setIsClicked] = useState<boolean>(false);
-  const [cats, setCats] = useState<string[]>([]);
   const { isSubscriptionModalOpen, setIsSubscriptionModalOpen } = useHome();
-
   const { user, token, logout } = useAuth();
-  const mySet = new Set();
+  const mySet = new Set<string>();
   const { currentMode } = useThemeContext();
-  let myCategories: any = [];
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -45,23 +42,12 @@ const CategorySelection = ({ emailRef, email }: Props) => {
     }
   );
 
-  console.log(categoriesData?.data?.data?.data);
-
-  function handleAddCategory(id: any) {
-    myCategories.some((category: any) => category.id === id);
-    if (!myCategories.some((category: any) => category === id)) {
-      myCategories.push(id);
-      myCategories && setCats(myCategories);
-    } else {
-      const category = myCategories.indexOf(id);
-      myCategories.splice(category, 1);
-      myCategories && setCats(myCategories);
-    }
+  function ClickHandler(data: any) {
+    mySet.add(data?.id);
   }
-  console.log({ myCategories, email });
 
   const handleSubmit = () => {
-    if (myCategories.length > 0) {
+    if (mySet.size < 1) {
       return;
     }
     categoryAddSubmitHandler();
@@ -87,7 +73,7 @@ const CategorySelection = ({ emailRef, email }: Props) => {
       categoryAddMutation.mutate(
         {
           email: email,
-          categories: cats,
+          categories: [...mySet],
         },
         {
           onSuccess: (responseData: any) => {
@@ -124,30 +110,16 @@ const CategorySelection = ({ emailRef, email }: Props) => {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 pb-3">
-            {categoriesData?.data?.data?.data?.map((category: any) => (
-              <div
-                onClick={() => {
-                  handleAddCategory(category.id);
-                  setIsClicked((prev) => !prev);
-                }}
-                className="relative overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500"
-              >
-                <div className="absolute top-5 right-5 bg-white rounded-t-full p-1">
-                  {myCategories.includes(category.id) && (
-                    <FaTablet className="text-red-500" />
-                  )}
-                </div>
-                <img
-                  src={category.category_image.original_url}
-                  alt=""
-                  className="h-36 w-full object-cover "
+            {categoriesData?.data?.data?.data?.map(
+              (category: any, index: number) => (
+                <CategoryCard
+                  key={index}
+                  category={category}
+                  ClickHandler={ClickHandler}
+                  mySet={mySet}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-600 to-transparent" />
-                <h3 className="absolute bottom-2 left-2 text-white font-medium text-[15px]">
-                  {category.name}
-                </h3>
-              </div>
-            ))}
+              )
+            )}
           </div>
 
           <div className="flex items-end justify-end w-full">
