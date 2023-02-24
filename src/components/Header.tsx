@@ -53,7 +53,7 @@ const Header: React.FC = () => {
                 ?.map((category: any) => (
                   <Link
                     key={category.id}
-                    to={`/categories/${category.id}`}
+                    to={`/categories/${category.slug}`}
                     className="group whitespace-nowrap flex items-center dark:text-white
                text-[15px] font-medium rounded-md"
                   >

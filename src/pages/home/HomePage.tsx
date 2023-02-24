@@ -70,8 +70,8 @@ const HomePage: React.FC = () => {
               <div
                 onClick={() =>
                   item.blog_cover.mime_type.includes("video")
-                    ? navigate(`/video/${item.id}`)
-                    : navigate(`/blog/${item.id}`)
+                    ? navigate(`/video/${item.slug}`)
+                    : navigate(`/blog/${item.slug}`)
                 }
                 key={item.id}
                 className="cursor-pointer overflow-hidden flex  items-center w-full border-b border-gray-300 dark:border-gray-500"
@@ -128,17 +128,19 @@ const HomePage: React.FC = () => {
       <>
         <div className="border-b border-gray-300 flex items-center justify-between pb-2 mb-4">
           <h2 className="font-bold text-xl pt-4 dark:text-white">Videos</h2>
-          <div className="bg-main-bg p-2 rounded-sm cursor-pointer">
+          <div 
+            onClick={()=>navigate('/videos')}
+          className="bg-main-bg p-2 rounded-sm cursor-pointer">
             <AiOutlineArrowRight className="text-white" />
           </div>
         </div>
 
         {homePageData.isFetched ? (
-          <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-3">
             {homePageData?.data?.data?.data?.videos?.map((item: any) => (
               <div
                 key={item.id}
-                onClick={() => navigate(`/video/${item.id}`)}
+                onClick={() => navigate(`/video/${item.slug}`)}
                 className="cursor-pointer overflow-hidden flex flex-col items-start  w-full"
               >
                 {item.blog_cover.mime_type.includes("video") ? (
@@ -219,8 +221,8 @@ const HomePage: React.FC = () => {
                         // }
                         onClick={() =>
                           item.blog_cover.mime_type.includes("video")
-                            ? navigate(`/video/${item.id}`)
-                            : navigate(`/blog/${item.id}`)
+                            ? navigate(`/video/${item.slug}`)
+                            : navigate(`/blog/${item.slug}`)
                         }
                         key={index}
                         className={`${
@@ -252,7 +254,7 @@ const HomePage: React.FC = () => {
                               }
                               controls={true}
                               width={"100%"}
-                              height={"100%"}
+                              height={"400px"}
                             />
                           </div>
                         ) : (
@@ -302,8 +304,8 @@ const HomePage: React.FC = () => {
                     // onClick={() => navigate(`/blog/${item.id}`)}
                     onClick={() =>
                       item.blog_cover.mime_type.includes("video")
-                        ? navigate(`/video/${item.id}`)
-                        : navigate(`/blog/${item.id}`)
+                        ? navigate(`/video/${item.slug}`)
+                        : navigate(`/blog/${item.slug}`)
                     }
                     className="cursor-pointer overflow-hidden flex flex-col items-start"
                   >
@@ -379,7 +381,7 @@ const HomePage: React.FC = () => {
                       {home.name}
                     </h2>
                     <div
-                      onClick={() => navigate(`/home/${home.id}`)}
+                      onClick={() => navigate(`/home/${home.slug}`)}
                       className="bg-main-bg p-2 rounded-sm cursor-pointer"
                     >
                       <AiOutlineArrowRight className="text-white" />
@@ -392,8 +394,8 @@ const HomePage: React.FC = () => {
                         // onClick={() => navigate(`/blog/${article.id}`)}
                         onClick={() =>
                           article.blog_cover.mime_type.includes("video")
-                            ? navigate(`/video/${article.id}`)
-                            : navigate(`/blog/${article.id}`)
+                            ? navigate(`/video/${article.slug}`)
+                            : navigate(`/blog/${article.slug}`)
                         }
                         className="relative flex flex-col items-start cursor-pointer overflow-hidden"
                       >
@@ -432,7 +434,7 @@ const HomePage: React.FC = () => {
                         </p>
                         <h4
                           onClick={() =>
-                            navigate(`/categories/${article.category.id}`)
+                            navigate(`/categories/${article.category.slug}`)
                           }
                           className="font-medium flex items-end justify-end text-[15px] p-1 cursor-pointer dark:text-gray-300 pt-3"
                         >

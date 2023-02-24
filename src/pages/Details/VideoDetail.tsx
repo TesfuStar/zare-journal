@@ -110,7 +110,7 @@ const VideoDetail: React.FC = () => {
       <div className="flex flex-col items-start space-y-2">
         {blogDetailsData?.data?.data?.data?.related?.map((item: any) => (
           <div
-            onClick={() => navigate(`/video/${item.id}`)}
+            onClick={() => navigate(`/video/${item.slug}`)}
             key={item.id}
             className="w-full flex items-start pb-2 space-x-2 cursor-pointer overflow-hidden border-b border-gray-300 dark:border-gray-600"
           >

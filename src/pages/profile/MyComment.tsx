@@ -53,8 +53,8 @@ const MyComment = () => {
                     <h3 
                        onClick={() =>
                         comment.blog.blog_cover.mime_type.includes("video")
-                          ? navigate(`/video/${comment.blog_id}`)
-                          : navigate(`/blog/${comment.blog_id}`)
+                          ? navigate(`/video/${comment.blog.slug}`)
+                          : navigate(`/blog/${comment.blog.slug}`)
                       }
                     className="capitalize font-semibold dark:text-white cursor-pointer hover:underline">
                       Article: {comment.blog.title}
@@ -104,8 +104,8 @@ const MyComment = () => {
                     <h3
                        onClick={() =>
                         comment.blog.blog_cover.mime_type.includes("video")
-                          ? navigate(`/video/${comment.blog_id}`)
-                          : navigate(`/blog/${comment.blog_id}`)
+                          ? navigate(`/video/${comment.blog.slug}`)
+                          : navigate(`/blog/${comment.blog.slug}`)
                       }
                     className="capitalize font-semibold dark:text-white cursor-pointer hover:underline">
                     Article: {comment.blog.title}

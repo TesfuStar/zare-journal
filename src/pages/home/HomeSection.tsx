@@ -62,7 +62,7 @@ const HomeSection = () => {
             {todayPick?.map((item: any, index: number) => (
               <div
                 key={item.id}
-                onClick={() => navigate(`/blog/${item.id}`)}
+                onClick={() => navigate(`/blog/${item.slug}`)}
                 className={`${
                   index === 0
                     ? "row-span-4 col-span-2 h-full w-full "
@@ -135,7 +135,7 @@ const HomeSection = () => {
             {todayPick?.map((item: any) => (
               <div
                 key={item.id}
-                onClick={() => navigate(`/blog/${item.id}`)}
+                onClick={() => navigate(`/blog/${item.slug}`)}
                 className="cursor-pointer overflow-hidden flex flex-col items-start "
               >
                 {item.blog_cover.mime_type.includes("video") ? (
@@ -189,7 +189,7 @@ const HomeSection = () => {
               return (
                 <div
                   ref={lastBookElementRef}
-                  onClick={() => navigate(`/blog/${blog.id}`)}
+                  onClick={() => navigate(`/blog/${blog.slug}`)}
                   key={blog.id}
                   className="cursor-pointer overflow-hidden flex flex-col  items-start w-full "
                 >
@@ -233,7 +233,7 @@ const HomeSection = () => {
             } else {
               return (
                 <div
-                  onClick={() => navigate(`/blog/${blog.id}`)}
+                  onClick={() => navigate(`/blog/${blog.slug}`)}
                   key={blog.id}
                   className="cursor-pointer overflow-hidden flex flex-col  items-start w-full "
                 >

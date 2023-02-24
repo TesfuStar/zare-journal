@@ -209,7 +209,9 @@ const BlogDetail: React.FC = () => {
                     0 && (
                     <div className=" flex items-center justify-between">
                       <h2 className="text-lg  font-semibold dark:text-gray-300">
-                        Comments ({blogDetailsData?.data?.data?.data?.blog?.comment_count})
+                        Comments (
+                        {blogDetailsData?.data?.data?.data?.blog?.comment_count}
+                        )
                       </h2>
                       {blogDetailsData?.data?.data?.data?.blog?.comments
                         ?.length > 10 && (
@@ -222,7 +224,7 @@ const BlogDetail: React.FC = () => {
                       )}
                     </div>
                   )}
-                  
+
                   <div className="grid grid-cols-1 gap-3 w-full">
                     {!seeAllComments
                       ? blogDetailsData?.data?.data?.data?.blog?.comments
@@ -356,7 +358,7 @@ const BlogDetail: React.FC = () => {
                   {blogDetailsData?.data?.data?.data?.related?.map(
                     (item: any) => (
                       <div
-                        onClick={() => navigate(`/blog/${item.id}`)}
+                        onClick={() => navigate(`/blog/${item.slug}`)}
                         key={item.id}
                         className="w-full flex items-start pb-2 space-x-2 cursor-pointer overflow-hidden border-b border-gray-300 dark:border-gray-600"
                       >

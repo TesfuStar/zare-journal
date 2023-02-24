@@ -63,6 +63,12 @@ const SignIn = React.lazy<React.FC>(() =>
     default: module.default,
   }))
 );
+
+const Videos = React.lazy<React.FC>(() =>
+  import("./pages/videos/Videos").then((module) => ({
+    default: module.default,
+  }))
+);
 const App = () => {
   const { user, token, checked } = useAuth();
   const { currentMode, setCurrentMode } = useThemeContext();
@@ -77,6 +83,7 @@ const App = () => {
       <Routes>
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/videos" element={<Videos />} />
         <Route path="/home/:id" element={<HomeSection />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/video/:id" element={<VideoDetail />} />
@@ -95,6 +102,7 @@ const App = () => {
       <Routes>
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/videos" element={<Videos />} />
         <Route path="/home/:id" element={<HomeSection />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/video/:id" element={<VideoDetail />} />
@@ -139,23 +147,3 @@ const App = () => {
 
 export default App;
 
-// {user && token ? (
-//   <Routes>
-//     <Route path="*" element={<Navigate to="/" />} />
-//     <Route path="/" element={<HomePage />} />
-//     <Route path="/blog/:id" element={<HomeSection />} />
-//     <Route path="/search" element={<Search />} />
-//     <Route path="/categories/:id" element={<Category />} />
-//     <Route path="profile" element={<SideMenu />}>
-//       <Route path="account" element={<Account />} />
-//     </Route>
-//   </Routes>
-// ) : (
-//   <Routes>
-//     <Route path="*" element={<Navigate to="/" />} />
-//     <Route path="/" element={<HomePage />} />
-//     <Route path="/blog/:id" element={<BlogDetail />} />
-//     <Route path="/search" element={<Search />} />
-//     <Route path="/categories/:id" element={<Category />} />
-//   </Routes>
-// )}

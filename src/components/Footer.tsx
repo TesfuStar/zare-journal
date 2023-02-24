@@ -80,7 +80,7 @@ const Footer: React.FC = () => {
                   ?.map((category: any) => (
                     <p
                       key={category.id}
-                      onClick={() => navigate(`/categories/${category.id}`)}
+                      onClick={() => navigate(`/categories/${category.slug}`)}
                       className="font-medium text-gray-500 cursor-pointer dark:text-gray-300"
                     >
                       {" "}

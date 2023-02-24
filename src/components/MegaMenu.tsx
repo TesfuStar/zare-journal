@@ -49,7 +49,7 @@ export default function MegaMenu({ isMegaMenuOpen, setIsMegaMenuOpen }: Props) {
                 <Link
                   key={category.id}
                   onClick={() => setIsMegaMenuOpen(false)}
-                  to={`/categories/${category.id}`}
+                  to={`/categories/${category.slug}`}
                   className="group whitespace-nowrap flex items-center 
                  text-[15px] font-medium rounded-md dark:text-white"
                 >

@@ -13,6 +13,7 @@ interface Blog {
   // Define the shape of a Blog object
   id: string;
   title: string;
+  slug:string;
   body: string;
   sub_heading:string;
   blog_cover: {

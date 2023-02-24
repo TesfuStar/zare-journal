@@ -72,7 +72,7 @@ export default function Drawer({ isDrawerOpen, setIsDrawerOpen }: Props) {
                 {categoriesData?.data?.data?.data?.map((category: any) => (
                   <Link
                     key={category.id}
-                    to={"/categories"}
+                    to={`/categories/${category.slug}`}
                     className="w-full font-medium text-lg dark:text-white border-b border-gray-300 dark:border-gray-700 pb-2"
                   >
                     {category.name}

@@ -79,8 +79,8 @@ const Category: React.FC = () => {
                   // onClick={() => navigate(`/blog/${item.id}`)}
                   onClick={() =>
                     item.blog_cover.mime_type.includes("video")
-                      ? navigate(`/video/${item.id}`)
-                      : navigate(`/blog/${item.id}`)
+                      ? navigate(`/video/${item.slug}`)
+                      : navigate(`/blog/${item.slug}`)
                   }
                   className={`${
                     index === 0
@@ -160,8 +160,8 @@ const Category: React.FC = () => {
                       // onClick={() => navigate(`/blog/${item.id}`)}
                       onClick={() =>
                         item.blog_cover.mime_type.includes("video")
-                          ? navigate(`/video/${item.id}`)
-                          : navigate(`/blog/${item.id}`)
+                          ? navigate(`/video/${item.slug}`)
+                          : navigate(`/blog/${item.slug}`)
                       }
                       className="cursor-pointer overflow-hidden flex flex-col items-start "
                     >
@@ -220,8 +220,8 @@ const Category: React.FC = () => {
                       // onClick={() => navigate(`/blog/${item.id}`)}
                       onClick={() =>
                         item.blog_cover.mime_type.includes("video")
-                          ? navigate(`/video/${item.id}`)
-                          : navigate(`/blog/${item.id}`)
+                          ? navigate(`/video/${item.slug}`)
+                          : navigate(`/blog/${item.slug}`)
                       }
                       className="cursor-pointer overflow-hidden flex flex-col items-start "
                     >

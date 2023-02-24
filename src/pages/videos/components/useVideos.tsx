@@ -1,67 +1,63 @@
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
-import { useAuth } from "../../../context/Auth";
 
 interface Props {
   pageNumber: number;
+  id?: string;
 }
 
-interface Comment {
+interface CateName {
+  name: string;
+}
+interface Blog {
   // Define the shape of a Blog object
   id: string;
   title: string;
+  slug: string;
   body: string;
-  
-  blog_id: string;
-  created_at: string;
-  diffForHumans:string;
-  author: {
-    name: string;
-    profile_photo_url: string;
+  sub_heading: string;
+  blog_cover: {
+    original_url: string;
+    mime_type: string;
   };
-  blog: {
-    title:string;
-    slug:string;
-    blog_cover: {
-      mime_type: string;
-    };
+  created_at: string;
+  category: {
+    name: string;
+  };
+  thumbnail: {
+    original_url: string;
+    mime_type: string;
   };
 }
 
-interface CommentData {
+interface HomeSectionData {
   data: {
-    data: Comment[];
+    data: Blog[];
   };
 }
+
 // articles
-const UseComment = ({ pageNumber }: Props) => {
+const useVideos = ({ pageNumber }: Props) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [videos, setVideos] = useState<Blog[]>([]);
   const [hasMore, setHasMore] = useState(false);
-  const { token } = useAuth();
-
-  const headers = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    Authorization: `Bearer ${token}`,
-  };
   useEffect(() => {
     setLoading(true);
     setError(false);
     let cancel: () => void;
     axios({
       method: "GET",
-      url: `${process.env.REACT_APP_BACKEND_URL}my-comments`,
+      url: `${process.env.REACT_APP_BACKEND_URL}videos`,
       params: { page: pageNumber },
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
-      headers: headers,
     })
-      .then((res: AxiosResponse<CommentData>) => {
-        console.log(res?.data?.data);
-        setComments((prevComment) => {
+      .then((res: AxiosResponse<HomeSectionData>) => {
+        // console.log(res?.data?.data?.data);
+
+        setVideos((preVideos) => {
           return Array.from(
-            new Set<Comment>([...prevComment, ...res.data.data?.data])
+            new Set<Blog>([...preVideos, ...res.data.data?.data])
           );
         });
         setHasMore(res.data.data?.data?.length > 0);
@@ -74,7 +70,7 @@ const UseComment = ({ pageNumber }: Props) => {
     return () => cancel();
   }, [pageNumber]);
 
-  return { loading, error, comments, hasMore };
+  return { loading, error, videos, hasMore };
 };
 
-export default UseComment;
+export default useVideos;

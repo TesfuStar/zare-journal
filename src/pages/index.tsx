@@ -9,4 +9,6 @@ export {default as Account} from './profile/Account'
 export {default as MyComment} from './profile/MyComment'
 export {default as SignIn} from './Auth/SignIn'
 
+export {default as Videos} from './videos/Videos'
+
 
