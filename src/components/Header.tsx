@@ -119,7 +119,7 @@ const Header: React.FC = () => {
                 size={20}
                 className="cursor-pointer dark:text-white"
               />
-              {(!user?.subscribed && !isSubscribed)&& (
+              {(!user?.subscribed)&& (
                 <button
                   onClick={() => setIsSubscriptionModalOpen(true)}
                   className="bg-main-bg hover:bg-main-bg/70 p-2 px-3 rounded-sm text-white font-normal text-[15px] uppercase"

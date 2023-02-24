@@ -105,12 +105,13 @@ const SignIn = () => {
           appId="2211226365745867"
           autoLoad={false}
           fields="name,email,picture"
-          onClick={responseFacebook}
+          // onClick={responseFacebook}
           callback={responseFacebook}
           render={(renderProps: any) => (
             <button
               className="p-2 w-full hover:opacity-95 flex items-center space-x-2
         justify-center border border-gray-600  font-normal text-dark-color text-[15px] rounded-[4px]"
+        onClick={renderProps.onClick}
             >
               <BsFacebook size={20} className="text-sky-600" />{" "}
               <span className=" text-[15px] dark:text-white">Facebook</span>

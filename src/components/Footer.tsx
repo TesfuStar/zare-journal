@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
   };
   return (
     <>
-      <div className="max-w-7xl mx-auto border-y border-gray-300  dark:border-gray-500 py-3 pb-3">
+      <div className="max-w-7xl mx-auto border-y border-gray-300  dark:border-gray-500 py-3 p-3">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pb-2">
           <div className="flex flex-col items-start space-y-2">
             <Link to={"/"}>

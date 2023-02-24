@@ -86,7 +86,7 @@ const SubscribeModal = () => {
   }
 
   const panelLight =
-    " w-full max-w-2xlc transform overflow-hidden rounded-2xl bg-white  text-left align-middle shadow-xl transition-all";
+    " w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white  text-left align-middle shadow-xl transition-all";
   const panelDark =
     "w-full max-w-2xl transform overflow-hidden rounded-2xl bg-dark-bg  text-left align-middle shadow-xl transition-all";
 

@@ -114,7 +114,7 @@ const App = () => {
           {/* <Navbar /> */}
           <Suspense
             fallback={
-              <div>
+              <div className="flex items-center justify-center min-h-screen">
                 <PulseLoader color="#EF5138" />
               </div>
             }
@@ -123,7 +123,7 @@ const App = () => {
           </Suspense>
         </div>
       ) : (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center min-h-screen">
           <PulseLoader color="#EF5138" />
         </div>
       )}

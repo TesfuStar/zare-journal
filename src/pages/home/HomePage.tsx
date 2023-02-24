@@ -486,7 +486,7 @@ const HomePage: React.FC = () => {
         {homePageData.isFetched &&
           homePageData?.data?.data?.data?.videos?.length > 0 && <Videos />}
       </div>
-      {!user?.subscribed && !isSubscribed && <SubscribeBanner />}
+      {!user?.subscribed &&  <SubscribeBanner />}
       <Footer />
     </div>
   );

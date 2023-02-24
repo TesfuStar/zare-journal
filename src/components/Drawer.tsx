@@ -57,7 +57,7 @@ export default function Drawer({ isDrawerOpen, setIsDrawerOpen }: Props) {
             ) : (
               <img src={DarkLogo} alt="" className="h-10" />
             )}
-           
+
             <FaTimes
               size={20}
               onClick={() => {
@@ -86,7 +86,7 @@ export default function Drawer({ isDrawerOpen, setIsDrawerOpen }: Props) {
             )}
           </div>
           {/*  */}
-          <div className="px-4">
+          <div className="px-4 w-full">
             <div
               onClick={() => navigate("/search")}
               className="flex items-center space-x-2 border-b border-gray-300 dark:border-gray-700 pb-2"

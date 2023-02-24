@@ -10,11 +10,12 @@ import ReactPlayer from "react-player";
 import Header from "../../components/Header";
 import { useHome } from "../../context/HomeContext";
 import { Helmet } from "react-helmet";
+import { Footer } from "../../components";
 const Search: React.FC = () => {
   const homeRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   // const [searchString, setSearchString] = useState<string>("");
-  const {searchString, setSearchString} =useHome()
+  const { searchString, setSearchString } = useHome();
   const [error, setError] = useState<string>("");
   const [search, setSearch] = useState<number>(1);
   const [sort, setSort] = useState("latest");
@@ -119,7 +120,11 @@ const Search: React.FC = () => {
               ?.map((item: any) => (
                 <p
                   onClick={() => setSearchString(item.name)}
-                  className={`text-dark-color dark:text-white ${searchString === item.name ? "bg-main-color/50" : "bg-gray-500/20 "} cursor-pointer text-sm hover:underline p-1 rounded-full font-medium`}
+                  className={`text-dark-color dark:text-white ${
+                    searchString === item.name
+                      ? "bg-main-color/50"
+                      : "bg-gray-500/20 "
+                  } cursor-pointer text-sm hover:underline p-1 rounded-full font-medium`}
                 >
                   {item.name}
                 </p>
@@ -134,12 +139,12 @@ const Search: React.FC = () => {
   return (
     <div className="bg-white dark:bg-dark-bg">
       <Helmet>
-              <title>Search | ZareJournal</title>
-              <meta
-                name="description"
-                content="Bringing you the world, one story at a time."
-              />
-            </Helmet>
+        <title>Search | ZareJournal</title>
+        <meta
+          name="description"
+          content="Bringing you the world, one story at a time."
+        />
+      </Helmet>
       <Header />
       <div className=" max-w-7xl mx-auto w-full flex flex-col p-3">
         <div className="flex flex-col items-center justify-center py-10">
@@ -168,7 +173,7 @@ const Search: React.FC = () => {
             </button>
           </div>
           <div className="max-w-5xl mx-auto pt-5 w-full flex items-start justify-between ">
-          <SubCategories />
+            <SubCategories />
             <select
               name=""
               onChange={(e) => setSort(e.target.value)}
@@ -182,7 +187,7 @@ const Search: React.FC = () => {
             </select>
           </div>
         </div>
-        
+
         {/* results */}
         {searchString && (
           <div className="flex items-start justify-start self-start pt-5">
@@ -223,8 +228,8 @@ const Search: React.FC = () => {
                         <img
                           src={blog.blog_cover.original_url}
                           alt=""
-                          className="h-full  md:h-44 cursor-pointer hover:scale-[1.03] w-36 md:w-56 
-                   object-cover transition-all duration-500 ease-out"
+                          className="h-36  md:h-[200px] cursor-pointer hover:scale-[1.03] w-36 md:w-[300px] md:min-w-[300px]
+                          object-cover transition-all duration-500 ease-out object-center"
                         />
                       )}
 
@@ -267,7 +272,7 @@ const Search: React.FC = () => {
                         <img
                           src={blog.blog_cover.original_url}
                           alt=""
-                          className="h-full  md:h-[200px] cursor-pointer hover:scale-[1.03] w-36 md:w-60 md:min-w-60
+                          className="h-36  md:h-[200px] cursor-pointer hover:scale-[1.03] w-36 md:w-[300px] md:min-w-[300px]
                           object-cover transition-all duration-500 ease-out object-center"
                         />
                       )}
@@ -363,6 +368,7 @@ const Search: React.FC = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
