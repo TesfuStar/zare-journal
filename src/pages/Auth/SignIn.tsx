@@ -10,7 +10,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleData } from "../../utils/Interface";
 import { useAuth } from "../../context/Auth";
-
+import { Helmet } from "react-helmet";
 const SignIn = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isCoverPage, setIsCoverPage] = useState<boolean>(true);
@@ -122,6 +122,13 @@ const SignIn = () => {
   }
   return (
     <div className="relative bg-white dark:bg-dark-bg">
+      <Helmet>
+        <title>Create Account | ZareJournal</title>
+        <meta
+          name="description"
+          content="Bringing you the world, one story at a time."
+        />
+      </Helmet>
       <img
         src={Frame}
         alt=""
@@ -146,7 +153,9 @@ const SignIn = () => {
             {/*  */}
             {isCoverPage ? (
               <div className="flex flex-col items-start space-y-1 w-full ">
-                <p className="text-normal dark:text-white">Welcome to zare-journal </p>
+                <p className="text-normal dark:text-white">
+                  Welcome to zare-journal{" "}
+                </p>
                 <h3 className="font-semibold text-lg dark:text-white">
                   Please Create an account.
                 </h3>

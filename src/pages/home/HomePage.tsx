@@ -12,10 +12,11 @@ import Header from "../../components/Header";
 import { Footer } from "../../components";
 import { useAuth } from "../../context/Auth";
 import SubscribeBanner from "./components/SubscribeBanner";
+import { Helmet } from "react-helmet";
 const HomePage: React.FC = () => {
   const { user } = useAuth();
   const [todaysPick, setTodaysPick] = useState<string[]>([]);
-  const isSubscribed = localStorage.getItem("zare-journal-subscriber")
+  const isSubscribed = localStorage.getItem("zare-journal-subscriber");
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
   const headers = {
@@ -115,7 +116,9 @@ const HomePage: React.FC = () => {
   function MostRecent() {
     return (
       <>
-      <h1 className=" pb-3  cursor-pointer font-semibold dark:text-gray-300">Most Recent</h1>
+        <h1 className=" pb-3  cursor-pointer font-semibold dark:text-gray-300">
+          Most Recent
+        </h1>
         {homePageData.isFetched ? (
           <div className="flex flex-col items-start space-y-2 gap-3">
             {homePageData?.data?.data?.data?.most_recent?.map((item: any) => (
@@ -130,9 +133,9 @@ const HomePage: React.FC = () => {
                   </h4>
                   <h3 className="font-semibold text-gray-900 dark:text-white">
                     {item.title}
-                  <p className="text-gray-400 text-sm font-light  dark:text-gray-300">
-                    {item.created_at}
-                  </p>
+                    <p className="text-gray-400 text-sm font-light  dark:text-gray-300">
+                      {item.created_at}
+                    </p>
                   </h3>
                 </div>
                 {item.blog_cover.mime_type.includes("video") ? (
@@ -248,85 +251,89 @@ const HomePage: React.FC = () => {
         {/* todays pick */}
         {homePageData.isFetched ? (
           <>
+            <Helmet>
+              <title>ZareJournal</title>
+              <meta
+                name="description"
+                content="Bringing you the world, one story at a time."
+              />
+            </Helmet>
             <div className="hidden md:grid grid-col-1 md:grid-cols-12 gap-3 md:gap-5 order-last">
-            <div className="md:col-span-8  w-full">
-              <div className="flex flex-col w-full items-start space-y-1 ">
-
-            <h1 className="border-b w-full border-gray-300 font-bold mb-3 text-lg dark:text-gray-100">
-              Today’s Pick
-            </h1>
-            <div className="w-full grid grid-rows-4 grid-flow-col gap-3">
-
-            {todaysPick?.map((item: any, index: number) => (
-                  <div
-                    onClick={() =>
-                      !item.blog_cover.mime_type.includes("video") &&
-                      navigate(`/blog/${item.id}`)
-                    }
-                    key={index}
-                    className={`${
-                      index === 0
-                        ? "row-span-2 w-52"
-                        : index === 1
-                        ? "row-span-2 w-52"
-                        : "row-span-4 h-full w-full"
-                    } flex flex-col items-start space-y-1 overflow-hidden w-full`}
-                  >
-                    {item.blog_cover.mime_type.includes("video") ? (
+              <div className="md:col-span-8  w-full">
+                <div className="flex flex-col w-full items-start space-y-1 ">
+                  <h1 className="border-b w-full border-gray-300 font-bold mb-3 text-lg dark:text-gray-100">
+                    Today’s Pick
+                  </h1>
+                  <div className="w-full grid grid-rows-4 grid-flow-col gap-3">
+                    {todaysPick?.map((item: any, index: number) => (
                       <div
-                        className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                          item.index === 2 ? "h-auto " : "max-h-56 h-full "
-                        }`}
+                        onClick={() =>
+                          !item.blog_cover.mime_type.includes("video") &&
+                          navigate(`/blog/${item.id}`)
+                        }
+                        key={index}
+                        className={`${
+                          index === 0
+                            ? "row-span-2 w-52"
+                            : index === 1
+                            ? "row-span-2 w-52"
+                            : "row-span-4 h-full w-full"
+                        } flex flex-col items-start space-y-1 overflow-hidden w-full`}
                       >
-                        <ReactPlayer
-                          url={item.blog_cover.original_url}
-                          light={
-                            <img
-                              src={item.thumbnail.original_url}
-                              alt="My video thumbnail"
-                              className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                                item.index === 3
-                                  ? "h-auto "
-                                  : "max-h-56 h-full "
-                              }`}
+                        {item.blog_cover.mime_type.includes("video") ? (
+                          <div
+                            className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
+                              item.index === 2 ? "h-auto " : "max-h-56 h-full "
+                            }`}
+                          >
+                            <ReactPlayer
+                              url={item.blog_cover.original_url}
+                              light={
+                                <img
+                                  src={item.thumbnail.original_url}
+                                  alt="My video thumbnail"
+                                  className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
+                                    item.index === 3
+                                      ? "h-auto "
+                                      : "max-h-56 h-full "
+                                  }`}
+                                />
+                              }
+                              controls={true}
+                              width={"100%"}
+                              height={"100%"}
                             />
-                          }
-                          controls={true}
-                          width={"100%"}
-                          height={"100%"}
-                        />
+                          </div>
+                        ) : (
+                          <img
+                            src={item.blog_cover.original_url}
+                            alt=""
+                            className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
+                              item.index === 3 ? "h-auto " : "max-h-56 h-full  "
+                            }`}
+                            // className="w-full"
+                          />
+                        )}
+                        <p className="text-gray-400 dark:text-gray-300 text-sm font-light pt-3">
+                          {item.created_at}
+                        </p>
+                        <h3
+                          className={`font-semibold text-gray-900 dark:text-white ${
+                            item.index === 3 ? "md:text-3xl lg:text-6xl " : " "
+                          } `}
+                        >
+                          {item.title}
+                        </h3>
+                        <h4 className=" text-[15px] p-1 cursor-pointer line-clamp-2 dark:text-gray-200">
+                          {item.index === 3 && item.sub_heading}
+                        </h4>
+                        <p className="border border-gray-300 dark:border-gray-500 text-sm p-1 cursor-pointer dark:text-gray-200">
+                          {item.category.name}
+                        </p>
                       </div>
-                    ) : (
-                      <img
-                        src={item.blog_cover.original_url}
-                        alt=""
-                        className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                          item.index === 3 ? "h-auto " : "max-h-56 h-full  "
-                        }`}
-                        // className="w-full"
-                      />
-                    )}
-                    <p className="text-gray-400 dark:text-gray-300 text-sm font-light pt-3">
-                      {item.created_at}
-                    </p>
-                    <h3
-                      className={`font-semibold text-gray-900 dark:text-white ${
-                        item.index === 3 ? "md:text-3xl lg:text-6xl " : " "
-                      } `}
-                    >
-                      {item.title}
-                    </h3>
-                    <h4 className=" text-[15px] p-1 cursor-pointer line-clamp-2 dark:text-gray-200">
-                      {item.index === 3 && item.sub_heading}
-                    </h4>
-                    <p className="border border-gray-300 dark:border-gray-500 text-sm p-1 cursor-pointer dark:text-gray-200">
-                      {item.category.name}
-                    </p>
+                    ))}
                   </div>
-                ))}
-            </div>
-              </div>
-              
+                </div>
               </div>
               <div className="md:col-span-4 w-full">
                 <MostRecent />
@@ -479,7 +486,7 @@ const HomePage: React.FC = () => {
         {homePageData.isFetched &&
           homePageData?.data?.data?.data?.videos?.length > 0 && <Videos />}
       </div>
-      {(!user?.subscribed && !isSubscribed) && <SubscribeBanner />}
+      {!user?.subscribed && !isSubscribed && <SubscribeBanner />}
       <Footer />
     </div>
   );

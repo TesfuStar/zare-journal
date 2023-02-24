@@ -9,6 +9,7 @@ import useBlogSearch from "./components/useBlogSearch";
 import ReactPlayer from "react-player";
 import Header from "../../components/Header";
 import { useHome } from "../../context/HomeContext";
+import { Helmet } from "react-helmet";
 const Search: React.FC = () => {
   const homeRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -132,6 +133,13 @@ const Search: React.FC = () => {
   }
   return (
     <div className="bg-white dark:bg-dark-bg">
+      <Helmet>
+              <title>Search | ZareJournal</title>
+              <meta
+                name="description"
+                content="Bringing you the world, one story at a time."
+              />
+            </Helmet>
       <Header />
       <div className=" max-w-7xl mx-auto w-full flex flex-col p-3">
         <div className="flex flex-col items-center justify-center py-10">

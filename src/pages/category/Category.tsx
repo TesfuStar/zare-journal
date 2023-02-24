@@ -8,9 +8,19 @@ import parse from "html-react-parser";
 import ReactPlayer from "react-player";
 import Header from "../../components/Header";
 import { Footer } from "../../components";
+import { Helmet } from "react-helmet";
+
+interface Trending {
+  title: string;
+  body: string;
+  sub_heading: string;
+  blog_cover: {
+    original_url: string;
+  };
+}
 const Category: React.FC = () => {
   const { id } = useParams();
-  const [trendingStory, setTrendingStory] = useState<string[]>([]);
+  const [trendingStory, setTrendingStory] = useState<Trending[]>([]);
   const navigate = useNavigate();
   const headers = {
     "Content-Type": "application/json",
@@ -40,9 +50,23 @@ const Category: React.FC = () => {
       },
     }
   );
+  console.log(trendingStory[0]?.sub_heading);
   function TrendingStory() {
     return (
       <div>
+        {(blogCategoryData?.isFetched && blogCategoryData?.isSuccess) && (
+          <Helmet>
+            <title>ZareJournal-{trendingStory[0]?.title}</title>
+            <meta
+              name="description"
+              content={`${trendingStory[0]?.sub_heading}`}
+            />
+            <meta
+              property="og:image"
+              content={trendingStory[0]?.blog_cover?.original_url}
+            />
+          </Helmet>
+        )}
         <h2 className="font-bold text-xl py-5 dark:text-white">
           {blogCategoryData?.data?.data?.data?.category?.name}
         </h2>
@@ -174,49 +198,51 @@ const Category: React.FC = () => {
     <div className="bg-white dark:bg-dark-bg">
       <Header />
       <div className="max-w-7xl mx-auto p-3">
-        <TrendingStory />
         {blogCategoryData?.isFetched ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            <div className="md:col-span-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-              {blogCategoryData?.data?.data?.data?.by_category?.map(
-                (item: any) => (
-                  <div
-                    key={item.id}
-                    onClick={() => navigate(`/blog/${item.id}`)}
-                    className="cursor-pointer overflow-hidden flex flex-col items-start "
-                  >
-                    {item.blog_cover.mime_type.includes("video") ? (
-                      <div className="w-full ">
-                        <ReactPlayer
-                          url={item.blog_cover.original_url}
-                          controls={true}
-                          width={"100%"}
-                          height={"224px"}
+          <div>
+            <TrendingStory />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+              <div className="md:col-span-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                {blogCategoryData?.data?.data?.data?.by_category?.map(
+                  (item: any) => (
+                    <div
+                      key={item.id}
+                      onClick={() => navigate(`/blog/${item.id}`)}
+                      className="cursor-pointer overflow-hidden flex flex-col items-start "
+                    >
+                      {item.blog_cover.mime_type.includes("video") ? (
+                        <div className="w-full ">
+                          <ReactPlayer
+                            url={item.blog_cover.original_url}
+                            controls={true}
+                            width={"100%"}
+                            height={"224px"}
+                          />
+                        </div>
+                      ) : (
+                        <img
+                          src={item.blog_cover.original_url}
+                          alt=""
+                          className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                          // className="w-full"
                         />
-                      </div>
-                    ) : (
-                      <img
-                        src={item.blog_cover.original_url}
-                        alt=""
-                        className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
-                        // className="w-full"
-                      />
-                    )}
-                    <p className="text-gray-400 text-sm font-light pt-3 dark:text-gray-300">
-                      {item.created_at}
-                    </p>
-                    <h3 className="font-bold text-gray-900 dark:text-white">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm font-normal line-clamp-2 dark:text-gray-200">
-                      {parse(item.body)}
-                    </p>
-                    <h4 className=" text-[15px] p-1 cursor-pointer dark:text-gray-300">
-                      {item.category.name}
-                    </h4>
-                  </div>
-                )
-              )}
+                      )}
+                      <p className="text-gray-400 text-sm font-light pt-3 dark:text-gray-300">
+                        {item.created_at}
+                      </p>
+                      <h3 className="font-bold text-gray-900 dark:text-white">
+                        {item.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm font-normal line-clamp-2 dark:text-gray-200">
+                        {parse(item.body)}
+                      </p>
+                      <h4 className=" text-[15px] p-1 cursor-pointer dark:text-gray-300">
+                        {item.category.name}
+                      </h4>
+                    </div>
+                  )
+                )}
+              </div>
             </div>
           </div>
         ) : (

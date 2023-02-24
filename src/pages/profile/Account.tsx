@@ -7,7 +7,7 @@ import axios from "axios";
 import UpdatePassword from "./components/UpdatePassword";
 import { ToastContainer, toast, Slide, ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { Helmet } from "react-helmet";
 declare var URL: any;
 const Account = () => {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -135,6 +135,13 @@ const Account = () => {
 
   return (
     <div className="dark:bg-dark-bg h-fit w-full">
+      <Helmet>
+        <title>Account | ZareJournal</title>
+        <meta
+          name="description"
+          content="Bringing you the world, one story at a time."
+        />
+      </Helmet>
       <div className="flex flex-col items-start space-y-3 w-full">
         <div className="flex items-center justify-between space-x-2 pb-10 w-full">
           <h1 className="font-semibold text-lg text-gray-700 dark:text-white">
