@@ -56,62 +56,7 @@ const HomePage: React.FC = () => {
       </div>
     );
   };
-  //trending
-  function TrendingStory() {
-    return (
-      <>
-        <div className="border-b border-gray-300 flex items-center justify-between pb-2 mb-4 ">
-          <h2 className="font-bold text-xl">Trending Stories</h2>
-          <div className="bg-main-bg p-2 rounded-sm cursor-pointer">
-            <AiOutlineArrowRight className="text-white" />
-          </div>
-        </div>
 
-        {homePageData.isFetched ? (
-          <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-3">
-            {homePageData?.data?.data?.data?.trending?.map((item: any) => (
-              <div
-                key={item.id}
-                onClick={() => navigate(`/blog/${item.id}`)}
-                className="flex flex-col items-start cursor-pointer overflow-hidden"
-              >
-                {item.blog_cover.mime_type.includes("video") ? (
-                  <div className="">
-                    <ReactPlayer
-                      url={item.blog_cover.original_url}
-                      controls={true}
-                      width={"100%"}
-                      height={"100%"}
-                    />
-                  </div>
-                ) : (
-                  <img
-                    src={item.blog_cover.original_url}
-                    alt=""
-                    className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
-                    // className="w-full"
-                  />
-                )}
-                <p className="text-gray-400 text-sm font-light pt-3">
-                  {item.created_at}
-                </p>
-                <h3 className="font-bold text-gray-900">{item.title}</h3>
-                <p className="text-gray-600 text-sm font-normal line-clamp-2">
-                  {parse(item.body)}
-                </p>
-                <h4 className=" text-[15px] p-1 cursor-pointer">
-                  {item.category.name}
-                </h4>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <GridLoading />
-        )}
-        {error && <Error />}
-      </>
-    );
-  }
   //MostRecent
   function MostRecent() {
     return (
@@ -123,7 +68,11 @@ const HomePage: React.FC = () => {
           <div className="flex flex-col items-start space-y-2 gap-3">
             {homePageData?.data?.data?.data?.most_recent?.map((item: any) => (
               <div
-                onClick={() => navigate(`/blog/${item.id}`)}
+                onClick={() =>
+                  item.blog_cover.mime_type.includes("video")
+                    ? navigate(`/video/${item.id}`)
+                    : navigate(`/blog/${item.id}`)
+                }
                 key={item.id}
                 className="cursor-pointer overflow-hidden flex  items-center w-full border-b border-gray-300 dark:border-gray-500"
               >
@@ -189,7 +138,7 @@ const HomePage: React.FC = () => {
             {homePageData?.data?.data?.data?.videos?.map((item: any) => (
               <div
                 key={item.id}
-                onClick={() =>navigate(`/video/${item.id}`)}
+                onClick={() => navigate(`/video/${item.id}`)}
                 className="cursor-pointer overflow-hidden flex flex-col items-start  w-full"
               >
                 {item.blog_cover.mime_type.includes("video") ? (
@@ -264,9 +213,14 @@ const HomePage: React.FC = () => {
                   <div className="w-full grid grid-rows-4 grid-flow-col gap-3">
                     {todaysPick?.map((item: any, index: number) => (
                       <div
+                        // onClick={() =>
+                        //   !item.blog_cover.mime_type.includes("video") &&
+                        //   navigate(`/blog/${item.id}`)
+                        // }
                         onClick={() =>
-                          !item.blog_cover.mime_type.includes("video") &&
-                          navigate(`/blog/${item.id}`)
+                          item.blog_cover.mime_type.includes("video")
+                            ? navigate(`/video/${item.id}`)
+                            : navigate(`/blog/${item.id}`)
                         }
                         key={index}
                         className={`${
@@ -306,7 +260,9 @@ const HomePage: React.FC = () => {
                             src={item.blog_cover.original_url}
                             alt=""
                             className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                              item.index == 3 ? "h-[400px] " : "max-h-56 h-full  "
+                              item.index == 3
+                                ? "h-[400px] "
+                                : "max-h-56 h-full  "
                             }`}
                             // className="w-full"
                           />
@@ -343,7 +299,12 @@ const HomePage: React.FC = () => {
                 {todaysPick?.map((item: any) => (
                   <div
                     key={item.id}
-                    onClick={() => navigate(`/blog/${item.id}`)}
+                    // onClick={() => navigate(`/blog/${item.id}`)}
+                    onClick={() =>
+                      item.blog_cover.mime_type.includes("video")
+                        ? navigate(`/video/${item.id}`)
+                        : navigate(`/blog/${item.id}`)
+                    }
                     className="cursor-pointer overflow-hidden flex flex-col items-start"
                   >
                     {item.blog_cover.mime_type.includes("video") ? (
@@ -428,7 +389,12 @@ const HomePage: React.FC = () => {
                     {home.articles?.map((article: any) => (
                       <div
                         key={article.id}
-                        onClick={() => navigate(`/blog/${article.id}`)}
+                        // onClick={() => navigate(`/blog/${article.id}`)}
+                        onClick={() =>
+                          article.blog_cover.mime_type.includes("video")
+                            ? navigate(`/video/${article.id}`)
+                            : navigate(`/blog/${article.id}`)
+                        }
                         className="relative flex flex-col items-start cursor-pointer overflow-hidden"
                       >
                         {article.blog_cover.mime_type.includes("video") ? (
@@ -483,7 +449,7 @@ const HomePage: React.FC = () => {
         {homePageData.isFetched &&
           homePageData?.data?.data?.data?.videos?.length > 0 && <Videos />}
       </div>
-      {!user?.subscribed &&  <SubscribeBanner />}
+      {!user?.subscribed && <SubscribeBanner />}
       <Footer />
     </div>
   );

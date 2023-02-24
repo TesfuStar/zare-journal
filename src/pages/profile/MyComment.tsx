@@ -39,7 +39,11 @@ const MyComment = () => {
             return (
               <div
                 ref={lastCommentElementRef}
-                onClick={() => navigate(`/blog/${comment.blog_id}`)}
+                onClick={() =>
+                  comment.blog.blog_cover.mime_type.includes("video")
+                    ? navigate(`/video/${comment.blog_id}`)
+                    : navigate(`/blog/${comment.blog_id}`)
+                }
                 key={index}
                 className="border p-3  rounded-sm border-dark-color/50 dark:border-gray-500 w-full"
               >
@@ -56,6 +60,9 @@ const MyComment = () => {
                     <p className="text-gray-400 dark:text-white text-normal text-[12px]">
                       {comment.created_at}
                     </p>
+                    <h3 className="capitalize font-semibold dark:text-white">
+                      {comment.blog.title}
+                    </h3>
                     <p
                       className={`text-gray-500 dark:text-gray-300  text-[15px]`}
                     >
@@ -83,7 +90,11 @@ const MyComment = () => {
           } else {
             return (
               <div
-                onClick={() => navigate(`/blog/${comment.blog_id}`)}
+                onClick={() =>
+                  comment.blog.blog_cover.mime_type.includes("video")
+                    ? navigate(`/video/${comment.blog_id}`)
+                    : navigate(`/blog/${comment.blog_id}`)
+                }
                 key={index}
                 className="border p-3  rounded-sm border-dark-color/50 dark:border-gray-500 w-full"
               >
@@ -100,6 +111,10 @@ const MyComment = () => {
                     <p className="text-gray-400 dark:text-white text-normal text-[12px]">
                       {comment.created_at}
                     </p>
+
+                    <h3 className="capitalize font-semibold dark:text-white">
+                      {comment.blog.title}
+                    </h3>
                     <p
                       className={`text-gray-500 dark:text-gray-300  text-[15px]`}
                     >

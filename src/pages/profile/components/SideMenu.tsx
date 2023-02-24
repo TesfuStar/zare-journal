@@ -48,8 +48,8 @@ const SideMenu = () => {
             onClick={logout}
             className="flex items-center pl-5 space-x-4 cursor-pointer"
           >
-            <MdOutlineLogout className="text-white" size={20} />
-            <h1 className={"text-white "}>Logout</h1>
+            <MdOutlineLogout className=" text-[#bdcadf]" size={20} />
+            <h1 className={"dark:text-white "}>Logout</h1>
           </div>
         </div>
         {/* small sidebar */}
@@ -89,7 +89,9 @@ const SideMenu = () => {
                         <NavLink
                           key={link.name}
                           to={`/profile/${link.link}`}
-                          className={"flex items-center pb-2 space-x-4 cursor-pointer"}
+                          className={
+                            "flex items-center pb-2 space-x-4 cursor-pointer"
+                          }
                         >
                           {link.icon}
                           <span
@@ -105,7 +107,10 @@ const SideMenu = () => {
                         onClick={logout}
                         className="flex items-center pb-2 space-x-4 cursor-pointer"
                       >
-                        <MdOutlineLogout className="text-white" size={20} />
+                        <MdOutlineLogout
+                          className=" text-[#bdcadf]"
+                          size={20}
+                        />
                         <h1 className={"text-white "}>Logout</h1>
                       </div>
                     </Menu.Item>

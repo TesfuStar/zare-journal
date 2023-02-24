@@ -54,7 +54,7 @@ const Category: React.FC = () => {
   function TrendingStory() {
     return (
       <div>
-        {(blogCategoryData?.isFetched && blogCategoryData?.isSuccess) && (
+        {blogCategoryData?.isFetched && blogCategoryData?.isSuccess && (
           <Helmet>
             <title>{`ZareJournal-${trendingStory[0]?.title}`}</title>
             <meta
@@ -76,7 +76,12 @@ const Category: React.FC = () => {
               {trendingStory?.slice(0, 3)?.map((item: any, index: number) => (
                 <div
                   key={item.id}
-                  onClick={() => navigate(`/blog/${item.id}`)}
+                  // onClick={() => navigate(`/blog/${item.id}`)}
+                  onClick={() =>
+                    item.blog_cover.mime_type.includes("video")
+                      ? navigate(`/video/${item.id}`)
+                      : navigate(`/blog/${item.id}`)
+                  }
                   className={`${
                     index === 0
                       ? "row-span-4 col-span-2 h-full w-full"
@@ -152,7 +157,12 @@ const Category: React.FC = () => {
                   (item: any) => (
                     <div
                       key={item.id}
-                      onClick={() => navigate(`/blog/${item.id}`)}
+                      // onClick={() => navigate(`/blog/${item.id}`)}
+                      onClick={() =>
+                        item.blog_cover.mime_type.includes("video")
+                          ? navigate(`/video/${item.id}`)
+                          : navigate(`/blog/${item.id}`)
+                      }
                       className="cursor-pointer overflow-hidden flex flex-col items-start "
                     >
                       {item.blog_cover.mime_type.includes("video") ? (
@@ -207,7 +217,12 @@ const Category: React.FC = () => {
                   (item: any) => (
                     <div
                       key={item.id}
-                      onClick={() => navigate(`/blog/${item.id}`)}
+                      // onClick={() => navigate(`/blog/${item.id}`)}
+                      onClick={() =>
+                        item.blog_cover.mime_type.includes("video")
+                          ? navigate(`/video/${item.id}`)
+                          : navigate(`/blog/${item.id}`)
+                      }
                       className="cursor-pointer overflow-hidden flex flex-col items-start "
                     >
                       {item.blog_cover.mime_type.includes("video") ? (

@@ -208,7 +208,12 @@ const Search: React.FC = () => {
                   return (
                     <div
                       ref={lastBookElementRef}
-                      onClick={() => navigate(`/blog/${blog.id}`)}
+                      // onClick={() => navigate(`/blog/${blog.id}`)}
+                      onClick={() =>
+                        blog.blog_cover.mime_type.includes("video")
+                          ? navigate(`/video/${blog.id}`)
+                          : navigate(`/blog/${blog.id}`)
+                      }
                       key={blog.id}
                       className="flex item-start space-x-2 cursor-pointer overflow-hidden w-full"
                     >
@@ -252,7 +257,11 @@ const Search: React.FC = () => {
                 } else {
                   return (
                     <div
-                      onClick={() => navigate(`/blog/${blog.id}`)}
+                      onClick={() =>
+                        blog.blog_cover.mime_type.includes("video")
+                          ? navigate(`/video/${blog.id}`)
+                          : navigate(`/blog/${blog.id}`)
+                      }
                       key={blog.id}
                       className="flex item-start space-x-2 cursor-pointer overflow-hidden  w-full"
                     >
@@ -312,7 +321,11 @@ const Search: React.FC = () => {
             </h3>
             {popularBlogs?.map((blog) => (
               <div
-                onClick={() => navigate(`/blog/${blog.id}`)}
+                onClick={() =>
+                  blog.blog_cover.mime_type.includes("video")
+                    ? navigate(`/video/${blog.id}`)
+                    : navigate(`/blog/${blog.id}`)
+                }
                 key={blog.id}
                 className="flex items-start pb-2 space-x-2 cursor-pointer overflow-hidden border-b border-gray-300 dark:border-gray-600"
               >

@@ -17,12 +17,18 @@ interface Comment {
     name: string;
     profile_photo_url: string;
   };
+  blog: {
+    title:string;
+    blog_cover: {
+      mime_type: string;
+    };
+  };
 }
 
 interface CommentData {
-  data:{
-    data:Comment[];
-  }
+  data: {
+    data: Comment[];
+  };
 }
 // articles
 const UseComment = ({ pageNumber }: Props) => {
