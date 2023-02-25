@@ -212,7 +212,7 @@ const HomePage: React.FC = () => {
                   <h1 className="border-b w-full border-gray-300 font-bold mb-3 text-lg dark:text-gray-100">
                     Today’s Pick
                   </h1>
-                  <div className="w-full grid grid-rows-4 grid-flow-col gap-3">
+                  <div className="w-full grid grid-rows-4 grid-flow-col gap-3 items-start justify-start">
                     {todaysPick?.map((item: any, index: number) => (
                       <div
                         // onClick={() =>
@@ -235,8 +235,8 @@ const HomePage: React.FC = () => {
                       >
                         {item.blog_cover.mime_type.includes("video") ? (
                           <div
-                            className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                              item.index === 2 ? "h-auto " : "max-h-56 h-full "
+                            className={` w-full hover:scale-105 duration-300 cursor-pointer ${
+                              index === 2 ? "h-[400px]" : "h-[200px] "
                             }`}
                           >
                             <ReactPlayer
@@ -245,16 +245,12 @@ const HomePage: React.FC = () => {
                                 <img
                                   src={item.thumbnail.original_url}
                                   alt="My video thumbnail"
-                                  className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                                    item.index === 3
-                                      ? "h-auto "
-                                      : "max-h-56 h-full "
-                                  }`}
+                                  className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer`}
                                 />
                               }
                               controls={true}
                               width={"100%"}
-                              height={"400px"}
+                              height={"100%"}
                             />
                           </div>
                         ) : (
@@ -262,9 +258,9 @@ const HomePage: React.FC = () => {
                             src={item.blog_cover.original_url}
                             alt=""
                             className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                              item.index == 3
+                                 index === 2
                                 ? "h-[400px] "
-                                : "max-h-56 h-full  "
+                                : "h-[200px]  "
                             }`}
                             // className="w-full"
                           />
@@ -311,9 +307,7 @@ const HomePage: React.FC = () => {
                   >
                     {item.blog_cover.mime_type.includes("video") ? (
                       <div
-                        className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                          item.index === 2 ? "h-auto " : "max-h-56 h-full "
-                        }`}
+                        className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer h-44`}
                       >
                         <ReactPlayer
                           url={item.blog_cover.original_url}
@@ -321,11 +315,7 @@ const HomePage: React.FC = () => {
                             <img
                               src={item.thumbnail.original_url}
                               alt="My video thumbnail"
-                              className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer ${
-                                item.index === 3
-                                  ? "h-auto "
-                                  : "max-h-56 h-full "
-                              }`}
+                              className={`object-cover w-full hover:scale-105 duration-300 cursor-pointer h-full`}
                             />
                           }
                           controls={true}
@@ -337,7 +327,7 @@ const HomePage: React.FC = () => {
                       <img
                         src={item.blog_cover.original_url}
                         alt=""
-                        className="object-cover w-full max-h-56 h-full hover:scale-105 duration-300"
+                        className="object-cover w-full h-44 hover:scale-105 duration-300"
                         // className="w-full"
                       />
                     )}
